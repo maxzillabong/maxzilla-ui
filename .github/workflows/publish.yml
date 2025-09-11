@@ -37,12 +37,12 @@ jobs:
 
       - name: Publish core package
         working-directory: ./packages/core
-        run: npm publish
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish react package
         working-directory: ./packages/react
-        run: npm publish
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
