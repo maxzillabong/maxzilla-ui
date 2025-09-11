@@ -3,17 +3,14 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
 
 # Build outputs
 dist/
 build/
-*.tsbuildinfo
-.rollup.cache/
-
-# Coverage directory used by tools like istanbul
-coverage/
-*.lcov
+out/
+.next/
+.nuxt/
+storybook-static/
 
 # Environment variables
 .env
@@ -21,13 +18,6 @@ coverage/
 .env.development.local
 .env.test.local
 .env.production.local
-
-# IDEs and editors
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
 
 # OS generated files
 .DS_Store
@@ -38,22 +28,28 @@ coverage/
 ehthumbs.db
 Thumbs.db
 
-# Storybook
-storybook-static/
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
-# Temporary folders
-tmp/
-temp/
+# Package files
+*.tgz
+*.tar.gz
 
 # Logs
 logs
 *.log
 
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Cache directories
+.cache/
+.parcel-cache/
+.npm/
 
 # Optional npm cache directory
 .npm
@@ -61,7 +57,6 @@ pids
 # Optional eslint cache
 .eslintcache
 
-# Changeset
-.changeset/*.md
-!.changeset/config.json
-!.changeset/README.md
+# Temporary folders
+tmp/
+temp/
