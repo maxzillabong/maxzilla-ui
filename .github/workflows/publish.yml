@@ -26,7 +26,7 @@ jobs:
 
       - name: Install core package dependencies
         working-directory: ./packages/core
-        run: npm install
+        run: npm install --no-package-lock
 
       - name: Build core package
         working-directory: ./packages/core
@@ -34,7 +34,7 @@ jobs:
 
       - name: Install react package dependencies
         working-directory: ./packages/react
-        run: npm install
+        run: npm install --no-package-lock
 
       - name: Build react package
         working-directory: ./packages/react
