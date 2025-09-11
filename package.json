@@ -16,8 +16,10 @@
   ],
   "scripts": {
     "dev": "npm run dev --workspaces --if-present",
-    "build": "npm run build --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present", 
     "test": "npm run test --workspaces --if-present",
+    "version": "npm version --workspaces",
+    "publish-all": "npm run build && npm publish --workspaces",
     "lint": "npm run lint --workspaces --if-present",
     "storybook": "npm run storybook -w @maxzilla/ui-core",
     "build-storybook": "npm run build-storybook -w @maxzilla/ui-core",

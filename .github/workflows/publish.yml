@@ -22,44 +22,13 @@ jobs:
           node-version: '18'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Install core package dependencies
-        working-directory: ./packages/core
+      - name: Install dependencies
         run: npm install --no-package-lock
 
-      - name: Build core package
-        working-directory: ./packages/core
+      - name: Build all packages
         run: npm run build
 
-      - name: Publish core package
-        working-directory: ./packages/core
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Install tokens package dependencies
-        working-directory: ./packages/tokens
-        run: npm install --no-package-lock
-
-      - name: Build tokens package
-        working-directory: ./packages/tokens
-        run: npm run build
-
-      - name: Publish tokens package
-        working-directory: ./packages/tokens
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Install react package dependencies
-        working-directory: ./packages/react
-        run: npm install --no-package-lock
-
-      - name: Build react package
-        working-directory: ./packages/react
-        run: npm run build
-
-      - name: Publish react package
-        working-directory: ./packages/react
-        run: npm publish --access public
+      - name: Publish all packages
+        run: npm publish --workspaces --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

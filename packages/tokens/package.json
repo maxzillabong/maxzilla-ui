@@ -1,6 +1,6 @@
 {
   "name": "maxzilla-ui-tokens",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "Design tokens and theme system for Maxzilla UI",
   "type": "module",
   "main": "dist/index.js",

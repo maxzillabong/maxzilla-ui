@@ -24,8 +24,8 @@
     "framer-motion": "^11.3.21",
     "prismjs": "^1.29.0",
     "@types/prismjs": "^1.26.4",
-    "maxzilla-ui-core": "^0.1.2",
-    "maxzilla-ui-react": "^0.1.1",
+    "maxzilla-ui-core": "^0.1.5",
+    "maxzilla-ui-react": "^0.1.5",
     "@webcomponents/webcomponentsjs": "^2.8.0"
   },
   "devDependencies": {
