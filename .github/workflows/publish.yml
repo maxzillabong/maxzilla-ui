@@ -49,3 +49,17 @@ jobs:
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Install react package dependencies
+        working-directory: ./packages/react
+        run: npm install --no-package-lock
+
+      - name: Build react package
+        working-directory: ./packages/react
+        run: npm run build
+
+      - name: Publish react package
+        working-directory: ./packages/react
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
