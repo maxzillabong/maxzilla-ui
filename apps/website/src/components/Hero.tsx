@@ -3,8 +3,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, Download, Sparkles, Zap, Code, Palette } from 'lucide-react'
-import Link from 'next/link'
-import { Button } from '@maxzilla/ui-react'
+import { Button } from 'maxzilla-ui-react'
 
 export function Hero() {
   const [mounted, setMounted] = useState(false)
@@ -22,7 +21,7 @@ export function Hero() {
       {/* Background Effects */}
       <div className="absolute inset-0 bg-grid opacity-30"></div>
       <div className="hero-glow"></div>
-      
+
       {/* Floating Elements */}
       <div className="absolute top-32 left-10 w-20 h-20 bg-primary-200 dark:bg-primary-800 rounded-full opacity-20 animate-float"></div>
       <div className="absolute top-48 right-16 w-32 h-32 bg-green-200 dark:bg-green-800 rounded-full opacity-10 animate-float" style={{ animationDelay: '2s' }}></div>
@@ -86,7 +85,7 @@ export function Hero() {
             { icon: Code, text: 'Framework Agnostic' },
             { icon: Zap, text: 'Lightning Fast' },
             { icon: Palette, text: 'Beautiful Design' },
-          ].map(({ icon: Icon, text }, index) => (
+          ].map(({ icon: Icon, text }) => (
             <div
               key={text}
               className="flex items-center gap-2 bg-white dark:bg-neutral-800 px-4 py-2 rounded-full shadow-sm border border-neutral-200 dark:border-neutral-700"
@@ -104,7 +103,7 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
         >
-          <Button 
+          <Button
             variant="primary"
             size="lg"
             onClick={() => window.location.href = '/docs/installation'}
@@ -114,8 +113,8 @@ export function Hero() {
             Get Started
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
           </Button>
-          
-          <Button 
+
+          <Button
             variant="outline"
             size="lg"
             onClick={() => window.open('http://localhost:6007', '_blank', 'noopener,noreferrer')}
@@ -143,11 +142,11 @@ export function Hero() {
             </div>
             <div className="font-mono">
               <div className="text-green-400 mb-2"># Install Maxzilla UI</div>
-              <div className="text-white mb-4">npm install @maxzilla/ui-core</div>
+              <div className="text-white mb-4">npm install maxzilla-ui-core</div>
               <div className="text-green-400 mb-2"># Import and use</div>
               <div className="text-white">
                 <span className="text-purple-400">import</span>{' '}
-                <span className="text-yellow-300">'@maxzilla/ui-core/button'</span>
+                <span className="text-yellow-300">'maxzilla-ui-core/button'</span>
               </div>
             </div>
           </div>
@@ -165,7 +164,7 @@ export function Hero() {
             { number: '5', label: 'Frameworks' },
             { number: '100%', label: 'Accessible' },
             { number: '0', label: 'Dependencies' },
-          ].map(({ number, label }, index) => (
+          ].map(({ number, label }) => (
             <div key={label} className="text-center">
               <div className="text-3xl md:text-4xl font-bold text-primary-600 dark:text-primary-400 mb-2">
                 {number}

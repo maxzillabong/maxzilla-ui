@@ -2,30 +2,23 @@
 
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { 
-  ArrowRight, 
-  Code, 
-  Palette, 
-  Zap, 
-  Globe, 
-  Users, 
+import {
+  ArrowRight,
+  Users,
   Star,
   Github,
   BookOpen,
   Sparkles,
-  Target,
-  Layers,
-  Rocket,
   Heart
 } from 'lucide-react'
 import Link from 'next/link'
-import { Header } from '../components/Header'
-import { Hero } from '../components/Hero'
-import { Features } from '../components/Features'
-import { LiveComponentShowcase } from '../components/LiveComponentShowcase'
-import { CodeExample } from '../components/CodeExample'
-import { Stats } from '../components/Stats'
-import { Footer } from '../components/Footer'
+import { Header } from '@/components/Header'
+import { Hero } from '@/components/Hero'
+import { Features } from '@/components/Features'
+import { LiveComponentShowcase } from '@/components/LiveComponentShowcase'
+import { CodeExample } from '@/components/CodeExample'
+import { Stats } from '@/components/Stats'
+import { Footer } from '@/components/Footer'
 
 export default function HomePage() {
   const [mounted, setMounted] = useState(false)
@@ -41,7 +34,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-white dark:bg-neutral-950">
       <Header />
-      
+
       {/* Hero Section */}
       <Hero />
 
@@ -70,13 +63,13 @@ export default function HomePage() {
           </motion.div>
 
           <div className="grid lg:grid-cols-2 gap-8">
-            <CodeExample 
+            <CodeExample
               title="Vanilla JavaScript"
               language="html"
               code={`<!-- Import components -->
 <script type="module">
-  import '@maxzilla/ui-core/button';
-  import '@maxzilla/ui-core/card';
+  import 'maxzilla-ui-core/button';
+  import 'maxzilla-ui-core/card';
 </script>
 
 <!-- Use anywhere -->
@@ -90,10 +83,10 @@ export default function HomePage() {
 </mz-card>`}
             />
 
-            <CodeExample 
+            <CodeExample
               title="React Integration"
               language="tsx"
-              code={`import { MzButton, MzCard } from '@maxzilla/ui-react';
+              code={`import { MzButton, MzCard } from 'maxzilla-ui-react';
 
 function App() {
   return (
@@ -122,8 +115,8 @@ function App() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <Link 
-                href="/docs" 
+              <Link
+                href="/docs"
                 className="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg"
               >
                 <BookOpen className="w-5 h-5" />
@@ -151,29 +144,29 @@ function App() {
               <Sparkles className="w-4 h-4" />
               Ready for Production
             </div>
-            
+
             <h2 className="text-4xl md:text-6xl font-bold mb-6">
               Start Building
               <br />
               <span className="text-gradient">Beautiful Interfaces</span>
             </h2>
-            
+
             <p className="text-xl text-neutral-600 dark:text-neutral-400 mb-12 max-w-2xl mx-auto">
-              Join developers who are already building amazing experiences with Maxzilla UI. 
+              Join developers who are already building amazing experiences with Maxzilla UI.
               Framework-agnostic, accessible, and beautiful by default.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link 
+              <Link
                 href="https://github.com/maxvfischer/maxzilla-ui"
                 className="inline-flex items-center gap-2 bg-neutral-900 dark:bg-white hover:bg-neutral-800 dark:hover:bg-neutral-100 text-white dark:text-neutral-900 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
               >
                 <Github className="w-5 h-5" />
                 View on GitHub
               </Link>
-              
-              <Link 
-                href="/storybook" 
+
+              <Link
+                href="/storybook"
                 className="inline-flex items-center gap-2 bg-white dark:bg-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-700 text-neutral-900 dark:text-white border-2 border-neutral-200 dark:border-neutral-600 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105"
               >
                 <BookOpen className="w-5 h-5" />

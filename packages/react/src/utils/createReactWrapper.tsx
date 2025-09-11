@@ -1,10 +1,5 @@
 import React, { forwardRef, useEffect, useRef, type ComponentPropsWithRef } from 'react'
 
-// Custom event types for web components
-interface CustomEventMap {
-  [key: string]: CustomEvent<any>
-}
-
 // Props interface for web component wrappers
 export interface WebComponentProps extends ComponentPropsWithRef<any> {
   children?: React.ReactNode
@@ -22,7 +17,7 @@ export function createReactWrapper<T extends HTMLElement = HTMLElement>(
   const Component = forwardRef<T, WebComponentProps>((props, ref) => {
     const { children, className, style, ...webComponentProps } = props
     const elementRef = useRef<T>(null)
-    
+
     // Automatically load web components
     useWebComponents()
 
@@ -45,13 +40,13 @@ export function createReactWrapper<T extends HTMLElement = HTMLElement>(
         if (key.startsWith('on') && typeof value === 'function') {
           // Handle React event props (onSomething -> something)
           const eventName = eventMap[key] || key.slice(2).toLowerCase()
-          
+
           const handler = (event: Event) => {
             value(event)
           }
 
           element.addEventListener(eventName, handler)
-          
+
           return () => {
             element.removeEventListener(eventName, handler)
           }
@@ -94,7 +89,7 @@ export function useWebComponents() {
     // Import web components if not already loaded
     if (typeof window !== 'undefined' && 'customElements' in window) {
       // Use dynamic import with type assertion to avoid TS errors
-      import('@maxzilla/ui-core' as any).catch(console.error)
+      import('maxzilla-ui-core' as any).catch(console.error)
     }
   }, [])
 }
