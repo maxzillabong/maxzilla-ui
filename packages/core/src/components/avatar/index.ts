@@ -1,0 +1,1 @@
+export { MzAvatar } from './mz-avatar.js';

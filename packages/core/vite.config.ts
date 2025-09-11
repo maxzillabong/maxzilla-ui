@@ -19,7 +19,12 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: true,
     rollupOptions: {
-      external: ['lit', 'lit/decorators.js', 'lit/directives/class-map.js'],
+      external: [
+        'lit', 
+        'lit/decorators.js', 
+        'lit/directives/class-map.js',
+        '@webcomponents/webcomponentsjs'
+      ],
       output: {
         entryFileNames: '[name].js',
         chunkFileNames: '[name]-[hash].js',

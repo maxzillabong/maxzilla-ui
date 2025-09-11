@@ -90,7 +90,7 @@ export function toggleTheme(): void {
 /**
  * Initialize theme system
  */
-export function initializeTheme(): void {
+export function initializeTheme(): (() => void) | undefined {
   if (typeof window === 'undefined') return;
   
   const currentTheme = getCurrentTheme();

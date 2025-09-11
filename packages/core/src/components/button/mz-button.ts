@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { baseStyles } from '../../styles/base.js';
 import { animationStyles } from '../../styles/animations.js';
@@ -239,14 +239,13 @@ export class MzButton extends LitElement {
   @property({ type: String }) href?: string;
   @property({ type: String }) target?: '_blank' | '_self' | '_parent' | '_top';
 
-  @state() private pressed = false;
 
   private handlePointerDown = () => {
-    this.pressed = true;
+    // Add visual feedback if needed
   };
 
   private handlePointerUp = () => {
-    this.pressed = false;
+    // Remove visual feedback if needed
   };
 
   private handleClick = (event: MouseEvent) => {

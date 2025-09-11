@@ -1,0 +1,44 @@
+{
+  "name": "@maxzilla/ui-react",
+  "version": "0.1.0",
+  "description": "React wrapper components for Maxzilla UI web components",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "generate": "node scripts/generate-wrappers.js",
+    "build": "npm run generate && tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "react",
+    "web-components",
+    "maxzilla-ui",
+    "ui-components"
+  ],
+  "author": "Max Vananen <m.f.vananen@gmail.com>",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "dependencies": {
+    "@maxzilla/ui-core": "^0.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "typescript": "^5.5.4"
+  }
+}

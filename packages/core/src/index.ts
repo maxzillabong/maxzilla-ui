@@ -8,7 +8,18 @@ export { MzModal } from './components/modal/index.js';
 
 // Export styles and utilities
 export * from './styles/index.js';
-export * from './utils/index.js';
+export { 
+  getCurrentTheme,
+  setTheme,
+  applyTheme,
+  getResolvedTheme,
+  toggleTheme,
+  initializeTheme,
+  onThemeChange
+} from './utils/theme.js';
+export * from './utils/animation.js';
+export * from './utils/dom.js';
 
 // Export types
 export type * from './types.js';
+export type { ThemeMode } from './utils/theme.js';
