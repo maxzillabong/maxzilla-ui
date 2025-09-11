@@ -1,6 +1,6 @@
 {
   "name": "maxzilla-ui-core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Core web components library for Maxzilla UI built with Lit Element",
   "type": "module",
   "main": "dist/index.js",
@@ -19,7 +19,7 @@
       "types": "./dist/card.d.ts"
     },
     "./input": {
-      "import": "./dist/input.js", 
+      "import": "./dist/input.js",
       "types": "./dist/input.d.ts"
     },
     "./badge": {
@@ -57,7 +57,7 @@
   },
   "keywords": [
     "web-components",
-    "lit-element", 
+    "lit-element",
     "ui-components",
     "design-system",
     "aceternity",
