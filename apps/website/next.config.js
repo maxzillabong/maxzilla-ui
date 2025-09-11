@@ -11,7 +11,6 @@ const nextConfig = {
     // Handle web components and lit imports
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@maxzilla/ui-core': require.resolve('../../packages/core/dist/index.js'),
       '@webcomponents/webcomponentsjs': require.resolve('@webcomponents/webcomponentsjs'),
     };
     
