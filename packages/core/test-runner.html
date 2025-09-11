@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maxzilla UI Component Tests</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    
+    .test-output {
+      background: #1e1e1e;
+      color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+      font-size: 14px;
+      white-space: pre-wrap;
+      margin: 20px 0;
+    }
+    
+    .controls {
+      margin: 20px 0;
+    }
+    
+    button {
+      background: #007acc;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+    
+    button:hover {
+      background: #005a9e;
+    }
+    
+    .status {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 6px;
+    }
+    
+    .status.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    
+    .status.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 Maxzilla UI Component Tests</h1>
+  
+  <div class="controls">
+    <button onclick="runAllTests()">Run All Tests</button>
+    <button onclick="runButtonTests()">Run Button Tests</button>
+    <button onclick="clearOutput()">Clear Output</button>
+  </div>
+  
+  <div id="status"></div>
+  <div id="output" class="test-output"></div>
+  
+  <script type="module">
+    // Import the test modules
+    import { runner as buttonRunner } from './src/components/button/button.integration.test.js';
+    
+    let output = document.getElementById('output');
+    let status = document.getElementById('status');
+    
+    // Capture console output
+    const originalConsole = {
+      log: console.log,
+      error: console.error
+    };
+    
+    function captureConsole() {
+      output.textContent = '';
+      
+      console.log = (...args) => {
+        output.textContent += args.join(' ') + '\n';
+        originalConsole.log(...args);
+      };
+      
+      console.error = (...args) => {
+        output.textContent += args.join(' ') + '\n';
+        originalConsole.error(...args);
+      };
+    }
+    
+    function restoreConsole() {
+      console.log = originalConsole.log;
+      console.error = originalConsole.error;
+    }
+    
+    async function showStatus(message, type = 'info') {
+      status.className = `status ${type}`;
+      status.textContent = message;
+      
+      if (type !== 'error') {
+        setTimeout(() => {
+          status.textContent = '';
+          status.className = 'status';
+        }, 3000);
+      }
+    }
+    
+    window.runButtonTests = async function() {
+      captureConsole();
+      showStatus('Running Button tests...', 'info');
+      
+      try {
+        await buttonRunner.run();
+        showStatus('✅ Button tests completed successfully!', 'success');
+      } catch (error) {
+        showStatus(`❌ Button tests failed: ${error.message}`, 'error');
+      }
+      
+      restoreConsole();
+    };
+    
+    window.runAllTests = async function() {
+      captureConsole();
+      showStatus('Running all tests...', 'info');
+      
+      try {
+        await buttonRunner.run();
+        showStatus('✅ All tests completed successfully!', 'success');
+      } catch (error) {
+        showStatus(`❌ Tests failed: ${error.message}`, 'error');
+      }
+      
+      restoreConsole();
+    };
+    
+    window.clearOutput = function() {
+      output.textContent = '';
+      status.textContent = '';
+      status.className = 'status';
+    };
+    
+    // Show initial message
+    output.textContent = '📝 Click "Run Tests" to start testing components...\n';
+  </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+{
+  "name": "@maxzilla/ui-vue",
+  "version": "0.1.0",
+  "description": "Vue wrapper components for Maxzilla UI built with code generation",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "npm run generate && vue-tsc --noEmit && vite build",
+    "generate": "node scripts/generate-wrappers.js",
+    "dev": "npm run generate && vue-tsc --noEmit --watch",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "vue",
+    "web-components", 
+    "ui-components",
+    "design-system",
+    "aceternity",
+    "maxzilla-ui",
+    "wrapper-components"
+  ],
+  "author": "Max Vananen <m.f.vananen@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "vue": "^3.4.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.0",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.2",
+    "vue-tsc": "^2.0.0"
+  },
+  "peerDependencies": {
+    "@maxzilla/ui-core": "^0.1.0",
+    "vue": "^3.4.0"
+  }
+}

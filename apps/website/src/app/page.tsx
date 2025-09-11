@@ -22,7 +22,7 @@ import Link from 'next/link'
 import { Header } from '../components/Header'
 import { Hero } from '../components/Hero'
 import { Features } from '../components/Features'
-import { ComponentShowcase } from '../components/ComponentShowcase'
+import { LiveComponentShowcase } from '../components/LiveComponentShowcase'
 import { CodeExample } from '../components/CodeExample'
 import { Stats } from '../components/Stats'
 import { Footer } from '../components/Footer'
@@ -49,7 +49,7 @@ export default function HomePage() {
       <Features />
 
       {/* Component Showcase */}
-      <ComponentShowcase />
+      <LiveComponentShowcase />
 
       {/* Code Examples */}
       <section className="py-24 px-4 bg-neutral-50 dark:bg-neutral-900">

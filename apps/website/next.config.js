@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
   trailingSlash: true,
   images: {
     unoptimized: true
@@ -12,7 +11,8 @@ const nextConfig = {
     // Handle web components and lit imports
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@maxzilla/ui-core': require.resolve('../../packages/core/src/index.ts'),
+      '@maxzilla/ui-core': require.resolve('../../packages/core/dist/index.js'),
+      '@webcomponents/webcomponentsjs': require.resolve('@webcomponents/webcomponentsjs'),
     };
     
     return config;

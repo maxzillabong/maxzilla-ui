@@ -65,3 +65,7 @@ pids
 .changeset/*.md
 !.changeset/config.json
 !.changeset/README.md
+
+# Development notes (never commit)
+CLAUDE.md
+COMPONENT_ROADMAP.md

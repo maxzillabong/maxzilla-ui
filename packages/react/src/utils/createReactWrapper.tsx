@@ -22,6 +22,9 @@ export function createReactWrapper<T extends HTMLElement = HTMLElement>(
   const Component = forwardRef<T, WebComponentProps>((props, ref) => {
     const { children, className, style, ...webComponentProps } = props
     const elementRef = useRef<T>(null)
+    
+    // Automatically load web components
+    useWebComponents()
 
     // Forward ref
     useEffect(() => {

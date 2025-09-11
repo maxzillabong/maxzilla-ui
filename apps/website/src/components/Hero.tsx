@@ -1,10 +1,22 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, Download, Sparkles, Zap, Code, Palette } from 'lucide-react'
 import Link from 'next/link'
+import { Button } from '@maxzilla/ui-react'
 
 export function Hero() {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return null
+  }
+
   return (
     <section className="relative pt-32 pb-20 px-4 overflow-hidden">
       {/* Background Effects */}
@@ -92,24 +104,25 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
         >
-          <Link 
-            href="/docs/installation"
-            className="group inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-xl animate-glow"
+          <Button 
+            variant="primary"
+            size="lg"
+            onClick={() => window.location.href = '/docs/installation'}
+            className="group animate-glow"
           >
             <Download className="w-5 h-5" />
             Get Started
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-          </Link>
+          </Button>
           
-          <Link 
-            href="http://localhost:6007"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-white dark:bg-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-700 text-neutral-900 dark:text-white border-2 border-neutral-200 dark:border-neutral-600 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105"
+          <Button 
+            variant="outline"
+            size="lg"
+            onClick={() => window.open('http://localhost:6007', '_blank', 'noopener,noreferrer')}
           >
             View Components
             <ArrowRight className="w-5 h-5" />
-          </Link>
+          </Button>
         </motion.div>
 
         {/* Quick Install */}

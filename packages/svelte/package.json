@@ -1,0 +1,52 @@
+{
+  "name": "@maxzilla/ui-svelte",
+  "version": "0.1.0",
+  "description": "Svelte wrapper components for Maxzilla UI built with code generation",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "svelte": "dist/index.js",
+  "exports": {
+    ".": {
+      "svelte": "./dist/index.js",
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "npm run generate && svelte-package",
+    "generate": "node scripts/generate-wrappers.js",
+    "dev": "npm run generate && svelte-package --watch",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "svelte",
+    "web-components",
+    "ui-components", 
+    "design-system",
+    "aceternity",
+    "maxzilla-ui",
+    "wrapper-components"
+  ],
+  "author": "Max Vananen <m.f.vananen@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "svelte": "^4.2.0"
+  },
+  "devDependencies": {
+    "@sveltejs/package": "^2.3.0",
+    "svelte-check": "^3.8.0",
+    "typescript": "^5.5.4"
+  },
+  "peerDependencies": {
+    "@maxzilla/ui-core": "^0.1.0",
+    "svelte": "^4.0.0"
+  }
+}

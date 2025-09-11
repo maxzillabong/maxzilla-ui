@@ -3,7 +3,13 @@
   "version": "0.1.0",
   "description": "A modern web components library with Aceternity-inspired design, built on Lit Element",
   "type": "module",
-  "keywords": ["web-components", "lit-element", "ui-library", "design-system", "aceternity"],
+  "keywords": [
+    "web-components",
+    "lit-element",
+    "ui-library",
+    "design-system",
+    "aceternity"
+  ],
   "author": "Max Vananen <m.f.vananen@gmail.com>",
   "license": "MIT",
   "repository": {
@@ -30,5 +36,8 @@
     "@changesets/cli": "^2.27.7",
     "typescript": "^5.5.4",
     "vite": "^5.4.2"
+  },
+  "dependencies": {
+    "@webcomponents/webcomponentsjs": "^2.8.0"
   }
 }
