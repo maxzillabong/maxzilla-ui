@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "apps/website/package.json",
+      "use": "@vercel/next",
+      "config": {
+        "rootDirectory": "apps/website"
+      }
+    }
+  ],
+  "installCommand": "npm install --prefix=../.. && cd ../../packages/core && npm run build && cd ../react && npm run build && cd ../../apps/website && npm install",
+  "buildCommand": "cd apps/website && npm run build",
+  "outputDirectory": "apps/website/out"
+}
