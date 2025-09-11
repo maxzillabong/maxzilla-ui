@@ -45,7 +45,7 @@
     "custom-elements.json"
   ],
   "scripts": {
-    "build": "vite build && npm run build:types",
+    "build": "vite build",
     "build:types": "tsc --project tsconfig.build.json",
     "dev": "vite build --watch",
     "analyze": "cem analyze --litelement",
