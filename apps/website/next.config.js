@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
   trailingSlash: true,
   images: {
     unoptimized: true
@@ -15,14 +16,6 @@ const nextConfig = {
     };
     
     return config;
-  },
-  async rewrites() {
-    return [
-      {
-        source: '/storybook/:path*',
-        destination: 'http://localhost:6007/:path*'
-      }
-    ];
   }
 };
 

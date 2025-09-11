@@ -1,14 +1,15 @@
 {
   "../../../packages/core/dist/index.js -> @webcomponents/webcomponentsjs": {
-    "id": "../../../packages/core/dist/index.js -> @webcomponents/webcomponentsjs",
+    "id": 145,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_webcomponents_webcomponentsjs_webcomponents-bundle_js.js"
+      "static/chunks/145.5895cadc1975001a.js"
     ]
   },
   "../../../packages/react/dist/utils/createReactWrapper.js -> @maxzilla/ui-core": {
-    "id": "../../../packages/react/dist/utils/createReactWrapper.js -> @maxzilla/ui-core",
+    "id": 2440,
     "files": [
-      "static/chunks/_app-pages-browser_packages_core_dist_index_js.js"
+      "static/chunks/429.3e46eb2afe73d98a.js",
+      "static/chunks/440.01662d839d449ad8.js"
     ]
   }
 }

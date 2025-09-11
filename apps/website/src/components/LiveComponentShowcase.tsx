@@ -204,7 +204,7 @@ export function LiveComponentShowcase() {
                 type="email"
                 placeholder="Enter your email"
                 value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
+                onChange={(e) => setInputValue((e.target as HTMLInputElement).value)}
                 helperText="We'll never share your email"
               />
               <Input
@@ -232,7 +232,7 @@ export function LiveComponentShowcase() {
               <Badge variant="error">
                 Error
               </Badge>
-              <Badge variant="info">
+              <Badge variant="primary">
                 Info
               </Badge>
             </div>
