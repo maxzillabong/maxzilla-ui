@@ -35,22 +35,6 @@ jobs:
         with:
           static_site_generator: next
 
-      - name: Install core dependencies
-        working-directory: ./packages/core
-        run: npm install --no-package-lock
-
-      - name: Build core package
-        working-directory: ./packages/core
-        run: npm run build
-
-      - name: Install tokens dependencies
-        working-directory: ./packages/tokens
-        run: npm install --no-package-lock
-
-      - name: Build tokens package
-        working-directory: ./packages/tokens
-        run: npm run build
-
       - name: Install website dependencies
         working-directory: ./apps/website
         run: npm install --no-package-lock
