@@ -24,12 +24,17 @@ jobs:
           node-version: '18'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Install dependencies
+      - name: Install core package dependencies
+        working-directory: ./packages/core
         run: npm install
 
       - name: Build core package
         working-directory: ./packages/core
         run: npm run build
+
+      - name: Install react package dependencies
+        working-directory: ./packages/react
+        run: npm install
 
       - name: Build react package
         working-directory: ./packages/react
