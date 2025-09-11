@@ -2,6 +2,8 @@
 const nextConfig = {
   output: 'export',
   trailingSlash: true,
+  basePath: '/maxzilla-ui',
+  assetPrefix: '/maxzilla-ui',
   images: {
     unoptimized: true
   },
