@@ -32,12 +32,8 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
-
-      - name: Install root dependencies
-        run: npm install
-
-      - name: Build all packages
-        run: npm run build
+        with:
+          static_site_generator: next
 
       - name: Install website dependencies
         working-directory: ./apps/website
