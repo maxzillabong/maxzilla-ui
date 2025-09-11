@@ -35,3 +35,17 @@ jobs:
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Install tokens package dependencies
+        working-directory: ./packages/tokens
+        run: npm install --no-package-lock
+
+      - name: Build tokens package
+        working-directory: ./packages/tokens
+        run: npm run build
+
+      - name: Publish tokens package
+        working-directory: ./packages/tokens
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

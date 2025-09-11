@@ -1,5 +1,5 @@
 {
-  "name": "@maxzilla/ui-tokens",
+  "name": "maxzilla-ui-tokens",
   "version": "0.1.0",
   "description": "Design tokens and theme system for Maxzilla UI",
   "type": "module",
@@ -26,6 +26,9 @@
   "keywords": ["design-tokens", "css-variables", "theme", "maxzilla-ui"],
   "author": "Max Vananen <m.f.vananen@gmail.com>",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "typescript": "^5.5.4",
     "vite": "^5.4.2"
