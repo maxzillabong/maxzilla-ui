@@ -1,6 +1,6 @@
 {
   "name": "maxzilla-ui-react",
-  "version": "0.1.2",
+  "version": "0.1.1",
   "description": "React wrapper components for Maxzilla UI web components",
   "type": "module",
   "main": "dist/index.js",
@@ -34,7 +34,7 @@
     "react-dom": "^18.0.0"
   },
   "dependencies": {
-    "maxzilla-ui-core": "^0.1.0"
+    "maxzilla-ui-core": "^0.1.2"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
