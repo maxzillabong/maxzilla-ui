@@ -6,9 +6,8 @@ export { MzBadge } from './components/badge/index.js';
 export { MzAvatar } from './components/avatar/index.js';
 export { MzModal } from './components/modal/index.js';
 
-// Export styles and utilities
+// Export styles
 export * from './styles/index.js';
-export * from './utils/index.js';
 
 // Export types
 export type * from './types.js';
