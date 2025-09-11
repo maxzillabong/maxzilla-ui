@@ -1,5 +1,5 @@
 {
-  "name": "@maxzilla/ui-core",
+  "name": "maxzilla-ui-core",
   "version": "0.1.0",
   "description": "Core web components library for Maxzilla UI built with Lit Element",
   "type": "module",
