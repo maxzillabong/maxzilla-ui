@@ -141,6 +141,15 @@ const componentDefinitions = {
   ,
   'mz-popover': { props: { placement: "'top'|'bottom'|'left'|'right'", open: 'boolean', hover: 'boolean' }, events: {} },
   'mz-table': { props: {}, events: {} }
+  ,
+  'mz-form': { props: {}, events: { onSubmit: 'submit' } },
+  'mz-form-group': { props: {}, events: {} },
+  'mz-form-actions': { props: {}, events: {} },
+  'mz-pagination': { props: { total: 'number', pageSize: 'number', current: 'number' }, events: { onPageChange: 'page-change' } },
+  'mz-alert': { props: { variant: "'success'|'info'|'warning'|'error'", dismissible: 'boolean' }, events: { onClose: 'close' } },
+  'mz-progress': { props: { value: 'number', max: 'number', label: 'string', showValue: 'boolean' }, events: {} },
+  'mz-loading': { props: { overlay: 'boolean', size: "'sm'|'md'|'lg'" }, events: {} },
+  'mz-toast-container': { props: { duration: 'number' }, events: {} }
 }
 
 function toPascalCase(str) {

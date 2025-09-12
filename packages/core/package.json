@@ -110,6 +110,30 @@
       "import": "./dist/table.js",
       "types": "./dist/table.d.ts"
     },
+    "./form": {
+      "import": "./dist/form.js",
+      "types": "./dist/form.d.ts"
+    },
+    "./pagination": {
+      "import": "./dist/pagination.js",
+      "types": "./dist/pagination.d.ts"
+    },
+    "./alert": {
+      "import": "./dist/alert.js",
+      "types": "./dist/alert.d.ts"
+    },
+    "./progress": {
+      "import": "./dist/progress.js",
+      "types": "./dist/progress.d.ts"
+    },
+    "./loading": {
+      "import": "./dist/loading.js",
+      "types": "./dist/loading.d.ts"
+    },
+    "./toast-container": {
+      "import": "./dist/toastcontainer.js",
+      "types": "./dist/toastcontainer.d.ts"
+    },
     "./styles": {
       "import": "./dist/styles.js",
       "types": "./dist/styles.d.ts"

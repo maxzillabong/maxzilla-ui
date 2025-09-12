@@ -24,6 +24,12 @@ export { MzSidebar } from './components/sidebar/index.js';
 export { MzRow, MzCol } from './components/grid/index.js';
 export { MzPopover } from './components/popover/index.js';
 export { MzTable } from './components/table/index.js';
+export { MzForm, MzFormGroup, MzFormActions } from './components/form/index.js';
+export { MzPagination } from './components/pagination/index.js';
+export { MzAlert } from './components/alert/index.js';
+export { MzProgress } from './components/progress/index.js';
+export { MzLoading } from './components/loading/index.js';
+export { MzToastContainer } from './components/toast-container/index.js';
 
 // Export styles
 export * from './styles/index.js';
