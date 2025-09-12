@@ -83,6 +83,64 @@ const componentDefinitions = {
       onOpen: 'open'
     }
   }
+  ,
+  'mz-accordion': {
+    props: {
+      multiple: 'boolean'
+    },
+    events: {}
+  },
+  'mz-accordion-item': {
+    props: {
+      header: 'string',
+      open: 'boolean'
+    },
+    events: {
+      onToggle: 'accordion-toggle'
+    }
+  }
+  ,
+  'mz-divider': {
+    props: { orientation: "'horizontal' | 'vertical'" },
+    events: {}
+  },
+  'mz-stack': {
+    props: {
+      direction: "'horizontal' | 'vertical'",
+      spacing: "'sm' | 'md' | 'lg'",
+      align: "'start' | 'center' | 'end'",
+      justify: "'start' | 'center' | 'end' | 'between'"
+    },
+    events: {}
+  },
+  'mz-container': {
+    props: { size: "'sm' | 'md' | 'lg' | 'xl'", centered: 'boolean' },
+    events: {}
+  },
+  'mz-checkbox': {
+    props: { checked: 'boolean', disabled: 'boolean', label: 'string' },
+    events: { onChange: 'change' }
+  },
+  'mz-switch': {
+    props: { checked: 'boolean', disabled: 'boolean', label: 'string' },
+    events: { onChange: 'change' }
+  },
+  'mz-textarea': {
+    props: { label: 'string', placeholder: 'string', rows: 'number', value: 'string', disabled: 'boolean', helperText: 'string' },
+    events: { onInput: 'input', onChange: 'change' }
+  }
+  ,
+  'mz-navbar': { props: {}, events: {} },
+  'mz-breadcrumb': { props: {}, events: {} },
+  'mz-breadcrumb-item': { props: { href: 'string', current: 'boolean' }, events: {} },
+  'mz-drawer': { props: { open: 'boolean', placement: "'left' | 'right'", closable: 'boolean' }, events: { onClose: 'drawer-close' } },
+  'mz-radio-group': { props: { name: 'string', value: 'string' }, events: { onChange: 'change' } },
+  'mz-radio': { props: { value: 'string', checked: 'boolean', disabled: 'boolean' }, events: { onSelect: 'radio-select' } },
+  'mz-tabs': { props: { initial: 'number' }, events: {} },
+  'mz-tab': { props: { label: 'string', active: 'boolean' }, events: {} }
+  ,
+  'mz-popover': { props: { placement: "'top'|'bottom'|'left'|'right'", open: 'boolean', hover: 'boolean' }, events: {} },
+  'mz-table': { props: {}, events: {} }
 }
 
 function toPascalCase(str) {

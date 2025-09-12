@@ -32,7 +32,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-neutral-950">
+    <div className="min-h-screen bg-white dark:bg-neutral-950 pb-24 md:pb-32">
       <Header />
 
       {/* Hero Section */}
@@ -158,7 +158,7 @@ function App() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link
-                href="https://github.com/maxvfischer/maxzilla-ui"
+                href="https://github.com/maxzillabong/maxzilla-ui"
                 className="inline-flex items-center gap-2 bg-neutral-900 dark:bg-white hover:bg-neutral-800 dark:hover:bg-neutral-100 text-white dark:text-neutral-900 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
               >
                 <Github className="w-5 h-5" />

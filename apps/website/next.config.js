@@ -1,9 +1,11 @@
 /** @type {import('next').NextConfig} */
+const isProd = process.env.NODE_ENV === 'production'
+
 const nextConfig = {
   output: 'export',
   trailingSlash: true,
-  basePath: '/maxzilla-ui',
-  assetPrefix: '/maxzilla-ui',
+  basePath: isProd ? '/maxzilla-ui' : '',
+  assetPrefix: isProd ? '/maxzilla-ui' : '',
   images: {
     unoptimized: true
   },

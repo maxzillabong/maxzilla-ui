@@ -96,6 +96,18 @@ export default function RootLayout({
                   (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
                 document.documentElement.setAttribute('data-theme', theme);
                 
+                // Update Tailwind dark mode class
+                if (theme === 'dark') {
+                  document.documentElement.classList.add('dark');
+                } else {
+                  document.documentElement.classList.remove('dark');
+                }
+                
+                // Sync with web components theme system
+                localStorage.setItem('mz-theme', theme);
+                document.documentElement.classList.remove('mz-theme-light', 'mz-theme-dark');
+                document.documentElement.classList.add('mz-theme-' + theme);
+                
                 // Load Web Components polyfill if needed
                 if (!('customElements' in window)) {
                   const script = document.createElement('script');
@@ -108,7 +120,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 antialiased">
-        {children}
+        <div className="site-wrapper">{children}</div>
 
         {/* Web Components loader */}
         <script

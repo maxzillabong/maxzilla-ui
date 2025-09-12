@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, Download, Sparkles, Zap, Code, Palette } from 'lucide-react'
 import { Button } from 'maxzilla-ui-react'
+import packageJson from '../../package.json'
 
 export function Hero() {
   const [mounted, setMounted] = useState(false)
@@ -36,7 +37,7 @@ export function Hero() {
           className="inline-flex items-center gap-2 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 px-4 py-2 rounded-full text-sm font-medium mb-8 border border-primary-200 dark:border-primary-800"
         >
           <Sparkles className="w-4 h-4 animate-pulse" />
-          Introducing Maxzilla UI v0.1.0
+          Introducing Maxzilla UI v{packageJson.version}
         </motion.div>
 
         {/* Main Heading */}

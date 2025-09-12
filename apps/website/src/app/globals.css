@@ -159,3 +159,47 @@ mz-button, mz-card, mz-input, mz-badge, mz-avatar, mz-modal {
     background-image: url("data:image/svg+xml,%3csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='none' fill-rule='evenodd'%3e%3cg fill='%23374151' fill-opacity='0.1'%3e%3ccircle cx='30' cy='30' r='4'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e");
   }
 }
+
+/* Mobile menu push content aside */
+.site-wrapper {
+  transition: transform 0.3s ease-in-out;
+}
+
+body.menu-open .site-wrapper {
+  transform: translateX(-320px); /* matches w-80 sidebar */
+}
+
+/* Mobile menu positioning */
+.mobile-menu-slide {
+  box-shadow: 
+    -4px 0 15px rgba(0, 0, 0, 0.1),
+    -2px 0 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Dark mode menu styles */
+@media (prefers-color-scheme: dark) {
+  .mobile-menu-slide {
+    box-shadow: 
+      -4px 0 15px rgba(0, 0, 0, 0.3),
+      -2px 0 8px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* Prevent body scroll when menu is open */
+body.menu-open {
+  overflow: hidden;
+}
+
+/* Floating animations for menu items */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}

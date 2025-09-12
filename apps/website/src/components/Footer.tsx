@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { Github, BookOpen, ExternalLink, Heart, Mail, Globe } from 'lucide-react'
 import Link from 'next/link'
+import packageJson from '../../package.json'
 
 const footerLinks = {
   Product: [
@@ -18,15 +19,15 @@ const footerLinks = {
     { label: 'Accessibility', href: '/docs/accessibility' }
   ],
   Community: [
-    { label: 'GitHub', href: 'https://github.com/maxvfischer/maxzilla-ui', external: true },
-    { label: 'Issues', href: 'https://github.com/maxvfischer/maxzilla-ui/issues', external: true },
-    { label: 'Discussions', href: 'https://github.com/maxvfischer/maxzilla-ui/discussions', external: true },
+    { label: 'GitHub', href: 'https://github.com/maxzillabong/maxzilla-ui', external: true },
+    { label: 'Issues', href: 'https://github.com/maxzillabong/maxzilla-ui/issues', external: true },
+    { label: 'Discussions', href: 'https://github.com/maxzillabong/maxzilla-ui/discussions', external: true },
     { label: 'Contributing', href: '/docs/contributing' }
   ],
   Legal: [
     { label: 'Privacy Policy', href: '/privacy' },
     { label: 'Terms of Service', href: '/terms' },
-    { label: 'License', href: 'https://github.com/maxvfischer/maxzilla-ui/blob/main/LICENSE', external: true },
+    { label: 'License', href: 'https://github.com/maxzillabong/maxzilla-ui/blob/main/LICENSE', external: true },
     { label: 'Code of Conduct', href: '/code-of-conduct' }
   ]
 }
@@ -55,7 +56,7 @@ export function Footer() {
                 </div>
                 <div>
                   <div className="text-2xl font-bold text-gradient">Maxzilla UI</div>
-                  <div className="text-sm text-neutral-400 -mt-1">v0.1.0</div>
+                  <div className="text-sm text-neutral-400 -mt-1">v{packageJson.version}</div>
                 </div>
               </Link>
 
@@ -68,7 +69,7 @@ export function Footer() {
               {/* Social Links */}
               <div className="flex items-center gap-4">
                 <Link
-                  href="https://github.com/maxvfischer/maxzilla-ui"
+                  href="https://github.com/maxzillabong/maxzilla-ui"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition-colors duration-200 group"

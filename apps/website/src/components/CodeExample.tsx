@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Copy, Check } from 'lucide-react'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 interface CodeExampleProps {
   title: string
@@ -24,23 +26,16 @@ export function CodeExample({ title, language, code, className = '' }: CodeExamp
     }
   }
 
-  // Simple syntax highlighting for demonstration
-  const highlightCode = (code: string, language: string) => {
-    if (language === 'html') {
-      return code
-        .replace(/(&lt;[^&]*&gt;)/g, '<span class="text-blue-400">$1</span>')
-        .replace(/(\/\*.*?\*\/)/g, '<span class="text-green-400">$1</span>')
+  // Map language names for syntax highlighter
+  const getLanguage = (lang: string) => {
+    switch (lang.toLowerCase()) {
+      case 'tsx':
+        return 'typescript'
+      case 'jsx':
+        return 'javascript'
+      default:
+        return lang.toLowerCase()
     }
-    
-    if (language === 'tsx' || language === 'javascript') {
-      return code
-        .replace(/(import|export|function|const|let|var|return|from)/g, '<span class="text-purple-400">$1</span>')
-        .replace(/('.*?'|".*?")/g, '<span class="text-green-400">$1</span>')
-        .replace(/(\/\/.*)/g, '<span class="text-gray-500">$1</span>')
-        .replace(/(\{|\}|\(|\)|\[|\])/g, '<span class="text-yellow-400">$1</span>')
-    }
-
-    return code
   }
 
   return (
@@ -85,14 +80,21 @@ export function CodeExample({ title, language, code, className = '' }: CodeExamp
 
       {/* Code Content */}
       <div className="relative">
-        <div className="bg-neutral-900 dark:bg-neutral-950 p-6 overflow-x-auto">
-          <pre className="text-sm text-neutral-300 font-mono leading-relaxed">
-            <code 
-              dangerouslySetInnerHTML={{ 
-                __html: highlightCode(code, language) 
-              }} 
-            />
-          </pre>
+        <div className="overflow-x-auto">
+          <SyntaxHighlighter
+            language={getLanguage(language)}
+            style={oneDark}
+            customStyle={{
+              margin: 0,
+              padding: '1.5rem',
+              fontSize: '0.875rem',
+              lineHeight: '1.5',
+              background: 'rgb(23, 23, 23)', // neutral-900
+            }}
+            wrapLongLines={false}
+          >
+            {code}
+          </SyntaxHighlighter>
         </div>
 
         {/* Language Badge */}

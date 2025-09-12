@@ -12,7 +12,8 @@
   },
   "homepage": "https://ui.maxzilla.nl",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "apps/*"
   ],
   "scripts": {
     "dev": "npm run dev --workspaces --if-present",
@@ -26,9 +27,18 @@
     "clean": "rm -rf packages/*/dist packages/*/node_modules node_modules",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "npm run build && changeset publish"
+    "release": "npm run build && changeset publish",
+    "build:core": "npm run build -w maxzilla-ui-core",
+    "build:react": "npm run build -w maxzilla-ui-react",
+    "build:website": "npm run build -w @maxzilla/ui-website",
+    "build:all": "npm run build:core && npm run build:react && npm run build:website",
+    "dev:core": "npm run dev -w maxzilla-ui-core",
+    "dev:react": "npm run dev -w maxzilla-ui-react",
+    "dev:website": "npm run dev -w @maxzilla/ui-website",
+    "dev:all": "concurrently -n core,react,site -c cyan,magenta,green \"npm:dev:core\" \"npm:dev:react\" \"npm:dev:website\""
   },
   "devDependencies": {
+    "concurrently": "^9.0.0",
     "@changesets/cli": "^2.27.7",
     "typescript": "^5.5.4",
     "vite": "^5.4.2"
