@@ -9,12 +9,17 @@ export class MzToastContainer extends LitElement {
   static styles = [
     baseStyles,
     css`
-      :host{position:fixed;right:1rem;top:1rem;display:block;z-index:50}
+      :host{position:fixed;display:block;z-index:50}
+      :host([position="top-right"]){right:1rem;top:1rem}
+      :host([position="top-left"]){left:1rem;top:1rem}
+      :host([position="bottom-right"]){right:1rem;bottom:1rem}
+      :host([position="bottom-left"]){left:1rem;bottom:1rem}
       .item{margin-bottom:.5rem}
     `
   ]
   @state() private _items: ToastItem[] = []
   @property({type:Number}) duration = 2500
+  @property({type:String, reflect:true}) position: 'top-left'|'top-right'|'bottom-left'|'bottom-right' = 'top-right'
 
   public show(message: string, variant: ToastItem['variant'] = 'info', duration = this.duration){
     const id = Date.now()+Math.random()
@@ -28,4 +33,3 @@ export class MzToastContainer extends LitElement {
 }
 
 declare global { interface HTMLElementTagNameMap { 'mz-toast-container': MzToastContainer } }
-

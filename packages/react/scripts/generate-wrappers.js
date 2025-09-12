@@ -150,6 +150,10 @@ const componentDefinitions = {
   'mz-progress': { props: { value: 'number', max: 'number', label: 'string', showValue: 'boolean' }, events: {} },
   'mz-loading': { props: { overlay: 'boolean', size: "'sm'|'md'|'lg'" }, events: {} },
   'mz-toast-container': { props: { duration: 'number' }, events: {} }
+  ,
+  'mz-tree': { props: {}, events: {} },
+  'mz-tree-node': { props: { label: 'string', expandable: 'boolean' }, events: {} },
+  'mz-date-picker': { props: { label: 'string', value: 'string' }, events: { onChange: 'change' } }
 }
 
 function toPascalCase(str) {

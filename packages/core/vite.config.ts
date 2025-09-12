@@ -37,6 +37,8 @@ export default defineConfig({
         progress: resolve(__dirname, 'src/components/progress/index.ts'),
         loading: resolve(__dirname, 'src/components/loading/index.ts'),
         toastcontainer: resolve(__dirname, 'src/components/toast-container/index.ts'),
+        tree: resolve(__dirname, 'src/components/tree/index.ts'),
+        datepicker: resolve(__dirname, 'src/components/datepicker/index.ts'),
         styles: resolve(__dirname, 'src/styles/index.ts'),
       },
       formats: ['es'],

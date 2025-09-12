@@ -28,6 +28,7 @@ export class MzPopover extends LitElement {
     return html`
       <span ...=${(triggerHandlers as any)}><slot name="trigger"></slot></span>
       <div class="panel ${this.open?'open':''}" style=${style} role="dialog" @mouseleave=${this.hover?this._close:undefined}>
+        <div style="position:absolute;width:.5rem;height:.5rem;background:var(--mz-color-neutral-0);transform:rotate(45deg);${pos==='top'?'top:100%;left:50%;margin-left:-.25rem':'display:none'}"></div>
         <slot></slot>
       </div>
     `
@@ -35,4 +36,3 @@ export class MzPopover extends LitElement {
 }
 
 declare global { interface HTMLElementTagNameMap { 'mz-popover': MzPopover } }
-

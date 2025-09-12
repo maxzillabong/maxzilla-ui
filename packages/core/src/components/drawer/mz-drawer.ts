@@ -32,19 +32,29 @@ export class MzDrawer extends LitElement {
     super.disconnectedCallback()
     window.removeEventListener('keydown', this._onKey)
   }
+  firstUpdated(){ if(this.open) this._focusFirst() }
   private _onKey(e: KeyboardEvent) { if (this.open && this.closable && e.key === 'Escape') this.close() }
+  private _onTrap(e: KeyboardEvent){
+    if(!this.open || e.key!=='Tab') return
+    const focusables = this.renderRoot.querySelectorAll<HTMLElement>('[tabindex],button,a,input,select,textarea')
+    if(focusables.length===0) return
+    const first = focusables[0]; const last = focusables[focusables.length-1]
+    const active = this.renderRoot.activeElement as HTMLElement
+    if(e.shiftKey && active===first){ e.preventDefault(); last.focus() }
+    else if(!e.shiftKey && active===last){ e.preventDefault(); first.focus() }
+  }
+  private _focusFirst(){ const el = this.renderRoot.querySelector<HTMLElement>('[tabindex],button,a,input,select,textarea'); el?.focus() }
   private close() { this.open = false; this.dispatchEvent(new CustomEvent('drawer-close', { bubbles: true })) }
 
   render() {
     const side = this.placement === 'left' ? 'left' : 'right'
     return html`
       <div class="scrim ${this.open ? 'open' : ''}" @click=${() => this.closable && this.close()}></div>
-      <aside class="panel ${side} ${this.open ? 'open' : ''}" role="dialog" aria-modal="true">
-        <div class="inner"><slot></slot></div>
+      <aside class="panel ${side} ${this.open ? 'open' : ''}" role="dialog" aria-modal="true" @keydown=${this._onTrap}>
+        <div class="inner" tabindex="0"><slot></slot></div>
       </aside>
     `
   }
 }
 
 declare global { interface HTMLElementTagNameMap { 'mz-drawer': MzDrawer } }
-

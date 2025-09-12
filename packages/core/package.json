@@ -134,6 +134,14 @@
       "import": "./dist/toastcontainer.js",
       "types": "./dist/toastcontainer.d.ts"
     },
+    "./tree": {
+      "import": "./dist/tree.js",
+      "types": "./dist/tree.d.ts"
+    },
+    "./datepicker": {
+      "import": "./dist/datepicker.js",
+      "types": "./dist/datepicker.d.ts"
+    },
     "./styles": {
       "import": "./dist/styles.js",
       "types": "./dist/styles.d.ts"

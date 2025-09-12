@@ -9,6 +9,7 @@ export class MzTooltip extends LitElement {
     css`
       :host{position:relative;display:inline-block}
       .tip{position:absolute;z-index:10;background:var(--mz-color-neutral-900);color:var(--mz-color-neutral-0);font-size:var(--mz-text-xs);padding:.35rem .5rem;border-radius:.375rem;white-space:nowrap;opacity:0;transform:translateY(4px);transition:opacity var(--mz-transition-normal), transform var(--mz-transition-normal)}
+      .tip::after{content:'';position:absolute;width:.5rem;height:.5rem;background:var(--mz-color-neutral-900);transform:rotate(45deg)}
       :host([data-open="true"]) .tip{opacity:1;transform:translateY(0)}
     `
   ]
@@ -28,4 +29,3 @@ export class MzTooltip extends LitElement {
 }
 
 declare global { interface HTMLElementTagNameMap { 'mz-tooltip': MzTooltip } }
-

@@ -30,6 +30,8 @@ export { MzAlert } from './components/alert/index.js';
 export { MzProgress } from './components/progress/index.js';
 export { MzLoading } from './components/loading/index.js';
 export { MzToastContainer } from './components/toast-container/index.js';
+export { MzTree, MzTreeNode } from './components/tree/index.js';
+export { MzDatePicker } from './components/datepicker/index.js';
 
 // Export styles
 export * from './styles/index.js';
