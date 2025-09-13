@@ -9,12 +9,35 @@ export class MzToastContainer extends LitElement {
   static styles = [
     baseStyles,
     css`
-      :host{position:fixed;display:block;z-index:50}
-      :host([position="top-right"]){right:1rem;top:1rem}
-      :host([position="top-left"]){left:1rem;top:1rem}
-      :host([position="bottom-right"]){right:1rem;bottom:1rem}
-      :host([position="bottom-left"]){left:1rem;bottom:1rem}
-      .item{margin-bottom:.5rem}
+      :host {
+        position: fixed;
+        display: block;
+        z-index: 50;
+      }
+
+      :host([position="top-right"]) {
+        right: var(--mz-space-4); /* 1rem */
+        top: var(--mz-space-4); /* 1rem */
+      }
+
+      :host([position="top-left"]) {
+        left: var(--mz-space-4); /* 1rem */
+        top: var(--mz-space-4); /* 1rem */
+      }
+
+      :host([position="bottom-right"]) {
+        right: var(--mz-space-4); /* 1rem */
+        bottom: var(--mz-space-4); /* 1rem */
+      }
+
+      :host([position="bottom-left"]) {
+        left: var(--mz-space-4); /* 1rem */
+        bottom: var(--mz-space-4); /* 1rem */
+      }
+
+      .item {
+        margin-bottom: var(--mz-space-2); /* 0.5rem */
+      }
     `
   ]
   @state() private _items: ToastItem[] = []

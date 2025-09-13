@@ -4,8 +4,27 @@ import { baseStyles } from '../../styles/base.js'
 
 @customElement('mz-form-group')
 export class MzFormGroup extends LitElement {
-  static styles = [baseStyles, css`:host{display:grid;grid-template-columns:1fr;gap:var(--mz-space-4)}@media(min-width:768px){:host{grid-template-columns:repeat(2,minmax(0,1fr))}}`]
-  render(){ return html`<slot></slot>` }
+  static styles = [
+    baseStyles,
+    css`
+      :host {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--mz-space-4); /* 1rem - standard form field spacing */
+      }
+
+      /* Responsive grid - 2 columns on tablet+ */
+      @media (min-width: 768px) {
+        :host {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+    `
+  ]
+
+  render() {
+    return html`<slot></slot>`
+  }
 }
 
 declare global { interface HTMLElementTagNameMap { 'mz-form-group': MzFormGroup } }

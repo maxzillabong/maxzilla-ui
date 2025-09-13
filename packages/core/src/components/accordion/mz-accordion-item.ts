@@ -9,17 +9,17 @@ export class MzAccordionItem extends LitElement {
     baseStyles,
     css`
       :host { display: block; color: var(--mz-color-neutral-900); }
-      .item { border-bottom: 1px solid var(--mz-color-neutral-200); }
+      .item { border-bottom: var(--mz-space-px) solid var(--mz-color-neutral-200); } /* 1px */
       .header {
         display: flex; align-items: center; justify-content: space-between;
-        width: 100%; background: transparent; border: 0; cursor: pointer;
-        padding: var(--mz-space-4); font-weight: 600; text-align: left; color: inherit;
+        width: 100%; background: transparent; border: var(--mz-space-0); cursor: pointer; /* 0 */
+        padding: var(--mz-space-4); font-weight: var(--mz-font-semibold); text-align: left; color: inherit; /* 600 */
       }
       .header:hover { background: var(--mz-color-neutral-50); }
       .chevron { transition: transform var(--mz-transition-normal); color: currentColor; }
       .chevron.open { transform: rotate(90deg); }
       .panel { overflow: hidden; transition: height var(--mz-transition-normal); }
-      .panel-inner { padding: 0 var(--mz-space-4) var(--mz-space-4); }
+      .panel-inner { padding: var(--mz-space-0) var(--mz-space-4) var(--mz-space-4); } /* 0 var(--mz-space-4) var(--mz-space-4) */
     `
   ]
 

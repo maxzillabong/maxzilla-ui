@@ -11,13 +11,13 @@ export class MzModal extends LitElement {
     animationStyles,
     css`
       :host {
-        --modal-backdrop: rgba(0, 0, 0, 0.5);
+        --modal-backdrop: rgba(0, 0, 0, 0.6);
         --modal-background: var(--mz-color-neutral-0);
-        --modal-border-radius: var(--mz-radius-xl);
-        --modal-shadow: var(--mz-shadow-xl);
-        --modal-max-width: 32rem;
+        --modal-border-radius: var(--mz-radius-3xl);
+        --modal-shadow: var(--mz-shadow-2xl);
+        --modal-max-width: var(--mz-space-128); /* 32rem */
         --modal-max-height: 80vh;
-        --modal-padding: var(--mz-space-6);
+        --modal-padding: var(--mz-space-8);
       }
 
       :host([open]) {
@@ -56,7 +56,8 @@ export class MzModal extends LitElement {
         right: 0;
         bottom: 0;
         background: var(--modal-backdrop);
-        backdrop-filter: blur(4px);
+        backdrop-filter: blur(12px) saturate(150%);
+        transition: all var(--mz-transition-slow);
       }
 
       .modal-content {
@@ -66,10 +67,11 @@ export class MzModal extends LitElement {
         width: 100%;
         background: var(--modal-background);
         border-radius: var(--modal-border-radius);
-        box-shadow: var(--modal-shadow);
+        box-shadow: var(--modal-shadow), 0 0 80px rgba(6, 182, 212, 0.1);
         overflow: hidden;
-        transform: scale(0.9) translateY(20px);
+        transform: scale(0.8) translateY(var(--mz-space-10));
         transition: all var(--mz-transition-spring);
+        border: 1px solid var(--mz-color-neutral-200);
       }
 
       .modal--open .modal-content {
@@ -81,43 +83,47 @@ export class MzModal extends LitElement {
         align-items: center;
         justify-content: space-between;
         padding: var(--modal-padding);
-        border-bottom: 1px solid var(--mz-color-neutral-200);
+        border-bottom: 2px solid var(--mz-color-neutral-100);
+        background: linear-gradient(to bottom, var(--mz-color-neutral-50), transparent);
       }
 
       .modal-title {
-        font-size: var(--mz-text-lg);
-        font-weight: 600;
+        font-size: var(--mz-text-xl);
+        font-weight: var(--mz-font-bold);
+        letter-spacing: var(--mz-tracking-tight);
         margin: 0;
+        color: var(--mz-color-neutral-900);
       }
 
       .modal-close {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 2rem;
-        height: 2rem;
+        width: var(--mz-space-10); /* 2.5rem */
+        height: var(--mz-space-10); /* 2.5rem */
         border: none;
-        background: transparent;
-        border-radius: var(--mz-radius-md);
+        background: var(--mz-color-neutral-100);
+        border-radius: var(--mz-radius-full);
         cursor: pointer;
-        color: var(--mz-color-neutral-500);
+        color: var(--mz-color-neutral-600);
         transition: var(--mz-transition-normal);
       }
 
       .modal-close:hover {
-        background: var(--mz-color-neutral-100);
-        color: var(--mz-color-neutral-700);
+        background: var(--mz-color-neutral-200);
+        color: var(--mz-color-neutral-800);
+        transform: rotate(90deg) scale(1.1);
       }
 
       .modal-close:focus-visible {
         outline: 2px solid var(--mz-color-primary-500);
-        outline-offset: 2px;
+        outline-offset: var(--mz-space-0-5);
       }
 
       .modal-body {
         padding: var(--modal-padding);
         overflow-y: auto;
-        max-height: calc(var(--modal-max-height) - 8rem);
+        max-height: calc(var(--modal-max-height) - var(--mz-space-32));
       }
 
       .modal-footer {
@@ -125,26 +131,26 @@ export class MzModal extends LitElement {
         gap: var(--mz-space-3);
         justify-content: flex-end;
         padding: var(--modal-padding);
-        border-top: 1px solid var(--mz-color-neutral-200);
-        background: var(--mz-color-neutral-50);
+        border-top: 2px solid var(--mz-color-neutral-100);
+        background: linear-gradient(to top, var(--mz-color-neutral-50), transparent);
       }
 
       /* Size variants */
       :host([size='sm']) {
-        --modal-max-width: 24rem;
+        --modal-max-width: var(--mz-space-96); /* 24rem */
       }
 
       :host([size='lg']) {
-        --modal-max-width: 48rem;
+        --modal-max-width: var(--mz-space-192); /* 48rem */
       }
 
       :host([size='xl']) {
-        --modal-max-width: 64rem;
+        --modal-max-width: var(--mz-space-256); /* 64rem */
       }
 
       :host([size='full']) {
-        --modal-max-width: calc(100vw - 2rem);
-        --modal-max-height: calc(100vh - 2rem);
+        --modal-max-width: calc(100vw - var(--mz-space-8));
+        --modal-max-height: calc(100vh - var(--mz-space-8));
       }
 
       /* Animation variants */

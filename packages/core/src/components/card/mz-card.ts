@@ -16,12 +16,12 @@ export class MzCard extends LitElement {
       :host {
         display: block;
         position: relative;
-        --card-background: var(--mz-color-neutral-0);
-        --card-border: 1px solid var(--mz-color-neutral-200);
-        --card-border-radius: var(--mz-radius-lg);
-        --card-padding: var(--mz-space-6);
-        --card-shadow: var(--mz-shadow-sm);
-        --card-transition: all var(--mz-transition-normal);
+        --card-background: rgba(255, 255, 255, 0.95);
+        --card-border: 2px solid var(--mz-color-neutral-200);
+        --card-border-radius: var(--mz-radius-3xl);
+        --card-padding: var(--mz-space-10); /* 2.5rem */
+        --card-shadow: var(--mz-shadow-md);
+        --card-transition: all var(--mz-transition-spring);
       }
 
       .card {
@@ -34,6 +34,7 @@ export class MzCard extends LitElement {
         transition: var(--card-transition);
         position: relative;
         overflow: hidden;
+        backdrop-filter: blur(20px) saturate(150%);
       }
 
       /* Elevation variants */
@@ -59,13 +60,15 @@ export class MzCard extends LitElement {
 
       /* Card variants */
       .card--outlined {
-        --card-border: 1px solid var(--mz-color-neutral-300);
+        --card-border: 2px solid var(--mz-color-primary-200);
         --card-shadow: none;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(6, 182, 212, 0.02));
       }
 
       .card--elevated {
         --card-border: none;
-        --card-shadow: var(--mz-shadow-lg);
+        --card-shadow: var(--mz-shadow-xl), 0 20px 40px -10px rgba(6, 182, 212, 0.1);
+        background: linear-gradient(135deg, var(--mz-color-neutral-0), rgba(255, 255, 255, 0.95));
       }
 
       .card--interactive {
@@ -74,9 +77,9 @@ export class MzCard extends LitElement {
       }
 
       .card--interactive:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--mz-shadow-xl);
-        border-color: var(--mz-color-primary-300);
+        transform: translateY(calc(-1 * var(--mz-space-1))) scale(1.02);
+        box-shadow: var(--mz-shadow-2xl), 0 20px 60px -15px rgba(6, 182, 212, 0.25);
+        border-color: var(--mz-color-primary-400);
       }
 
       .card--interactive::before {
@@ -102,29 +105,28 @@ export class MzCard extends LitElement {
       }
 
       .card--interactive:active {
-        transform: translateY(-1px);
+        transform: translateY(calc(-1 * var(--mz-space-px)));
       }
 
-      /* Hover glow effect */
-      .card--interactive:hover {
-        box-shadow: var(--mz-shadow-xl), 0 0 30px rgba(6, 182, 212, 0.15);
-      }
+      /* Hover glow effect - removed duplicate, already defined above */
 
       /* Header slot */
       ::slotted([slot='header']) {
-        margin: calc(-1 * var(--card-padding)) calc(-1 * var(--card-padding)) var(--mz-space-4) calc(-1 * var(--card-padding));
-        padding: var(--mz-space-4) var(--card-padding);
-        border-bottom: 1px solid var(--mz-color-neutral-200);
-        font-weight: 600;
-        font-size: var(--mz-text-lg);
+        margin: calc(-1 * var(--card-padding)) calc(-1 * var(--card-padding)) var(--mz-space-6) calc(-1 * var(--card-padding));
+        padding: var(--mz-space-6) var(--card-padding);
+        border-bottom: 2px solid var(--mz-color-neutral-100);
+        font-weight: var(--mz-font-bold);
+        font-size: var(--mz-text-xl);
+        letter-spacing: var(--mz-tracking-tight);
+        background: linear-gradient(to bottom, rgba(6, 182, 212, 0.03), transparent);
       }
 
       /* Footer slot */
       ::slotted([slot='footer']) {
-        margin: var(--mz-space-4) calc(-1 * var(--card-padding)) calc(-1 * var(--card-padding)) calc(-1 * var(--card-padding));
-        padding: var(--mz-space-4) var(--card-padding);
-        border-top: 1px solid var(--mz-color-neutral-200);
-        background: var(--mz-color-neutral-50);
+        margin: var(--mz-space-6) calc(-1 * var(--card-padding)) calc(-1 * var(--card-padding)) calc(-1 * var(--card-padding));
+        padding: var(--mz-space-6) var(--card-padding);
+        border-top: 2px solid var(--mz-color-neutral-100);
+        background: linear-gradient(to top, rgba(6, 182, 212, 0.02), transparent);
       }
 
       /* Image slot */
@@ -136,15 +138,85 @@ export class MzCard extends LitElement {
 
       /* Actions slot */
       ::slotted([slot='actions']) {
-        margin-top: var(--mz-space-4);
+        margin-top: var(--mz-space-6);
         display: flex;
-        gap: var(--mz-space-2);
+        gap: var(--mz-space-3);
         align-items: center;
+        flex-wrap: wrap;
+      }
+
+      /* Avatar slot */
+      .card-avatar {
+        position: absolute;
+        top: var(--mz-space-6);
+        right: var(--mz-space-6);
+        z-index: 10;
+      }
+
+      ::slotted([slot='avatar']) {
+        width: var(--mz-space-14); /* 3.5rem */
+        height: var(--mz-space-14); /* 3.5rem */
+        border-radius: var(--mz-radius-full);
+        border: 3px solid var(--mz-color-neutral-0);
+        box-shadow: var(--mz-shadow-lg);
+      }
+
+      /* Icon slot */
+      .card-icon {
+        margin-bottom: var(--mz-space-4);
+        width: var(--mz-space-12); /* 3rem */
+        height: var(--mz-space-12); /* 3rem */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, var(--mz-color-primary-100), var(--mz-color-primary-200));
+        border-radius: var(--mz-radius-xl);
+        color: var(--mz-color-primary-600);
+        font-size: var(--mz-text-2xl);
+        font-weight: var(--mz-font-bold);
+      }
+
+      ::slotted([slot='icon']) {
+        width: var(--mz-space-6); /* 1.5rem */
+        height: var(--mz-space-6); /* 1.5rem */
+      }
+
+      /* Badge slot */
+      .card-badge {
+        position: absolute;
+        top: var(--mz-space-4);
+        left: var(--mz-space-4);
+        z-index: 10;
+      }
+
+      /* Meta slot for additional info */
+      ::slotted([slot='meta']) {
+        display: flex;
+        gap: var(--mz-space-4);
+        margin-top: var(--mz-space-3);
+        padding-top: var(--mz-space-3);
+        border-top: 1px solid var(--mz-color-neutral-100);
+        font-size: var(--mz-text-sm);
+        color: var(--mz-color-neutral-500);
+      }
+
+      /* Tags slot */
+      ::slotted([slot='tags']) {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--mz-space-2);
+        margin-top: var(--mz-space-4);
       }
 
       /* Content spacing */
       .card-content {
         display: block;
+        position: relative;
+      }
+
+      /* Content with avatar padding adjustment */
+      :host([has-avatar]) .card-content {
+        padding-right: var(--mz-space-18); /* 4.5rem */
       }
 
       .card-content::slotted(*:first-child) {
@@ -165,8 +237,8 @@ export class MzCard extends LitElement {
         content: '';
         position: absolute;
         top: 0;
-        left: -200px;
-        width: 200px;
+        left: calc(-1 * var(--mz-space-50)); /* -200px */
+        width: var(--mz-space-50); /* 200px */
         height: 100%;
         background: linear-gradient(
           90deg,
@@ -185,7 +257,8 @@ export class MzCard extends LitElement {
 
       /* Compact padding */
       :host([compact]) {
-        --card-padding: var(--mz-space-4);
+        --card-padding: var(--mz-space-6);
+        --card-border-radius: var(--mz-radius-2xl);
       }
 
       /* Full height */
@@ -214,6 +287,7 @@ export class MzCard extends LitElement {
   @property({ type: Boolean, reflect: true }) disabled = false;
   @property({ type: Boolean, reflect: true }) compact = false;
   @property({ type: Boolean, reflect: true, attribute: 'full-height' }) fullHeight = false;
+  @property({ type: Boolean, reflect: true, attribute: 'has-avatar' }) hasAvatar = false;
 
   private handleClick = (event: MouseEvent) => {
     if (this.disabled || this.loading || !this.interactive) {

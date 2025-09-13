@@ -9,8 +9,16 @@ export class MzDivider extends LitElement {
     css`
       :host { display: block; }
       .divider { border-color: var(--mz-color-neutral-200); }
-      .h { border-top: 1px solid var(--mz-color-neutral-200); width: 100%; }
-      .v { border-left: 1px solid var(--mz-color-neutral-200); height: 100%; }
+      /* Horizontal divider - original: 1px */
+      .h {
+        border-top: var(--mz-space-px) solid var(--mz-color-neutral-200);
+        width: 100%;
+      }
+      /* Vertical divider - original: 1px */
+      .v {
+        border-left: var(--mz-space-px) solid var(--mz-color-neutral-200);
+        height: 100%;
+      }
     `
   ]
 

@@ -7,10 +7,48 @@ export class MzSelect extends LitElement {
   static styles = [
     baseStyles,
     css`
-      :host{display:block;color:var(--mz-color-neutral-900)}
-      label{display:block;font-weight:600;margin-bottom:var(--mz-space-2)}
-      select{width:100%;padding:var(--mz-space-2);border:1px solid var(--mz-color-neutral-300);border-radius:var(--mz-radius-md);background:var(--mz-color-neutral-0);color:inherit}
-      select:focus{outline:2px solid var(--mz-color-primary-500);outline-offset:2px}
+      :host {
+        display: block;
+        color: var(--mz-color-neutral-900);
+      }
+
+      label {
+        display: block;
+        font-weight: var(--mz-font-semibold); /* was: 600 */
+        margin-bottom: var(--mz-space-2);
+        font-size: var(--mz-text-sm); /* was: inherited */
+        line-height: var(--mz-leading-snug); /* was: default */
+        letter-spacing: var(--mz-tracking-normal); /* was: default */
+      }
+
+      select {
+        width: 100%;
+        padding: var(--mz-space-3) var(--mz-space-2); /* was: var(--mz-space-2) */
+        border: var(--mz-space-px) solid var(--mz-color-neutral-300); /* was: 1px solid */
+        border-radius: var(--mz-radius-md);
+        background: var(--mz-color-neutral-0);
+        color: inherit;
+        font-size: var(--mz-text-base); /* was: inherited */
+        line-height: var(--mz-leading-normal); /* was: default */
+        font-family: var(--mz-font-sans); /* was: inherited */
+        transition: var(--mz-transition-fast); /* was: none */
+      }
+
+      select:focus {
+        outline: var(--mz-space-0-5) solid var(--mz-color-primary-500); /* was: 2px solid */
+        outline-offset: var(--mz-space-0-5); /* was: 2px */
+        border-color: var(--mz-color-primary-400); /* was: unchanged */
+      }
+
+      select:hover {
+        border-color: var(--mz-color-neutral-400); /* was: no hover state */
+      }
+
+      select:disabled {
+        background: var(--mz-color-neutral-100); /* was: no disabled state */
+        color: var(--mz-color-neutral-400);
+        cursor: not-allowed;
+      }
     `
   ]
 

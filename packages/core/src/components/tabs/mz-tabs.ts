@@ -7,11 +7,34 @@ export class MzTabs extends LitElement {
   static styles = [
     baseStyles,
     css`
-      :host{display:block;color:var(--mz-color-neutral-900)}
-      .list{display:flex;gap:var(--mz-space-2);border-bottom:1px solid var(--mz-color-neutral-200);}
-      .btn{padding:.5rem .75rem;border-radius:.5rem;cursor:pointer;background:transparent;border:0;color:inherit}
-      .btn[aria-selected="true"]{background:var(--mz-color-neutral-100);font-weight:600}
-      .panels{padding:var(--mz-space-4) 0}
+      :host {
+        display: block;
+        color: var(--mz-color-neutral-900);
+      }
+      .list {
+        display: flex;
+        gap: var(--mz-space-2);
+        border-bottom: var(--mz-space-px) solid var(--mz-color-neutral-200); /* was: 1px solid */
+      }
+      .btn {
+        padding: var(--mz-space-2) var(--mz-space-3); /* was: .5rem .75rem */
+        border-radius: var(--mz-radius-lg); /* was: .5rem */
+        cursor: pointer;
+        background: transparent;
+        border: 0;
+        color: inherit;
+        font-size: var(--mz-text-base);
+        line-height: var(--mz-leading-normal);
+        letter-spacing: var(--mz-tracking-normal);
+        font-weight: var(--mz-font-normal);
+      }
+      .btn[aria-selected="true"] {
+        background: var(--mz-color-neutral-100);
+        font-weight: var(--mz-font-semibold); /* was: 600 */
+      }
+      .panels {
+        padding: var(--mz-space-4) 0;
+      }
     `
   ]
   @state() private _labels: string[] = []

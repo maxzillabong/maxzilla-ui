@@ -8,9 +8,9 @@ export class MzSidebar extends LitElement {
     baseStyles,
     css`
       :host{display:block;background:var(--mz-color-neutral-0);color:var(--mz-color-neutral-900);border-right:1px solid var(--mz-color-neutral-200);}
-      .inner{display:flex;flex-direction:column;gap:var(--mz-space-2);padding:var(--mz-space-4);min-width:14rem}
-      .header{font-weight:700;margin-bottom:var(--mz-space-2)}
-      ::slotted(a){color:inherit;text-decoration:none;padding:.25rem .5rem;border-radius:.375rem}
+      .inner{display:flex;flex-direction:column;gap:var(--mz-space-2);padding:var(--mz-space-4);min-width:var(--mz-space-56)} /* 14rem -> --mz-space-56 */
+      .header{font-weight:var(--mz-font-bold);margin-bottom:var(--mz-space-2)} /* 700 -> --mz-font-bold */
+      ::slotted(a){color:inherit;text-decoration:none;padding:var(--mz-space-1) var(--mz-space-2);border-radius:var(--mz-radius-md)} /* .25rem .5rem -> --mz-space-1 --mz-space-2, .375rem -> --mz-radius-md */
       ::slotted(a:hover){background:var(--mz-color-neutral-100)}
     `
   ]

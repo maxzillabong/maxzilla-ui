@@ -7,11 +7,32 @@ export class MzTable extends LitElement {
   static styles = [
     baseStyles,
     css`
-      :host{display:block}
-      table{width:100%;border-collapse:separate;border-spacing:0}
-      thead th{font-weight:600;text-align:left;color:var(--mz-color-neutral-700);padding:.5rem .75rem;border-bottom:1px solid var(--mz-color-neutral-200)}
-      tbody td{padding:.5rem .75rem;border-bottom:1px solid var(--mz-color-neutral-100)}
-      tbody tr:hover{background:var(--mz-color-neutral-50)}
+      :host {
+        display: block;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+      }
+
+      thead th {
+        font-weight: var(--mz-font-semibold); /* was: 600 */
+        text-align: left;
+        color: var(--mz-color-neutral-700);
+        padding: var(--mz-space-2) var(--mz-space-3); /* was: .5rem .75rem */
+        border-bottom: var(--mz-space-px) solid var(--mz-color-neutral-200); /* was: 1px solid */
+      }
+
+      tbody td {
+        padding: var(--mz-space-2) var(--mz-space-3); /* was: .5rem .75rem */
+        border-bottom: var(--mz-space-px) solid var(--mz-color-neutral-100); /* was: 1px solid */
+      }
+
+      tbody tr:hover {
+        background: var(--mz-color-neutral-50);
+      }
     `
   ]
   render(){

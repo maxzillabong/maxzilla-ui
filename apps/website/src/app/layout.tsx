@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import '@/styles/webcomponents-dark.css'
 
 export const metadata: Metadata = {
   title: 'Maxzilla UI - Modern Web Components Library',

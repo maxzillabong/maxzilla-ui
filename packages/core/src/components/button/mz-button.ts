@@ -14,11 +14,11 @@ export class MzButton extends LitElement {
       :host {
         display: inline-block;
         position: relative;
-        --button-height: 2.5rem;
-        --button-padding-x: 1rem;
-        --button-padding-y: 0.5rem;
+        --button-height: var(--mz-space-11); /* 2.75rem */
+        --button-padding-x: var(--mz-space-5); /* 1.25rem */
+        --button-padding-y: var(--mz-space-2-5); /* 0.625rem */
         --button-font-size: var(--mz-text-sm);
-        --button-border-radius: var(--mz-radius-md);
+        --button-border-radius: var(--mz-radius-xl);
         --button-transition: all var(--mz-transition-normal);
       }
 
@@ -26,15 +26,16 @@ export class MzButton extends LitElement {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 0.5rem;
+        gap: var(--mz-space-2);
         height: var(--button-height);
         padding: var(--button-padding-y) var(--button-padding-x);
         font-family: inherit;
         font-size: var(--button-font-size);
-        font-weight: 500;
+        font-weight: var(--mz-font-semibold);
+        letter-spacing: var(--mz-tracking-wide);
         line-height: 1;
         text-decoration: none;
-        border: 1px solid transparent;
+        border: 2px solid transparent;
         border-radius: var(--button-border-radius);
         cursor: pointer;
         transition: var(--button-transition);
@@ -42,6 +43,7 @@ export class MzButton extends LitElement {
         overflow: hidden;
         user-select: none;
         white-space: nowrap;
+        backdrop-filter: blur(10px);
       }
 
       .button:focus-visible {
@@ -72,78 +74,93 @@ export class MzButton extends LitElement {
 
       /* Size variants */
       :host([size='xs']) {
-        --button-height: 1.75rem;
-        --button-padding-x: 0.5rem;
-        --button-padding-y: 0.25rem;
+        --button-height: var(--mz-space-8); /* 2rem */
+        --button-padding-x: var(--mz-space-3); /* 0.75rem */
+        --button-padding-y: var(--mz-space-1-5); /* 0.375rem */
         --button-font-size: var(--mz-text-xs);
+        --button-border-radius: var(--mz-radius-lg);
       }
 
       :host([size='sm']) {
-        --button-height: 2rem;
-        --button-padding-x: 0.75rem;
-        --button-padding-y: 0.375rem;
+        --button-height: var(--mz-space-9); /* 2.25rem */
+        --button-padding-x: var(--mz-space-4); /* 1rem */
+        --button-padding-y: var(--mz-space-2); /* 0.5rem */
         --button-font-size: var(--mz-text-sm);
       }
 
       :host([size='lg']) {
-        --button-height: 3rem;
-        --button-padding-x: 1.5rem;
-        --button-padding-y: 0.75rem;
+        --button-height: var(--mz-space-13); /* 3.25rem */
+        --button-padding-x: var(--mz-space-7); /* 1.75rem */
+        --button-padding-y: var(--mz-space-3-5); /* 0.875rem */
         --button-font-size: var(--mz-text-base);
+        --button-border-radius: var(--mz-radius-2xl);
       }
 
       :host([size='xl']) {
-        --button-height: 3.5rem;
-        --button-padding-x: 2rem;
-        --button-padding-y: 1rem;
+        --button-height: var(--mz-space-15); /* 3.75rem */
+        --button-padding-x: var(--mz-space-9); /* 2.25rem */
+        --button-padding-y: var(--mz-space-4-5); /* 1.125rem */
         --button-font-size: var(--mz-text-lg);
+        --button-border-radius: var(--mz-radius-2xl);
       }
 
       /* Primary variant */
       .button--primary {
-        background: var(--mz-color-primary-500);
+        background: linear-gradient(135deg, var(--mz-color-primary-500), var(--mz-color-primary-600));
         color: var(--mz-color-neutral-0);
-        border-color: var(--mz-color-primary-500);
-        box-shadow: var(--mz-shadow-sm);
+        border-color: transparent;
+        box-shadow: var(--mz-shadow-md), inset 0 var(--mz-space-px) 0 rgba(255, 255, 255, 0.1);
       }
 
       .button--primary:hover {
-        background: var(--mz-color-primary-600);
-        border-color: var(--mz-color-primary-600);
-        transform: translateY(-1px);
-        box-shadow: var(--mz-shadow-md), var(--mz-shadow-glow);
+        background: linear-gradient(135deg, var(--mz-color-primary-400), var(--mz-color-primary-500));
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: var(--mz-shadow-lg), var(--mz-shadow-primary-glow);
       }
 
       .button--primary:active {
-        transform: translateY(0);
-        box-shadow: var(--mz-shadow-sm);
+        transform: translateY(0) scale(1);
+        box-shadow: var(--mz-shadow-sm), var(--mz-shadow-inner);
       }
 
       /* Secondary variant */
       .button--secondary {
-        background: var(--mz-color-neutral-100);
-        color: var(--mz-color-neutral-700);
-        border-color: var(--mz-color-neutral-200);
+        background: linear-gradient(135deg, var(--mz-color-neutral-100), var(--mz-color-neutral-200));
+        color: var(--mz-color-neutral-800);
+        border-color: var(--mz-color-neutral-300);
+        box-shadow: var(--mz-shadow-sm);
       }
 
       .button--secondary:hover {
-        background: var(--mz-color-neutral-200);
-        border-color: var(--mz-color-neutral-300);
-        transform: translateY(-1px);
-        box-shadow: var(--mz-shadow-sm);
+        background: linear-gradient(135deg, var(--mz-color-neutral-50), var(--mz-color-neutral-100));
+        border-color: var(--mz-color-neutral-400);
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: var(--mz-shadow-md);
+      }
+
+      .button--secondary:active {
+        transform: translateY(0) scale(1);
+        box-shadow: var(--mz-shadow-xs), var(--mz-shadow-inner);
       }
 
       /* Outline variant */
       .button--outline {
-        background: transparent;
+        background: rgba(255, 255, 255, 0.05);
         color: var(--mz-color-primary-600);
-        border-color: var(--mz-color-primary-300);
+        border-color: var(--mz-color-primary-400);
+        box-shadow: var(--mz-shadow-inner);
       }
 
       .button--outline:hover {
-        background: var(--mz-color-primary-50);
-        border-color: var(--mz-color-primary-400);
-        transform: translateY(-1px);
+        background: linear-gradient(135deg, var(--mz-color-primary-50), var(--mz-color-primary-100));
+        border-color: var(--mz-color-primary-500);
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: var(--mz-shadow-sm), 0 0 20px var(--mz-color-primary-200);
+      }
+
+      .button--outline:active {
+        transform: translateY(0) scale(1);
+        box-shadow: var(--mz-shadow-inner);
       }
 
       /* Ghost variant */
@@ -166,7 +183,7 @@ export class MzButton extends LitElement {
       }
 
       .button--destructive:hover {
-        background: hsl(0, 72%, 51%);
+        background: var(--mz-color-error-600);
         transform: translateY(-1px);
         box-shadow: var(--mz-shadow-md);
       }
@@ -180,8 +197,8 @@ export class MzButton extends LitElement {
       .button--loading::after {
         content: '';
         position: absolute;
-        width: 1rem;
-        height: 1rem;
+        width: var(--mz-space-4);
+        height: var(--mz-space-4);
         border: 2px solid currentColor;
         border-radius: 50%;
         border-top-color: transparent;
@@ -220,11 +237,11 @@ export class MzButton extends LitElement {
       }
 
       ::slotted([slot='start']) {
-        margin-right: 0.5rem;
+        margin-right: var(--mz-space-2);
       }
 
       ::slotted([slot='end']) {
-        margin-left: 0.5rem;
+        margin-left: var(--mz-space-2);
       }
     `,
   ];

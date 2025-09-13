@@ -116,7 +116,7 @@ export default function DetailClient({ slug }: { slug: string }) {
                 </div>
               </div>
               {tab === 'preview' ? (
-                <div className="p-6">
+                <div className="p-6 bg-gradient-to-br from-white to-neutral-50 dark:from-neutral-900 dark:to-neutral-950">
                   <s.Preview />
                 </div>
               ) : (

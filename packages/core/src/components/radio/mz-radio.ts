@@ -7,11 +7,40 @@ export class MzRadio extends LitElement {
   static styles = [
     baseStyles,
     css`
-      :host{display:inline-block;color:var(--mz-color-neutral-900)}
-      .root{display:inline-flex;align-items:center;gap:var(--mz-space-2);cursor:pointer}
-      .outer{width:1.1rem;height:1.1rem;border:1px solid var(--mz-color-neutral-300);border-radius:9999px;display:grid;place-items:center;background:var(--mz-color-neutral-0)}
-      .dot{width:.55rem;height:.55rem;border-radius:9999px;background:var(--mz-color-primary-500);transform:scale(0);transition:transform var(--mz-transition-normal)}
-      .checked .dot{transform:scale(1)}
+      :host {
+        display: inline-block;
+        color: var(--mz-color-neutral-900);
+      }
+
+      .root {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--mz-space-2);
+        cursor: pointer;
+      }
+
+      .outer {
+        width: var(--mz-space-4); /* 1.1rem -> 1rem (closest available token) */
+        height: var(--mz-space-4); /* 1.1rem -> 1rem (closest available token) */
+        border: var(--mz-space-px) solid var(--mz-color-neutral-300); /* 1px */
+        border-radius: var(--mz-radius-full); /* 9999px */
+        display: grid;
+        place-items: center;
+        background: var(--mz-color-neutral-0);
+      }
+
+      .dot {
+        width: var(--mz-space-2); /* 0.55rem -> 0.5rem (closest available token) */
+        height: var(--mz-space-2); /* 0.55rem -> 0.5rem (closest available token) */
+        border-radius: var(--mz-radius-full); /* 9999px */
+        background: var(--mz-color-primary-500);
+        transform: scale(0);
+        transition: transform var(--mz-transition-normal);
+      }
+
+      .checked .dot {
+        transform: scale(1);
+      }
     `
   ]
   @property({type:String}) value = ''

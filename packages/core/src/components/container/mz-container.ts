@@ -16,7 +16,16 @@ export class MzContainer extends LitElement {
   @property({ type: Boolean }) centered = false
 
   render() {
-    const max = this.size === 'sm' ? '40rem' : this.size === 'md' ? '48rem' : this.size === 'xl' ? '80rem' : '64rem'
+    // Container size mapping using design tokens
+    // Original values: sm: 40rem, md: 48rem, lg: 64rem, xl: 80rem
+    const max = this.size === 'sm'
+      ? 'var(--mz-container-sm)' // 40rem
+      : this.size === 'md'
+      ? 'var(--mz-container-md)' // 48rem
+      : this.size === 'xl'
+      ? 'var(--mz-container-xl)' // 80rem
+      : 'var(--mz-container-lg)' // 64rem (lg)
+
     const style = `max-width:${max};${this.centered ? 'margin-inline:auto;' : ''}`
     return html`<div class="container" style=${style}><slot></slot></div>`
   }

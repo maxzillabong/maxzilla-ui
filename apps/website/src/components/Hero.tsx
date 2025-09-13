@@ -49,14 +49,16 @@ export function Hero() {
         >
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8">
             <span className="hero-title-line">Build</span>
-            <span className="hero-title-line text-decoration-spacing">
-              <span className="text-gradient">Beautiful</span>
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: '100%' }}
-                transition={{ duration: 1.2, delay: 1, ease: [0.4, 0, 0.2, 1] }}
-                className="absolute bottom-2 left-0 right-0 h-1 md:h-1.5 rounded-full hero-underline"
-              />
+            <span className="hero-title-line">
+              <span className="text-gradient relative inline-block">
+                Beautiful
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: '100%' }}
+                  transition={{ duration: 1.2, delay: 1, ease: [0.4, 0, 0.2, 1] }}
+                  className="absolute -bottom-2 left-0 h-1 md:h-1.5 rounded-full hero-underline"
+                />
+              </span>
             </span>
             <span className="hero-title-line">Interfaces</span>
           </h1>

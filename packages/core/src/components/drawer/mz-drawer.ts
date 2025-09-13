@@ -8,14 +8,47 @@ export class MzDrawer extends LitElement {
     baseStyles,
     css`
       :host { display: contents; }
-      .scrim { position: fixed; inset: 0; background: rgba(0,0,0,.3); opacity: 0; pointer-events: none; transition: opacity var(--mz-transition-normal); }
-      .scrim.open { opacity: 1; pointer-events: auto; }
-      .panel { position: fixed; top: 0; bottom: 0; width: 20rem; background: var(--mz-color-neutral-0); color: var(--mz-color-neutral-900); box-shadow: var(--mz-shadow-lg); transform: translateX(100%); transition: transform var(--mz-transition-normal); }
-      .left { left: 0; transform: translateX(-100%); }
-      .right { right: 0; }
-      .panel.open.right { transform: translateX(0); }
-      .panel.open.left { transform: translateX(0); }
-      .inner { height: 100%; overflow: auto; padding: var(--mz-space-4); }
+      .scrim {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,.3); /* Original: rgba(0,0,0,.3) */
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--mz-transition-normal);
+      }
+      .scrim.open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .panel {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: var(--mz-space-80); /* Original: 20rem */
+        background: var(--mz-color-neutral-0);
+        color: var(--mz-color-neutral-900);
+        box-shadow: var(--mz-shadow-lg);
+        transform: translateX(100%);
+        transition: transform var(--mz-transition-normal);
+      }
+      .left {
+        left: 0;
+        transform: translateX(-100%);
+      }
+      .right {
+        right: 0;
+      }
+      .panel.open.right {
+        transform: translateX(0);
+      }
+      .panel.open.left {
+        transform: translateX(0);
+      }
+      .inner {
+        height: 100%;
+        overflow: auto;
+        padding: var(--mz-space-4);
+      }
     `
   ]
 

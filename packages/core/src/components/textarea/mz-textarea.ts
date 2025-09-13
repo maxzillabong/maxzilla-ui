@@ -8,10 +8,28 @@ export class MzTextarea extends LitElement {
     baseStyles,
     css`
       :host { display: block; color: var(--mz-color-neutral-900); }
-      label { display: block; font-weight: 600; margin-bottom: var(--mz-space-2); }
-      textarea { width: 100%; padding: var(--mz-space-3); border: 1px solid var(--mz-color-neutral-300); border-radius: var(--mz-radius-md); background: var(--mz-color-neutral-0); color: inherit; }
-      textarea:focus { outline: 2px solid var(--mz-color-primary-500); outline-offset: 2px; }
-      .helper { font-size: var(--mz-text-sm); color: var(--mz-color-neutral-500); margin-top: var(--mz-space-2); }
+      label {
+        display: block;
+        font-weight: var(--mz-font-semibold); /* was: 600 */
+        margin-bottom: var(--mz-space-2);
+      }
+      textarea {
+        width: 100%;
+        padding: var(--mz-space-3);
+        border: var(--mz-space-px) solid var(--mz-color-neutral-300); /* border-width was: 1px */
+        border-radius: var(--mz-radius-md);
+        background: var(--mz-color-neutral-0);
+        color: inherit;
+      }
+      textarea:focus {
+        outline: var(--mz-space-2) solid var(--mz-color-primary-500); /* outline-width was: 2px */
+        outline-offset: var(--mz-space-2); /* was: 2px */
+      }
+      .helper {
+        font-size: var(--mz-text-sm);
+        color: var(--mz-color-neutral-500);
+        margin-top: var(--mz-space-2);
+      }
     `
   ]
 

@@ -19,7 +19,15 @@ export class MzStack extends LitElement {
 
   render() {
     const isRow = this.direction === 'horizontal'
-    const gap = this.spacing === 'sm' ? 'var(--mz-space-2)' : this.spacing === 'lg' ? 'var(--mz-space-6)' : 'var(--mz-space-4)'
+
+    // Gap spacing using design tokens
+    // Original values: sm: 0.5rem, md: 1rem, lg: 1.5rem
+    const gap = this.spacing === 'sm'
+      ? 'var(--mz-space-2)' // 0.5rem
+      : this.spacing === 'lg'
+      ? 'var(--mz-space-6)' // 1.5rem
+      : 'var(--mz-space-4)' // 1rem (md)
+
     const alignMap: Record<string, string> = { start: 'flex-start', center: 'center', end: 'flex-end' }
     const justifyMap: Record<string, string> = { start: 'flex-start', center: 'center', end: 'flex-end', between: 'space-between' }
     const style = `flex-direction:${isRow ? 'row' : 'column'};gap:${gap};align-items:${alignMap[this.align]};justify-content:${justifyMap[this.justify]}`

@@ -9,7 +9,7 @@ export class MzAccordion extends LitElement {
     css`
       :host {
         display: block;
-        border: 1px solid var(--mz-color-neutral-200);
+        border: var(--mz-space-px) solid var(--mz-color-neutral-200); /* 1px */
         border-radius: var(--mz-radius-lg);
         background: var(--mz-color-neutral-0);
         color: var(--mz-color-neutral-900);

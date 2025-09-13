@@ -4,7 +4,15 @@ import { baseStyles } from '../../styles/base.js'
 
 @customElement('mz-radio-group')
 export class MzRadioGroup extends LitElement {
-  static styles = [baseStyles, css`:host{display:block;color:var(--mz-color-neutral-900)}`]
+  static styles = [
+    baseStyles,
+    css`
+      :host {
+        display: block;
+        color: var(--mz-color-neutral-900);
+      }
+    `
+  ]
   @property({ type: String }) name = ''
   @property({ type: String }) value: string | null = null
 

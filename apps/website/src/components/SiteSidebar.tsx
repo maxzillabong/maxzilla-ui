@@ -1,6 +1,6 @@
 "use client"
 import Link from 'next/link'
-import { useMemo } from 'react'
+import { useMemo, useEffect, useRef } from 'react'
 import { componentsData } from '@/app/components/registry-data'
 
 type Category = {
@@ -21,6 +21,30 @@ export function SiteSidebar({
   sticky?: boolean
   filter?: string
 }) {
+  const navRef = useRef<HTMLDivElement>(null)
+
+  // Save and restore scroll position when navigating between components
+  useEffect(() => {
+    const scrollKey = 'sidebar-scroll-position'
+    const navEl = navRef.current
+
+    if (navEl) {
+      // Restore scroll position
+      const savedPosition = sessionStorage.getItem(scrollKey)
+      if (savedPosition) {
+        navEl.scrollTop = parseInt(savedPosition, 10)
+      }
+
+      // Save scroll position on scroll
+      const handleScroll = () => {
+        sessionStorage.setItem(scrollKey, navEl.scrollTop.toString())
+      }
+
+      navEl.addEventListener('scroll', handleScroll)
+      return () => navEl.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
   const grouped = useMemo<Category[]>(() => {
     const map = new Map<string, { slug: string; name: string }[]>()
     const q = filter.trim().toLowerCase()
@@ -65,7 +89,7 @@ export function SiteSidebar({
 
   return (
     <nav aria-label="Site" className="text-sm text-neutral-700 dark:text-neutral-300">
-      <div className={`${sticky ? 'sticky top-20 max-h-[calc(100vh-6rem)]' : ''} overflow-auto pr-2`}>
+      <div ref={navRef} className={`${sticky ? 'sticky top-20 max-h-[calc(100vh-6rem)]' : ''} overflow-auto pr-2`}>
         {/* Documentation */}
         <div className="mb-5">
           <div className="px-2 py-1 mb-2 mt-3 rounded-md bg-neutral-50 dark:bg-neutral-800/60 text-neutral-900 dark:text-neutral-100 font-semibold uppercase tracking-wide text-[0.7rem]">Documentation</div>
