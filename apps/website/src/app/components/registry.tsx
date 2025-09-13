@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import { Button, Badge, Input, Card, Avatar, Modal, Accordion, AccordionItem, Divider, Stack, Container, Checkbox, Switch, Textarea, Navbar, Breadcrumb, BreadcrumbItem, Drawer, RadioGroup, Radio, Tabs, Tab } from 'maxzilla-ui-react'
+import { Button, Badge, Input, Card, Avatar, Modal, Accordion, AccordionItem, Divider, Stack, Container, Checkbox, Switch, Textarea, Navbar, Breadcrumb, BreadcrumbItem, Drawer, RadioGroup, Radio, Tabs, Tab, Popover, Table, Form, FormGroup, FormActions, Pagination, Alert, Progress, Loading, ToastContainer } from 'maxzilla-ui-react'
 
 export type ComponentCategory = 'Basics' | 'Forms' | 'Data Display' | 'Overlays' | 'Navigation' | 'Layout'
 
@@ -167,6 +167,69 @@ const TabsPreview: React.FC = () => (
   </Tabs>
 )
 
+const PopoverPreview: React.FC = () => (
+  <Popover>
+    <Button variant="outline" slot="trigger">Open</Button>
+    <div style={{ minWidth: '10rem' }}>
+      <p className="text-neutral-700 dark:text-neutral-300">Popover content</p>
+    </div>
+  </Popover>
+)
+
+const TablePreview: React.FC = () => (
+  <Table>
+    <th slot="header">Name</th>
+    <th slot="header">Role</th>
+    <tr><td>Ada</td><td>Engineer</td></tr>
+    <tr><td>Linus</td><td>Maintainer</td></tr>
+  </Table>
+)
+
+const FormPreview: React.FC = () => (
+  <Form>
+    <FormGroup>
+      <Input label="First Name" />
+      <Input label="Last Name" />
+    </FormGroup>
+    <FormActions>
+      <Button variant="outline" type="reset">Reset</Button>
+      <Button variant="primary" type="submit">Submit</Button>
+    </FormActions>
+  </Form>
+)
+
+const PaginationPreview: React.FC = () => (
+  <Pagination total={120} pageSize={10} current={1} />
+)
+
+const AlertPreview: React.FC = () => (
+  <div className="space-y-2">
+    <Alert variant="success">Saved successfully</Alert>
+    <Alert variant="warning">Be careful</Alert>
+  </div>
+)
+
+const ProgressPreview: React.FC = () => (
+  <Progress value={60} max={100} label="Upload" showValue />
+)
+
+const LoadingPreview: React.FC = () => (
+  <div className="flex items-center gap-3">
+    <Loading />
+    <span className="text-neutral-600 dark:text-neutral-300">Loading…</span>
+  </div>
+)
+
+const ToastContainerPreview: React.FC = () => {
+  const [ref, setRef] = React.useState<any>(null)
+  return (
+    <div className="space-y-2">
+      <ToastContainer ref={setRef as any} />
+      <Button variant="outline" onClick={() => ref?.show('Action completed', 'success')}>Show Toast</Button>
+    </div>
+  )
+}
+
 export const registry: ComponentMeta[] = [
   {
     slug: 'button',
@@ -293,6 +356,15 @@ export const registry: ComponentMeta[] = [
   { slug: 'drawer', name: 'Drawer', category: 'Navigation', description: 'Side panel overlay with scrim and placement.', Preview: DrawerPreview, code: { react: `<Drawer open>...</Drawer>`, html: `<mz-drawer open>...</mz-drawer>` } },
   { slug: 'radiogroup', name: 'Radio Group', category: 'Forms', description: 'Single selection among multiple options.', Preview: RadioGroupPreview, code: { react: `<RadioGroup name="plan"><Radio value="basic"/></RadioGroup>`, html: `<mz-radio-group name="plan"><mz-radio value="basic"></mz-radio></mz-radio-group>` } },
   { slug: 'tabs', name: 'Tabs', category: 'Data Display', description: 'Tabbed interface with panels.', Preview: TabsPreview, code: { react: `<Tabs><Tab label="One">...</Tab></Tabs>`, html: `<mz-tabs><mz-tab label="One">...</mz-tab></mz-tabs>` } }
+  ,
+  { slug: 'popover', name: 'Popover', category: 'Overlays', description: 'Rich contextual content anchored to a trigger.', Preview: PopoverPreview, code: { react: `<Popover><Button slot="trigger">Open</Button>...</Popover>`, html: `<mz-popover><button slot="trigger">Open</button>...</mz-popover>` } },
+  { slug: 'table', name: 'Table', category: 'Data Display', description: 'Semantic table with styled header and rows.', Preview: TablePreview, code: { react: `<Table><th slot="header">Name</th>...</Table>`, html: `<mz-table><th slot="header">Name</th>...</mz-table>` } },
+  { slug: 'form', name: 'Form', category: 'Forms', description: 'Form container with group and actions slots.', Preview: FormPreview, code: { react: `<Form><FormGroup>...</FormGroup><FormActions>...</FormActions></Form>`, html: `<mz-form><mz-form-group>...</mz-form-group><mz-form-actions>...</mz-form-actions></mz-form>` } },
+  { slug: 'pagination', name: 'Pagination', category: 'Data Display', description: 'Page navigation with prev/next and pages.', Preview: PaginationPreview, code: { react: `<Pagination total={120} pageSize={10} current={1} />`, html: `<mz-pagination total="120" page-size="10" current="1"></mz-pagination>` } },
+  { slug: 'alert', name: 'Alert', category: 'Data Display', description: 'Contextual messages with variants and dismiss.', Preview: AlertPreview, code: { react: `<Alert variant="success">Saved</Alert>`, html: `<mz-alert variant="success">Saved</mz-alert>` } },
+  { slug: 'progress', name: 'Progress', category: 'Data Display', description: 'Progress indication (linear).', Preview: ProgressPreview, code: { react: `<Progress value={60} max={100} label="Upload" showValue />`, html: `<mz-progress value="60" max="100" label="Upload" show-value></mz-progress>` } },
+  { slug: 'loading', name: 'Loading', category: 'Overlays', description: 'Loading spinner (inline or overlay).', Preview: LoadingPreview, code: { react: `<Loading overlay />`, html: `<mz-loading overlay></mz-loading>` } },
+  { slug: 'toastcontainer', name: 'Toast Container', category: 'Overlays', description: 'Toast stack/queue with variants and timing.', Preview: ToastContainerPreview, code: { react: `<ToastContainer ref={setRef} />`, html: `<mz-toast-container></mz-toast-container>` } }
 ]
 
 export function byCategory(category: ComponentCategory) {

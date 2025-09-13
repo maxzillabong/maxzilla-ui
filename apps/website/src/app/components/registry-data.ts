@@ -17,6 +17,14 @@ export const componentsData = [
   { slug: 'drawer', name: 'Drawer', category: 'Navigation', description: 'Side panel overlay with scrim and placement.' },
   { slug: 'radiogroup', name: 'Radio Group', category: 'Forms', description: 'Single selection among multiple options.' },
   { slug: 'tabs', name: 'Tabs', category: 'Data Display', description: 'Tabbed interface with panels.' },
+  { slug: 'popover', name: 'Popover', category: 'Overlays', description: 'Rich contextual content anchored to a trigger.' },
+  { slug: 'table', name: 'Table', category: 'Data Display', description: 'Semantic table with styled header and rows.' },
+  { slug: 'form', name: 'Form', category: 'Forms', description: 'Form container with group and actions.' },
+  { slug: 'pagination', name: 'Pagination', category: 'Data Display', description: 'Page navigation with prev/next and pages.' },
+  { slug: 'alert', name: 'Alert', category: 'Data Display', description: 'Contextual messages with variants and dismiss.' },
+  { slug: 'progress', name: 'Progress', category: 'Data Display', description: 'Progress indication (linear).' },
+  { slug: 'loading', name: 'Loading', category: 'Overlays', description: 'Loading spinner (inline or overlay).' },
+  { slug: 'toastcontainer', name: 'Toast Container', category: 'Overlays', description: 'Toast stack/queue with variants and timing.' },
 ]
 
 export function findDataBySlug(slug: string) {

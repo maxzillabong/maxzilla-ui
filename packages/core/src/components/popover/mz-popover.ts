@@ -24,9 +24,14 @@ export class MzPopover extends LitElement {
   render(){
     const pos = this.placement
     const style = pos==='top'? 'bottom:100%;left:50%;transform:translate(-50%,4px)' : pos==='bottom'? 'top:100%;left:50%;transform:translate(-50%,-4px)' : pos==='left'? 'right:100%;top:50%;transform:translate(4px,-50%)' : 'left:100%;top:50%;transform:translate(-4px,-50%)'
-    const triggerHandlers = this.hover ? { onmouseenter: this._open, onmouseleave: this._close } : { onclick: this._toggle.bind(this) }
     return html`
-      <span ...=${(triggerHandlers as any)}><slot name="trigger"></slot></span>
+      <span
+        @click=${this.hover ? undefined : this._toggle}
+        @mouseenter=${this.hover ? this._open : undefined}
+        @mouseleave=${this.hover ? this._close : undefined}
+      >
+        <slot name="trigger"></slot>
+      </span>
       <div class="panel ${this.open?'open':''}" style=${style} role="dialog" @mouseleave=${this.hover?this._close:undefined}>
         <div style="position:absolute;width:.5rem;height:.5rem;background:var(--mz-color-neutral-0);transform:rotate(45deg);${pos==='top'?'top:100%;left:50%;margin-left:-.25rem':'display:none'}"></div>
         <slot></slot>

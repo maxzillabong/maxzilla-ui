@@ -1,7 +1,8 @@
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { componentsData, findDataBySlug } from '../registry-data'
-import DetailClient from './DetailClient'
+import dynamic from 'next/dynamic'
+const DetailClient = dynamic(() => import('./DetailClient'), { ssr: false })
 
 export default function ComponentDetail({ params }: { params: { slug: string } }) {
   const data = findDataBySlug(params.slug)
