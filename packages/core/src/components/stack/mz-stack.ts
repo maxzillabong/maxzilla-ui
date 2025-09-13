@@ -31,7 +31,7 @@ export class MzStack extends LitElement {
     const alignMap: Record<string, string> = { start: 'flex-start', center: 'center', end: 'flex-end' }
     const justifyMap: Record<string, string> = { start: 'flex-start', center: 'center', end: 'flex-end', between: 'space-between' }
     const style = `flex-direction:${isRow ? 'row' : 'column'};gap:${gap};align-items:${alignMap[this.align]};justify-content:${justifyMap[this.justify]}`
-    return html`<div class="stack" style=${style}><slot></slot></div>`
+    return html`<div class="stack" style=${style} role="group"><slot></slot></div>`
   }
 }
 

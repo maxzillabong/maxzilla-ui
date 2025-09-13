@@ -1,8 +1,9 @@
 import { LitElement, html, css } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property, state, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { baseStyles } from '../../styles/base.js';
 import { animationStyles } from '../../styles/animations.js';
+import { FocusTrap } from '../../utils/focus-trap.js';
 
 @customElement('mz-modal')
 export class MzModal extends LitElement {
@@ -15,7 +16,7 @@ export class MzModal extends LitElement {
         --modal-background: var(--mz-color-neutral-0);
         --modal-border-radius: var(--mz-radius-3xl);
         --modal-shadow: var(--mz-shadow-2xl);
-        --modal-max-width: var(--mz-space-128); /* 32rem */
+        --modal-max-width: var(--mz-space-128);
         --modal-max-height: 80vh;
         --modal-padding: var(--mz-space-8);
       }
@@ -99,8 +100,8 @@ export class MzModal extends LitElement {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: var(--mz-space-10); /* 2.5rem */
-        height: var(--mz-space-10); /* 2.5rem */
+        width: var(--mz-space-10);
+        height: var(--mz-space-10);
         border: none;
         background: var(--mz-color-neutral-100);
         border-radius: var(--mz-radius-full);
@@ -137,15 +138,15 @@ export class MzModal extends LitElement {
 
       /* Size variants */
       :host([size='sm']) {
-        --modal-max-width: var(--mz-space-96); /* 24rem */
+        --modal-max-width: var(--mz-space-96);
       }
 
       :host([size='lg']) {
-        --modal-max-width: var(--mz-space-192); /* 48rem */
+        --modal-max-width: var(--mz-space-192);
       }
 
       :host([size='xl']) {
-        --modal-max-width: var(--mz-space-256); /* 64rem */
+        --modal-max-width: var(--mz-space-256);
       }
 
       :host([size='full']) {
@@ -185,6 +186,15 @@ export class MzModal extends LitElement {
       :host([scrollable]) .modal-body {
         max-height: 60vh;
       }
+
+      /* Accessibility */
+      @media (prefers-reduced-motion: reduce) {
+        .modal,
+        .modal-content,
+        .modal-backdrop {
+          transition: none;
+        }
+      }
     `,
   ];
 
@@ -195,8 +205,42 @@ export class MzModal extends LitElement {
   @property({ type: Boolean, reflect: true, attribute: 'no-close-on-backdrop' }) noCloseOnBackdrop = false;
   @property({ type: Boolean, reflect: true, attribute: 'no-close-button' }) noCloseButton = false;
   @property({ type: Boolean, reflect: true }) scrollable = false;
+  @property({ type: String, attribute: 'aria-label' }) ariaLabel = '';
+  @property({ type: String, attribute: 'aria-describedby' }) ariaDescribedBy = '';
 
   @state() private isAnimating = false;
+
+  @query('.modal-content') private modalContent!: HTMLElement;
+
+  private focusTrap?: FocusTrap;
+  private boundKeyDownHandler?: (e: KeyboardEvent) => void;
+  private scrollPosition = 0;
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.boundKeyDownHandler = this.handleKeyDown.bind(this);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.cleanup();
+  }
+
+  private cleanup() {
+    // Remove event listeners
+    if (this.boundKeyDownHandler) {
+      document.removeEventListener('keydown', this.boundKeyDownHandler);
+    }
+
+    // Deactivate focus trap
+    if (this.focusTrap) {
+      this.focusTrap.deactivate();
+      this.focusTrap = undefined;
+    }
+
+    // Restore body scroll
+    this.restoreBodyScroll();
+  }
 
   private handleBackdropClick = (event: MouseEvent) => {
     if (event.target === event.currentTarget && !this.noCloseOnBackdrop) {
@@ -208,22 +252,43 @@ export class MzModal extends LitElement {
     this.close();
   };
 
-  private handleKeyDown = (event: KeyboardEvent) => {
-    if (event.key === 'Escape' && this.open) {
+  private handleKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Escape' && this.open && !this.noCloseOnBackdrop) {
+      event.preventDefault();
       this.close();
     }
-  };
+  }
+
+  private preventBodyScroll() {
+    this.scrollPosition = window.scrollY;
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${this.scrollPosition}px`;
+    document.body.style.width = '100%';
+  }
+
+  private restoreBodyScroll() {
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    window.scrollTo(0, this.scrollPosition);
+  }
 
   public show() {
+    if (this.open) return;
+
     this.open = true;
     this.isAnimating = true;
-    
+
     // Add event listeners
-    document.addEventListener('keydown', this.handleKeyDown);
-    
+    if (this.boundKeyDownHandler) {
+      document.addEventListener('keydown', this.boundKeyDownHandler);
+    }
+
     // Prevent body scroll
-    document.body.style.overflow = 'hidden';
-    
+    this.preventBodyScroll();
+
     // Dispatch show event
     this.dispatchEvent(
       new CustomEvent('mz-modal-show', {
@@ -232,15 +297,28 @@ export class MzModal extends LitElement {
       })
     );
 
-    // Animation complete
-    setTimeout(() => {
-      this.isAnimating = false;
-    }, 300);
+    // Wait for render then setup focus trap
+    this.updateComplete.then(() => {
+      if (this.modalContent && !this.focusTrap) {
+        this.focusTrap = new FocusTrap(this.modalContent);
+        this.focusTrap.activate();
+      }
+
+      // Animation complete
+      setTimeout(() => {
+        this.isAnimating = false;
+
+        // Announce to screen readers
+        this.announceToScreenReader('Dialog opened');
+      }, 300);
+    });
   }
 
   public close() {
+    if (!this.open) return;
+
     this.isAnimating = true;
-    
+
     // Dispatch close event (can be cancelled)
     const closeEvent = this.dispatchEvent(
       new CustomEvent('mz-modal-close', {
@@ -249,19 +327,22 @@ export class MzModal extends LitElement {
         cancelable: true,
       })
     );
-    
+
     if (!closeEvent) return; // Event was cancelled
+
+    // Deactivate focus trap
+    if (this.focusTrap) {
+      this.focusTrap.deactivate();
+      this.focusTrap = undefined;
+    }
 
     setTimeout(() => {
       this.open = false;
       this.isAnimating = false;
-      
-      // Remove event listeners
-      document.removeEventListener('keydown', this.handleKeyDown);
-      
-      // Restore body scroll
-      document.body.style.overflow = '';
-      
+
+      // Cleanup
+      this.cleanup();
+
       // Dispatch closed event
       this.dispatchEvent(
         new CustomEvent('mz-modal-closed', {
@@ -269,14 +350,35 @@ export class MzModal extends LitElement {
           composed: true,
         })
       );
+
+      // Announce to screen readers
+      this.announceToScreenReader('Dialog closed');
     }, 150);
+  }
+
+  private announceToScreenReader(message: string) {
+    const announcement = document.createElement('div');
+    announcement.setAttribute('role', 'status');
+    announcement.setAttribute('aria-live', 'polite');
+    announcement.style.position = 'absolute';
+    announcement.style.left = '-10000px';
+    announcement.style.width = '1px';
+    announcement.style.height = '1px';
+    announcement.style.overflow = 'hidden';
+    announcement.textContent = message;
+
+    document.body.appendChild(announcement);
+
+    setTimeout(() => {
+      document.body.removeChild(announcement);
+    }, 1000);
   }
 
   protected updated(changedProperties: Map<string, any>) {
     if (changedProperties.has('open')) {
       if (this.open) {
         this.show();
-      } else {
+      } else if (!this.isAnimating) {
         this.close();
       }
     }
@@ -291,37 +393,54 @@ export class MzModal extends LitElement {
       [`modal--${this.animation}`]: true,
     };
 
+    const modalLabel = this.ariaLabel || this.title || 'Dialog';
+
     return html`
       <div
         class=${classMap(classes)}
         @click=${this.handleBackdropClick}
       >
-        <div class="modal-backdrop"></div>
-        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-backdrop" aria-hidden="true"></div>
+        <div
+          class="modal-content"
+          role="dialog"
+          aria-modal="true"
+          aria-label=${modalLabel}
+          aria-labelledby=${this.title ? 'modal-title' : nothing}
+          aria-describedby=${this.ariaDescribedBy || nothing}
+        >
           <div class="modal-header">
             <h2 id="modal-title" class="modal-title">
               <slot name="title">${this.title}</slot>
             </h2>
-            <button
-              class="modal-close"
-              aria-label="Close modal"
-              @click=${this.handleCloseClick}
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M18 6L6 18M6 6l12 12"/>
-              </svg>
-            </button>
+            ${!this.noCloseButton ? html`
+              <button
+                class="modal-close"
+                aria-label="Close dialog"
+                @click=${this.handleCloseClick}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+              </button>
+            ` : ''}
           </div>
-          
+
           <div class="modal-body">
             <slot></slot>
           </div>
-          
+
           <div class="modal-footer">
             <slot name="footer"></slot>
           </div>
         </div>
       </div>
     `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'mz-modal': MzModal;
   }
 }

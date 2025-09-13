@@ -27,7 +27,7 @@ export class MzContainer extends LitElement {
       : 'var(--mz-container-lg)' // 64rem (lg)
 
     const style = `max-width:${max};${this.centered ? 'margin-inline:auto;' : ''}`
-    return html`<div class="container" style=${style}><slot></slot></div>`
+    return html`<div class="container" style=${style} role="group"><slot></slot></div>`
   }
 }
 

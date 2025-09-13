@@ -1,9 +1,12 @@
 import { LitElement, css, html } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
+import { customElement, property, query } from 'lit/decorators.js'
 import { baseStyles } from '../../styles/base.js'
+import { ValidatableMixin } from '../../mixins/validation.js'
 
 @customElement('mz-checkbox')
-export class MzCheckbox extends LitElement {
+export class MzCheckbox extends ValidatableMixin(LitElement) {
+  static formAssociated = true
+
   static styles = [
     baseStyles,
     css`
@@ -17,19 +20,32 @@ export class MzCheckbox extends LitElement {
         align-items: center;
         gap: var(--mz-space-3);
         cursor: pointer;
-        font-weight: var(--mz-font-medium); /* was: 500 */
+        font-weight: var(--mz-font-medium);
         transition: opacity var(--mz-transition-normal);
+        position: relative;
       }
 
-      .root[aria-disabled="true"] {
-        opacity: 0.5; /* Keeping hardcoded opacity - no semantic token for disabled state */
+      .root.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .input {
+        position: absolute;
+        opacity: 0;
+        width: var(--mz-space-5);
+        height: var(--mz-space-5);
+        cursor: pointer;
+      }
+
+      .input:disabled {
         cursor: not-allowed;
       }
 
       .box {
-        width: var(--mz-space-5); /* was: 1.25rem */
-        height: var(--mz-space-5); /* was: 1.25rem */
-        border: 2px solid var(--mz-color-neutral-400); /* 2px border (no equivalent spacing token) */
+        width: var(--mz-space-5);
+        height: var(--mz-space-5);
+        border: 2px solid var(--mz-color-neutral-400);
         border-radius: var(--mz-radius-md);
         display: grid;
         place-items: center;
@@ -37,30 +53,64 @@ export class MzCheckbox extends LitElement {
         transition: all var(--mz-transition-spring);
         box-shadow: var(--mz-shadow-xs);
         position: relative;
+        pointer-events: none;
       }
 
-      .root:not([aria-disabled="true"]):hover .box {
+      .root:not(.disabled):hover .box {
         border-color: var(--mz-color-primary-400);
         transform: scale(1.1);
         box-shadow: var(--mz-shadow-sm);
       }
 
-      .box.checked {
+      .input:checked ~ .box {
         background: linear-gradient(135deg, var(--mz-color-primary-400), var(--mz-color-primary-500));
         border-color: var(--mz-color-primary-500);
-        box-shadow: var(--mz-shadow-sm), var(--mz-shadow-primary-glow); /* was: 0 0 15px rgba(6, 182, 212, 0.3) */
+        box-shadow: var(--mz-shadow-sm), var(--mz-shadow-primary-glow);
       }
 
-      .root:not([aria-disabled="true"]):hover .box.checked {
+      .root:not(.disabled):hover .input:checked ~ .box {
         background: linear-gradient(135deg, var(--mz-color-primary-300), var(--mz-color-primary-400));
-        box-shadow: var(--mz-shadow-md), var(--mz-shadow-primary-glow-hover); /* was: 0 0 20px rgba(6, 182, 212, 0.4) */
+        box-shadow: var(--mz-shadow-md), var(--mz-shadow-primary-glow-hover);
+      }
+
+      .input:focus-visible ~ .box {
+        outline: 2px solid var(--mz-color-primary-500);
+        outline-offset: var(--mz-space-0-5);
+      }
+
+      .input:indeterminate ~ .box {
+        background: linear-gradient(135deg, var(--mz-color-primary-200), var(--mz-color-primary-300));
+        border-color: var(--mz-color-primary-400);
       }
 
       .tick {
         color: var(--mz-color-neutral-0);
-        font-size: var(--mz-text-sm); /* was: 0.875rem */
-        line-height: var(--mz-leading-tight); /* was: 1 */
-        font-weight: var(--mz-font-bold); /* was: bold */
+        font-size: var(--mz-text-sm);
+        line-height: var(--mz-leading-tight);
+        font-weight: var(--mz-font-bold);
+        opacity: 0;
+        transform: scale(0) rotate(-45deg);
+        transition: all var(--mz-transition-spring);
+      }
+
+      .input:checked ~ .box .tick {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+        animation: checkmark 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      .dash {
+        width: var(--mz-space-2-5);
+        height: 2px;
+        background: var(--mz-color-neutral-0);
+        opacity: 0;
+        transform: scale(0);
+        transition: all var(--mz-transition-spring);
+      }
+
+      .input:indeterminate ~ .box .dash {
+        opacity: 1;
+        transform: scale(1);
         animation: checkmark 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       }
 
@@ -82,40 +132,179 @@ export class MzCheckbox extends LitElement {
         user-select: none;
       }
 
-      .root:focus-visible {
-        outline: 2px solid var(--mz-color-primary-500); /* 2px outline (no equivalent spacing token) */
-        outline-offset: var(--mz-space-0-5); /* was: 2px */
-        border-radius: var(--mz-radius-md);
+      .error-message {
+        color: var(--mz-color-error);
+        font-size: var(--mz-text-xs);
+        margin-top: var(--mz-space-1);
+        position: absolute;
+        top: 100%;
+        left: 0;
       }
     `
   ]
 
   @property({ type: Boolean, reflect: true }) checked = false
   @property({ type: Boolean, reflect: true }) disabled = false
+  @property({ type: Boolean, reflect: true }) indeterminate = false
   @property({ type: String }) label = ''
+  @property({ type: String }) name = ''
+  @property({ type: String }) value = 'on'
+  @property({ type: Boolean }) required = false
+  @property({ type: String, attribute: 'aria-label' }) ariaLabel = ''
+  @property({ type: String, attribute: 'aria-describedby' }) ariaDescribedBy = ''
 
-  private toggle() {
-    if (this.disabled) return
-    this.checked = !this.checked
-    this.dispatchEvent(new Event('change', { bubbles: true }))
+  @query('input') private _input!: HTMLInputElement
+
+  private _internals?: ElementInternals
+
+  constructor() {
+    super()
+    if ('attachInternals' in this) {
+      this._internals = (this as any).attachInternals()
+    }
   }
 
-  private onKey(e: KeyboardEvent) {
-    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); this.toggle() }
+  connectedCallback() {
+    super.connectedCallback()
+    this._updateFormValue()
+  }
+
+  private _updateFormValue() {
+    if (this._internals) {
+      const value = this.checked ? this.value : null
+      this._internals.setFormValue(value)
+
+      // Update validity
+      if (this.required && !this.checked) {
+        this._internals.setValidity(
+          { valueMissing: true },
+          'Please check this box if you want to proceed.'
+        )
+      } else {
+        this._internals.setValidity({})
+      }
+    }
+  }
+
+  private handleChange(e: Event) {
+    const input = e.target as HTMLInputElement
+    this.checked = input.checked
+    this.indeterminate = false
+    this._updateFormValue()
+
+    // Validate
+    if (this.touched) {
+      this.validate()
+    }
+
+    // Dispatch change event
+    this.dispatchEvent(new Event('change', {
+      bubbles: true,
+      composed: true
+    }))
+
+    // Dispatch custom event with detail
+    this.dispatchEvent(new CustomEvent('mz-change', {
+      detail: { checked: this.checked, value: this.value },
+      bubbles: true,
+      composed: true
+    }))
+  }
+
+  private handleBlur() {
+    this.touched = true
+    this.validate()
+
+    this.dispatchEvent(new Event('blur', {
+      bubbles: true,
+      composed: true
+    }))
+  }
+
+  updated(changedProperties: Map<string, any>) {
+    super.updated(changedProperties)
+
+    if (changedProperties.has('checked') || changedProperties.has('indeterminate')) {
+      if (this._input) {
+        this._input.checked = this.checked
+        this._input.indeterminate = this.indeterminate
+      }
+      this._updateFormValue()
+    }
+  }
+
+  // Form associated lifecycle callbacks
+  formAssociatedCallback(form: HTMLFormElement) {
+    // Called when associated with a form
+  }
+
+  formDisabledCallback(disabled: boolean) {
+    this.disabled = disabled
+  }
+
+  formResetCallback() {
+    this.checked = false
+    this.indeterminate = false
+    this.touched = false
+    this.errors = []
+  }
+
+  formStateRestoreCallback(state: string) {
+    this.checked = state === this.value
+  }
+
+  // Public API
+  click() {
+    this._input?.click()
+  }
+
+  focus() {
+    this._input?.focus()
+  }
+
+  blur() {
+    this._input?.blur()
   }
 
   render() {
+    const showError = this.touched && this.errors.length > 0
+
     return html`
-      <div class="root" role="checkbox" aria-checked=${this.checked} tabindex=${this.disabled ? -1 : 0}
-        @click=${this.toggle} @keydown=${this.onKey} aria-disabled=${this.disabled}>
-        <div class="box ${this.checked ? 'checked' : ''}">
-          ${this.checked ? html`<span class="tick">✓</span>` : html``}
+      <label class="root ${this.disabled ? 'disabled' : ''}">
+        <input
+          type="checkbox"
+          class="input"
+          .checked=${this.checked}
+          .indeterminate=${this.indeterminate}
+          ?disabled=${this.disabled}
+          ?required=${this.required}
+          name=${this.name}
+          value=${this.value}
+          aria-label=${this.ariaLabel || this.label}
+          aria-describedby=${this.ariaDescribedBy}
+          aria-invalid=${showError ? 'true' : 'false'}
+          @change=${this.handleChange}
+          @blur=${this.handleBlur}
+        />
+        <div class="box">
+          ${this.indeterminate
+            ? html`<span class="dash"></span>`
+            : html`<span class="tick">✓</span>`
+          }
         </div>
         ${this.label ? html`<span class="label">${this.label}</span>` : html`<slot></slot>`}
-      </div>
+      </label>
+      ${showError ? html`
+        <span class="error-message" role="alert">
+          ${this.errors[0]}
+        </span>
+      ` : ''}
     `
   }
 }
 
-declare global { interface HTMLElementTagNameMap { 'mz-checkbox': MzCheckbox } }
-
+declare global {
+  interface HTMLElementTagNameMap {
+    'mz-checkbox': MzCheckbox
+  }
+}

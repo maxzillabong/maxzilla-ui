@@ -43,8 +43,61 @@ export class MzDatePicker extends LitElement {
   `]
   @property({type:String}) label = ''
   @property({type:String}) value = ''
-  private onInput(e: Event){ this.value = (e.target as HTMLInputElement).value; this.dispatchEvent(new Event('change',{bubbles:true})) }
-  render(){ return html`${this.label? html`<label class="label">${this.label}</label>`: null}<input type="date" .value=${this.value} @input=${this.onInput} />` }
+
+  @property({ type: String, attribute: 'aria-label' }) ariaLabel?: string;
+  @property({ type: String, attribute: 'aria-describedby' }) ariaDescribedBy?: string;
+
+  private onInput(e: Event) {
+    this.value = (e.target as HTMLInputElement).value;
+    this.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+  
+  private handleCalendarKeyDown(e: KeyboardEvent) {
+    const key = e.key;
+    let newDate = new Date(this.selectedDate || new Date());
+
+    switch(key) {
+      case 'ArrowLeft':
+        newDate.setDate(newDate.getDate() - 1);
+        break;
+      case 'ArrowRight':
+        newDate.setDate(newDate.getDate() + 1);
+        break;
+      case 'ArrowUp':
+        newDate.setDate(newDate.getDate() - 7);
+        break;
+      case 'ArrowDown':
+        newDate.setDate(newDate.getDate() + 7);
+        break;
+      case 'Enter':
+      case ' ':
+        this.selectDate(newDate);
+        return;
+      case 'Escape':
+        this.close();
+        return;
+      default:
+        return;
+    }
+
+    e.preventDefault();
+    this.focusDate(newDate);
+  }
+
+  render() {
+    return html`
+      ${this.label ? html`<label class="label" for="date-input">${this.label}</label>` : null}
+      <input
+        id="date-input"
+        type="date"
+        .value=${this.value}
+        aria-label=${this.ariaLabel || this.label || 'Select date'}
+        aria-describedby=${this.ariaDescribedBy || ''}
+        role="textbox"
+        @input=${this.onInput}
+      />
+    `;
+  }
 }
 
 declare global { interface HTMLElementTagNameMap { 'mz-date-picker': MzDatePicker } }

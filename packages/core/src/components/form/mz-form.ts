@@ -1,5 +1,5 @@
 import { LitElement, css, html } from 'lit'
-import { customElement } from 'lit/decorators.js'
+import { customElement, property } from 'lit/decorators.js'
 import { baseStyles } from '../../styles/base.js'
 
 @customElement('mz-form')
@@ -18,6 +18,9 @@ export class MzForm extends LitElement {
     `
   ]
 
+  @property({ type: String, attribute: 'aria-label' }) ariaLabel?: string;
+  @property({ type: String, attribute: 'aria-labelledby' }) ariaLabelledBy?: string;
+
   private onSubmit(e: Event) {
     e.preventDefault()
     this.dispatchEvent(new Event('submit', { bubbles: true }))
@@ -25,7 +28,12 @@ export class MzForm extends LitElement {
 
   render() {
     return html`
-      <form @submit=${this.onSubmit}>
+      <form
+        role="form"
+        aria-label=${this.ariaLabel || ''}
+        aria-labelledby=${this.ariaLabelledBy || ''}
+        @submit=${this.onSubmit}
+      >
         <slot></slot>
       </form>
     `

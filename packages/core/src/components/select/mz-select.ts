@@ -1,6 +1,7 @@
 import { LitElement, css, html } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { baseStyles } from '../../styles/base.js'
+import { ValidatableMixin } from '../../mixins/validation.js';
 
 @customElement('mz-select')
 export class MzSelect extends LitElement {
@@ -56,6 +57,10 @@ export class MzSelect extends LitElement {
   @property({type:Boolean}) multiple = false
   @property({type:String}) value: string | null = null
 
+  @property({ type: String, attribute: 'aria-label' }) ariaLabel?: string;
+  @property({ type: String, attribute: 'aria-describedby' }) ariaDescribedBy?: string;
+  @property({ type: Boolean, attribute: 'aria-expanded' }) ariaExpanded = false;
+  @property({ type: String, attribute: 'aria-activedescendant' }) ariaActiveDescendant?: string;
   private _onChange(e: Event){
     const sel = e.target as HTMLSelectElement
     this.value = sel.value
@@ -65,8 +70,18 @@ export class MzSelect extends LitElement {
   render(){
     const options = Array.from(this.querySelectorAll('mz-option')).map(o=>({value:o.getAttribute('value')||'',label:o.getAttribute('label')||o.textContent||''}))
     return html`
-      ${this.label? html`<label>${this.label}</label>` : null}
-      <select @change=${this._onChange} ?multiple=${this.multiple} .value=${this.value ?? ''}>
+      ${this.label? html`<label for="select-input">${this.label}</label>` : null}
+      <select
+        id="select-input"
+        role="combobox"
+        aria-label=${this.ariaLabel || this.label || 'Select option'}
+        aria-describedby=${this.ariaDescribedBy || ''}
+        aria-expanded=${this.ariaExpanded}
+        aria-activedescendant=${this.ariaActiveDescendant || ''}
+        @change=${this._onChange}
+        ?multiple=${this.multiple}
+        .value=${this.value ?? ''}
+      >
         ${options.map(o=> html`<option value=${o.value}>${o.label}</option>`) }
       </select>
     `

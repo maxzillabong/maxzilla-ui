@@ -153,7 +153,48 @@ const componentDefinitions = {
   ,
   'mz-tree': { props: {}, events: {} },
   'mz-tree-node': { props: { label: 'string', expandable: 'boolean' }, events: {} },
-  'mz-date-picker': { props: { label: 'string', value: 'string' }, events: { onChange: 'change' } }
+  'mz-date-picker': { props: { label: 'string', value: 'string' }, events: { onChange: 'change' } },
+  'mz-select': {
+    props: {
+      value: 'string',
+      label: 'string',
+      placeholder: 'string',
+      disabled: 'boolean',
+      required: 'boolean',
+      error: 'boolean',
+      helperText: 'string',
+      name: 'string',
+      size: "'sm' | 'md' | 'lg'"
+    },
+    events: { onChange: 'change' }
+  },
+  'mz-tooltip': {
+    props: {
+      text: 'string',
+      placement: "'top' | 'bottom' | 'left' | 'right'"
+    },
+    events: {}
+  },
+  'mz-sidebar': {
+    props: {},
+    events: {}
+  },
+  'mz-toast': {
+    props: {
+      variant: "'success' | 'info' | 'warning' | 'error'",
+      message: 'string',
+      duration: 'number'
+    },
+    events: { onClose: 'close' }
+  },
+  'mz-row': {
+    props: {},
+    events: {}
+  },
+  'mz-col': {
+    props: { span: 'number' },
+    events: {}
+  }
 }
 
 function toPascalCase(str) {

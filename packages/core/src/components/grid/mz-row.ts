@@ -17,7 +17,7 @@ export class MzRow extends LitElement {
   `]
 
   render() {
-    return html`<div class="row"><slot></slot></div>`
+    return html`<div class="row" role="group"><slot></slot></div>`
   }
 }
 

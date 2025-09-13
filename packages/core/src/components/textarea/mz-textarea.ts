@@ -1,6 +1,7 @@
 import { LitElement, css, html } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { baseStyles } from '../../styles/base.js'
+import { ValidatableMixin } from '../../mixins/validation.js';
 
 @customElement('mz-textarea')
 export class MzTextarea extends LitElement {
@@ -40,6 +41,10 @@ export class MzTextarea extends LitElement {
   @property({ type: Boolean }) disabled = false
   @property({ type: String, attribute: 'helper-text' }) helperText = ''
 
+  @property({ type: String, attribute: 'aria-label' }) ariaLabel?: string;
+  @property({ type: String, attribute: 'aria-describedby' }) ariaDescribedBy?: string;
+  @property({ type: Boolean, attribute: 'aria-invalid' }) ariaInvalid = false;
+  @property({ type: Boolean, attribute: 'aria-required' }) ariaRequired = false;
   private onInput(e: Event) {
     const v = (e.target as HTMLTextAreaElement).value
     this.value = v
@@ -48,10 +53,23 @@ export class MzTextarea extends LitElement {
   }
 
   render() {
+    const helperId = this.helperText ? 'helper-text' : undefined;
     return html`
-      ${this.label ? html`<label>${this.label}</label>` : null}
-      <textarea rows=${this.rows} placeholder=${this.placeholder} .value=${this.value} ?disabled=${this.disabled} @input=${this.onInput}></textarea>
-      ${this.helperText ? html`<div class="helper">${this.helperText}</div>` : null}
+      ${this.label ? html`<label for="textarea-input">${this.label}</label>` : null}
+      <textarea
+        id="textarea-input"
+        rows=${this.rows}
+        placeholder=${this.placeholder}
+        .value=${this.value}
+        ?disabled=${this.disabled}
+        aria-label=${this.ariaLabel || this.label || 'Text area'}
+        aria-describedby=${this.ariaDescribedBy || helperId || ''}
+        aria-invalid=${this.ariaInvalid}
+        aria-required=${this.ariaRequired}
+        aria-multiline="true"
+        @input=${this.onInput}
+      ></textarea>
+      ${this.helperText ? html`<div id="helper-text" class="helper">${this.helperText}</div>` : null}
     `
   }
 }

@@ -120,14 +120,24 @@ export class MzBadge extends LitElement {
   @property({ type: String, reflect: true }) size: Size = 'md';
   @property({ type: Boolean, reflect: true }) dot = false;
 
+  @property({ type: String, attribute: 'aria-label' }) ariaLabel?: string;
+  @property({ type: Boolean }) live = false;
   render() {
     const classes = {
       badge: true,
       [`badge--${this.variant}`]: true,
     };
 
+    const role = this.live ? 'status' : undefined;
+    const ariaLive = this.live ? 'polite' : undefined;
+
     return html`
-      <span class=${classMap(classes)}>
+      <span
+        class=${classMap(classes)}
+        role=${role || 'status'}
+        aria-live=${ariaLive || 'off'}
+        aria-label=${this.ariaLabel || ''}
+      >
         ${this.dot ? '' : html`<slot></slot>`}
       </span>
     `;

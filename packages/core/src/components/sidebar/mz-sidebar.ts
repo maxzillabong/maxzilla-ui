@@ -1,5 +1,5 @@
 import { LitElement, css, html } from 'lit'
-import { customElement } from 'lit/decorators.js'
+import { customElement, property } from 'lit/decorators.js'
 import { baseStyles } from '../../styles/base.js'
 
 @customElement('mz-sidebar')
@@ -14,8 +14,22 @@ export class MzSidebar extends LitElement {
       ::slotted(a:hover){background:var(--mz-color-neutral-100)}
     `
   ]
+
+  @property({ type: String, attribute: 'aria-label' }) ariaLabel?: string;
+
   render(){
-    return html`<aside class="inner"><div class="header"><slot name="header"></slot></div><slot name="menu"></slot></aside>`
+    return html`
+      <aside
+        class="inner"
+        role="navigation"
+        aria-label=${this.ariaLabel || 'Sidebar navigation'}
+      >
+        <div class="header">
+          <slot name="header"></slot>
+        </div>
+        <slot name="menu"></slot>
+      </aside>
+    `
   }
 }
 

@@ -37,6 +37,9 @@ export class MzLoading extends LitElement {
   ]
   @property({type:Boolean}) overlay = false
   @property({type:String}) size: 'sm'|'md'|'lg' = 'md'
+
+  @property({ type: String, attribute: 'aria-label' }) ariaLabel = 'Loading';
+
   render() {
     // Using spacing tokens for size variants
     const s = this.size === 'sm'
@@ -45,8 +48,29 @@ export class MzLoading extends LitElement {
       ? 'var(--mz-space-8)' /* 2rem */
       : 'var(--mz-space-5)'; /* 1.25rem */
 
-    const spinner = html`<div class="spinner" style=${`width:${s};height:${s}`}></div>`;
-    return this.overlay ? html`<div class="overlay">${spinner}</div>` : spinner;
+    const spinner = html`
+      <div
+        class="spinner"
+        style=${`width:${s};height:${s}`}
+        role="status"
+        aria-label=${this.ariaLabel}
+        aria-live="polite"
+        aria-busy="true"
+      ></div>
+    `;
+
+    return this.overlay
+      ? html`
+          <div
+            class="overlay"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Loading overlay"
+          >
+            ${spinner}
+          </div>
+        `
+      : spinner;
   }
 }
 

@@ -18,6 +18,7 @@ export class MzAccordion extends LitElement {
   ]
 
   @property({ type: Boolean }) multiple = false
+  @property({ type: String, attribute: 'aria-label' }) ariaLabel?: string;
 
   connectedCallback(): void {
     super.connectedCallback()
@@ -64,7 +65,17 @@ export class MzAccordion extends LitElement {
     items[nextIndex]?.focusHeader()
   }
 
-  render() { return html`<slot></slot>` }
+  render() {
+    return html`
+      <div
+        role="group"
+        aria-label=${this.ariaLabel || 'Accordion'}
+        aria-multiselectable=${this.multiple}
+      >
+        <slot></slot>
+      </div>
+    `;
+  }
 }
 
 declare global { interface HTMLElementTagNameMap { 'mz-accordion': MzAccordion } }

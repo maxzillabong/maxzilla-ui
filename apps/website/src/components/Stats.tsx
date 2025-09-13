@@ -6,9 +6,9 @@ import { Code, Layers, Globe, Star, Users, Download, Github, Zap } from 'lucide-
 const stats = [
   {
     icon: Code,
-    number: '6+',
+    number: '41+',
     label: 'Components',
-    description: 'Production-ready components',
+    description: 'Comprehensive UI library covering forms, layout, navigation, and more',
     color: 'text-blue-500',
     bgColor: 'bg-blue-100 dark:bg-blue-900/30'
   },
@@ -91,7 +91,7 @@ export function Stats() {
             Built for <span className="text-gradient">Performance</span>
           </h2>
           <p className="text-xl text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto">
-            Every component is crafted with performance, accessibility, and developer experience in mind.
+            A comprehensive component library with 41+ production-ready components, crafted for performance, accessibility, and exceptional developer experience.
           </p>
         </motion.div>
 

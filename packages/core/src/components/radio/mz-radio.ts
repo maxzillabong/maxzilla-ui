@@ -9,54 +9,175 @@ export class MzRadio extends LitElement {
     css`
       :host {
         display: inline-block;
-        color: var(--mz-color-neutral-900);
+        color: var(--mz-color-neutral-800);
       }
 
       .root {
         display: inline-flex;
         align-items: center;
-        gap: var(--mz-space-2);
+        gap: var(--mz-space-3);
+        cursor: pointer;
+        font-weight: var(--mz-font-medium);
+        transition: opacity var(--mz-transition-normal);
+        position: relative;
+      }
+
+      .root.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .input {
+        position: absolute;
+        opacity: 0;
+        width: var(--mz-space-5);
+        height: var(--mz-space-5);
         cursor: pointer;
       }
 
+      .input:disabled {
+        cursor: not-allowed;
+      }
+
       .outer {
-        width: var(--mz-space-4); /* 1.1rem -> 1rem (closest available token) */
-        height: var(--mz-space-4); /* 1.1rem -> 1rem (closest available token) */
-        border: var(--mz-space-px) solid var(--mz-color-neutral-300); /* 1px */
-        border-radius: var(--mz-radius-full); /* 9999px */
+        width: var(--mz-space-5);
+        height: var(--mz-space-5);
+        border: 2px solid var(--mz-color-neutral-400);
+        border-radius: var(--mz-radius-full);
         display: grid;
         place-items: center;
-        background: var(--mz-color-neutral-0);
+        background: linear-gradient(135deg, var(--mz-color-neutral-0), var(--mz-color-neutral-50));
+        transition: all var(--mz-transition-spring);
+        box-shadow: var(--mz-shadow-xs);
+        position: relative;
+        pointer-events: none;
+      }
+
+      .root:not(.disabled):hover .outer {
+        border-color: var(--mz-color-primary-400);
+        transform: scale(1.1);
+        box-shadow: var(--mz-shadow-sm);
+      }
+
+      .input:checked ~ .outer {
+        background: linear-gradient(135deg, var(--mz-color-primary-400), var(--mz-color-primary-500));
+        border-color: var(--mz-color-primary-500);
+        box-shadow: var(--mz-shadow-sm), var(--mz-shadow-primary-glow);
+      }
+
+      .root:not(.disabled):hover .input:checked ~ .outer {
+        background: linear-gradient(135deg, var(--mz-color-primary-300), var(--mz-color-primary-400));
+        box-shadow: var(--mz-shadow-md), var(--mz-shadow-primary-glow-hover);
+      }
+
+      .input:focus-visible ~ .outer {
+        outline: 2px solid var(--mz-color-primary-500);
+        outline-offset: var(--mz-space-0-5);
       }
 
       .dot {
-        width: var(--mz-space-2); /* 0.55rem -> 0.5rem (closest available token) */
-        height: var(--mz-space-2); /* 0.55rem -> 0.5rem (closest available token) */
-        border-radius: var(--mz-radius-full); /* 9999px */
-        background: var(--mz-color-primary-500);
+        width: var(--mz-space-2);
+        height: var(--mz-space-2);
+        border-radius: var(--mz-radius-full);
+        background: var(--mz-color-neutral-0);
         transform: scale(0);
-        transition: transform var(--mz-transition-normal);
+        transition: all var(--mz-transition-spring);
+        opacity: 0;
       }
 
-      .checked .dot {
+      .input:checked ~ .outer .dot {
         transform: scale(1);
+        opacity: 1;
+        animation: radioCheck 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      @keyframes radioCheck {
+        0% {
+          transform: scale(0);
+          opacity: 0;
+        }
+        50% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .label {
+        user-select: none;
       }
     `
   ]
-  @property({type:String}) value = ''
-  @property({type:Boolean, reflect:true}) checked = false
-  @property({type:Boolean}) disabled = false
+  @property({ type: String }) value = ''
+  @property({ type: String }) name = ''
+  @property({ type: String }) label = ''
+  @property({ type: Boolean, reflect: true }) checked = false
+  @property({ type: Boolean }) disabled = false
+  @property({ type: Boolean }) required = false
+  @property({ type: String, attribute: 'aria-label' }) ariaLabel = ''
+  @property({ type: String, attribute: 'aria-describedby' }) ariaDescribedBy = ''
 
-  private select(){ if(this.disabled) return; this.checked=true; this.dispatchEvent(new CustomEvent('radio-select',{detail:{value:this.value},bubbles:true})) }
-  private onKey(e:KeyboardEvent){ if(e.key===' '||e.key==='Enter'){e.preventDefault();this.select()} }
+  private handleChange(e: Event) {
+    if (this.disabled) return
+    const input = e.target as HTMLInputElement
+    this.checked = input.checked
 
-  render(){
+    // Dispatch radio-select for group handling
+    this.dispatchEvent(new CustomEvent('radio-select', {
+      detail: { value: this.value },
+      bubbles: true,
+      composed: true
+    }))
+
+    // Dispatch standard change event
+    this.dispatchEvent(new Event('change', {
+      bubbles: true,
+      composed: true
+    }))
+
+    // Dispatch custom mz-change event
+    this.dispatchEvent(new CustomEvent('mz-change', {
+      detail: { checked: this.checked, value: this.value },
+      bubbles: true,
+      composed: true
+    }))
+  }
+
+  // Public API
+  click() {
+    this.shadowRoot?.querySelector('input')?.click()
+  }
+
+  focus() {
+    this.shadowRoot?.querySelector('input')?.focus()
+  }
+
+  blur() {
+    this.shadowRoot?.querySelector('input')?.blur()
+  }
+
+  render() {
     return html`
-      <div class="root ${this.checked?'checked':''}" role="radio" aria-checked=${this.checked} tabindex=${this.disabled?-1:0}
-        @click=${this.select} @keydown=${this.onKey} aria-disabled=${this.disabled}>
-        <div class="outer"><div class="dot"></div></div>
-        <slot></slot>
-      </div>
+      <label class="root ${this.disabled ? 'disabled' : ''}">
+        <input
+          type="radio"
+          class="input"
+          .checked=${this.checked}
+          ?disabled=${this.disabled}
+          ?required=${this.required}
+          name=${this.name}
+          value=${this.value}
+          aria-label=${this.ariaLabel || this.label}
+          aria-describedby=${this.ariaDescribedBy}
+          @change=${this.handleChange}
+        />
+        <div class="outer">
+          <div class="dot"></div>
+        </div>
+        ${this.label ? html`<span class="label">${this.label}</span>` : html`<slot></slot>`}
+      </label>
     `
   }
 }

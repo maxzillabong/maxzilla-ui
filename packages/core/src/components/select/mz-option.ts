@@ -20,6 +20,22 @@ export class MzOption extends LitElement {
   @property({ type: String }) value = ''
   @property({ type: String }) label = ''
 
+  @property({ type: Boolean }) selected = false;
+
+  connectedCallback() {
+    super.connectedCallback();
+    // Set ARIA attributes for option role
+    this.setAttribute('role', 'option');
+    this.setAttribute('aria-selected', this.selected.toString());
+  }
+
+  updated(changedProperties: Map<string | number | symbol, unknown>) {
+    super.updated(changedProperties);
+    if (changedProperties.has('selected')) {
+      this.setAttribute('aria-selected', this.selected.toString());
+    }
+  }
+
   createRenderRoot(){ return this } // light DOM for simpler select mapping
   render(){ return html`` }
 }

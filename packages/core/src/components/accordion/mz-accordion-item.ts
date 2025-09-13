@@ -75,10 +75,12 @@ export class MzAccordionItem extends LitElement {
         <button
           id=${this._buttonId}
           class="header"
+          type="button"
           @click=${this.toggle}
           @keydown=${this.onHeaderKeydown}
           aria-expanded=${this.open}
           aria-controls=${this._panelId}
+          aria-label=${this.header}
         >
           <span>${this.header}</span>
           <span class=${classMap({ chevron: true, open: this.open })}>▶</span>

@@ -51,7 +51,19 @@ export class MzToastContainer extends LitElement {
   }
 
   render(){
-    return html`${this._items.map(i=> html`<div class="item"><mz-alert variant=${i.variant}>${i.message}</mz-alert></div>`)} `
+    return html`
+      <div
+        role="region"
+        aria-live="polite"
+        aria-label="Notifications"
+      >
+        ${this._items.map(i=> html`
+          <div class="item">
+            <mz-alert variant=${i.variant}>${i.message}</mz-alert>
+          </div>
+        `)}
+      </div>
+    `
   }
 }
 

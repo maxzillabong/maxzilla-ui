@@ -162,7 +162,7 @@ export function Hero() {
           className="flex flex-wrap justify-center gap-8 md:gap-12 mt-20 pt-12 border-t border-neutral-200 dark:border-neutral-800"
         >
           {[
-            { number: '6+', label: 'Components' },
+            { number: '41+', label: 'Components' },
             { number: '5', label: 'Frameworks' },
             { number: '100%', label: 'Accessible' },
             { number: '0', label: 'Dependencies' },

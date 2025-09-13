@@ -15,7 +15,7 @@ export class MzCol extends LitElement {
   render() {
     const span = Math.max(1, Math.min(12, this.span))
     const style = `grid-column: span ${span} / span ${span}`
-    return html`<div style=${style}><slot></slot></div>`
+    return html`<div style=${style} role="gridcell"><slot></slot></div>`
   }
 }
 

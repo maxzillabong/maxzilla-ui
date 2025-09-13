@@ -46,15 +46,38 @@ export class MzTooltip extends LitElement {
   ]
   @property({type:String}) text = ''
   @property({type:String}) placement: 'top'|'bottom'|'left'|'right' = 'top'
+
+  @property({ type: String, attribute: 'aria-describedby' }) ariaDescribedBy?: string;
+
   @state() private _open = false
   private _show(){ this._open=true }
   private _hide(){ this._open=false }
   render(){
     const pos = this.placement
     const style = pos==='top'? 'bottom:100%;left:50%;transform:translate(-50%,var(--mz-space-1))' : pos==='bottom'? 'top:100%;left:50%;transform:translate(-50%,calc(-1 * var(--mz-space-1)))' : pos==='left'? 'right:100%;top:50%;transform:translate(var(--mz-space-1),-50%)' : 'left:100%;top:50%;transform:translate(calc(-1 * var(--mz-space-1)),-50%)'
+    const tooltipId = 'tooltip-' + Math.random().toString(36).substr(2, 9)
+
     return html`
-      <span @mouseenter=${this._show} @mouseleave=${this._hide} @focus=${this._show} @blur=${this._hide}><slot></slot></span>
-      <span class="tip" style=${style} part="content" data-open=${String(this._open)}>${this.text}</span>
+      <span
+        @mouseenter=${this._show}
+        @mouseleave=${this._hide}
+        @focus=${this._show}
+        @blur=${this._hide}
+        aria-describedby=${this.ariaDescribedBy || tooltipId}
+      >
+        <slot></slot>
+      </span>
+      <span
+        id=${tooltipId}
+        class="tip"
+        style=${style}
+        part="content"
+        data-open=${String(this._open)}
+        role="tooltip"
+        aria-hidden=${!this._open}
+      >
+        ${this.text}
+      </span>
     `
   }
 }

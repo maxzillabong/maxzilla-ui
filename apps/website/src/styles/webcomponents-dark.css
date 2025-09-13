@@ -1,0 +1,374 @@
+/* Dark mode styles for web components */
+
+/* Dark mode for all web components */
+@media (prefers-color-scheme: dark) {
+  /* Card component in dark mode */
+  mz-card {
+    --card-background: rgba(30, 30, 30, 0.95) !important;
+    --card-border: 2px solid rgba(255, 255, 255, 0.1) !important;
+    color: #e5e5e5 !important;
+  }
+
+  mz-card[variant="outlined"] {
+    --card-border: 2px solid rgba(6, 182, 212, 0.3) !important;
+    background: linear-gradient(135deg, rgba(30, 30, 30, 0.9), rgba(6, 182, 212, 0.05)) !important;
+  }
+
+  mz-card[variant="elevated"] {
+    background: linear-gradient(135deg, rgba(40, 40, 40, 0.95), rgba(30, 30, 30, 0.95)) !important;
+  }
+
+  /* Button component in dark mode */
+  mz-button {
+    --button-bg: rgba(255, 255, 255, 0.1) !important;
+    --button-color: #e5e5e5 !important;
+    --button-border: rgba(255, 255, 255, 0.2) !important;
+  }
+
+  mz-button[variant="primary"] {
+    --button-bg: rgba(6, 182, 212, 0.9) !important;
+    --button-color: #ffffff !important;
+  }
+
+  /* Badge component in dark mode */
+  mz-badge {
+    --badge-bg: rgba(255, 255, 255, 0.1) !important;
+    --badge-color: #e5e5e5 !important;
+  }
+
+  mz-badge[variant="primary"] {
+    --badge-bg: rgba(6, 182, 212, 0.2) !important;
+    --badge-color: #06b6d4 !important;
+  }
+
+  mz-badge[variant="success"] {
+    --badge-bg: rgba(34, 197, 94, 0.2) !important;
+    --badge-color: #22c55e !important;
+  }
+
+  mz-badge[variant="warning"] {
+    --badge-bg: rgba(234, 179, 8, 0.2) !important;
+    --badge-color: #eab308 !important;
+  }
+
+  mz-badge[variant="error"] {
+    --badge-bg: rgba(239, 68, 68, 0.2) !important;
+    --badge-color: #ef4444 !important;
+  }
+
+  /* Avatar component in dark mode */
+  mz-avatar {
+    --avatar-bg: rgba(255, 255, 255, 0.1) !important;
+    --avatar-color: #e5e5e5 !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+  }
+
+  /* Alert component in dark mode */
+  mz-alert {
+    --alert-bg: rgba(30, 30, 30, 0.95) !important;
+    --alert-color: #e5e5e5 !important;
+    --alert-border: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  mz-alert[variant="info"] {
+    --alert-bg: rgba(59, 130, 246, 0.1) !important;
+    --alert-border: rgba(59, 130, 246, 0.3) !important;
+  }
+
+  mz-alert[variant="success"] {
+    --alert-bg: rgba(34, 197, 94, 0.1) !important;
+    --alert-border: rgba(34, 197, 94, 0.3) !important;
+  }
+
+  mz-alert[variant="warning"] {
+    --alert-bg: rgba(234, 179, 8, 0.1) !important;
+    --alert-border: rgba(234, 179, 8, 0.3) !important;
+  }
+
+  mz-alert[variant="error"] {
+    --alert-bg: rgba(239, 68, 68, 0.1) !important;
+    --alert-border: rgba(239, 68, 68, 0.3) !important;
+  }
+
+  /* Modal component in dark mode */
+  mz-modal {
+    --modal-bg: rgba(30, 30, 30, 0.98) !important;
+    --modal-color: #e5e5e5 !important;
+    --modal-border: rgba(255, 255, 255, 0.1) !important;
+    --modal-overlay: rgba(0, 0, 0, 0.8) !important;
+  }
+
+  /* Input component in dark mode */
+  mz-input {
+    --input-bg: rgba(255, 255, 255, 0.05) !important;
+    --input-color: #e5e5e5 !important;
+    --input-border: rgba(255, 255, 255, 0.2) !important;
+    --input-placeholder: rgba(255, 255, 255, 0.4) !important;
+  }
+
+  mz-input:focus-within {
+    --input-border: rgba(6, 182, 212, 0.5) !important;
+  }
+
+  /* Checkbox component in dark mode */
+  mz-checkbox {
+    --checkbox-bg: rgba(255, 255, 255, 0.05) !important;
+    --checkbox-border: rgba(255, 255, 255, 0.3) !important;
+    --checkbox-color: #e5e5e5 !important;
+  }
+
+  mz-checkbox[checked] {
+    --checkbox-bg: rgba(6, 182, 212, 0.9) !important;
+    --checkbox-border: rgba(6, 182, 212, 1) !important;
+  }
+
+  /* Switch component in dark mode */
+  mz-switch {
+    --switch-bg: rgba(255, 255, 255, 0.2) !important;
+    --switch-thumb: #e5e5e5 !important;
+  }
+
+  mz-switch[checked] {
+    --switch-bg: rgba(6, 182, 212, 0.9) !important;
+  }
+
+  /* Navbar component in dark mode */
+  mz-navbar {
+    background: rgba(30, 30, 30, 0.8) !important;
+    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+  }
+
+  /* Toast component in dark mode */
+  mz-toast {
+    --toast-bg: rgba(30, 30, 30, 0.98) !important;
+    --toast-color: #e5e5e5 !important;
+    --toast-border: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  /* Progress component in dark mode */
+  mz-progress {
+    --progress-bg: rgba(255, 255, 255, 0.1) !important;
+    --progress-fill: rgba(6, 182, 212, 0.9) !important;
+  }
+
+  /* Stack component in dark mode */
+  mz-stack {
+    color: #e5e5e5 !important;
+  }
+
+  /* Container component in dark mode */
+  mz-container {
+    color: #e5e5e5 !important;
+  }
+
+  /* Divider component in dark mode */
+  mz-divider {
+    --divider-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  /* Textarea component in dark mode */
+  mz-textarea {
+    --textarea-bg: rgba(255, 255, 255, 0.05) !important;
+    --textarea-color: #e5e5e5 !important;
+    --textarea-border: rgba(255, 255, 255, 0.2) !important;
+    --textarea-placeholder: rgba(255, 255, 255, 0.4) !important;
+  }
+
+  /* Table component in dark mode */
+  mz-table {
+    --table-bg: rgba(30, 30, 30, 0.5) !important;
+    --table-border: rgba(255, 255, 255, 0.1) !important;
+    --table-header-bg: rgba(255, 255, 255, 0.05) !important;
+    --table-row-hover: rgba(255, 255, 255, 0.05) !important;
+    color: #e5e5e5 !important;
+  }
+
+  /* Accordion component in dark mode */
+  mz-accordion-item {
+    --accordion-bg: rgba(30, 30, 30, 0.5) !important;
+    --accordion-border: rgba(255, 255, 255, 0.1) !important;
+    --accordion-color: #e5e5e5 !important;
+  }
+
+  /* Breadcrumb component in dark mode */
+  mz-breadcrumb-item {
+    --breadcrumb-color: rgba(255, 255, 255, 0.7) !important;
+    --breadcrumb-separator: rgba(255, 255, 255, 0.3) !important;
+  }
+
+  mz-breadcrumb-item[current] {
+    --breadcrumb-color: #e5e5e5 !important;
+  }
+
+  /* Pagination component in dark mode */
+  mz-pagination {
+    --pagination-bg: rgba(255, 255, 255, 0.05) !important;
+    --pagination-color: #e5e5e5 !important;
+    --pagination-border: rgba(255, 255, 255, 0.2) !important;
+    --pagination-active-bg: rgba(6, 182, 212, 0.2) !important;
+    --pagination-active-color: #06b6d4 !important;
+  }
+
+  /* Tabs component in dark mode */
+  mz-tab {
+    --tab-color: rgba(255, 255, 255, 0.7) !important;
+    --tab-active-color: #06b6d4 !important;
+    --tab-border: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  /* Popover component in dark mode */
+  mz-popover {
+    --popover-bg: rgba(40, 40, 40, 0.98) !important;
+    --popover-color: #e5e5e5 !important;
+    --popover-border: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  /* Loading component in dark mode */
+  mz-loading {
+    --loading-color: #06b6d4 !important;
+    --loading-bg: rgba(0, 0, 0, 0.8) !important;
+  }
+
+  /* Form component in dark mode */
+  mz-form {
+    color: #e5e5e5 !important;
+  }
+
+  mz-form-group {
+    --form-label-color: rgba(255, 255, 255, 0.9) !important;
+    --form-helper-color: rgba(255, 255, 255, 0.6) !important;
+  }
+
+  /* Drawer component in dark mode */
+  mz-drawer {
+    --drawer-bg: rgba(30, 30, 30, 0.98) !important;
+    --drawer-color: #e5e5e5 !important;
+    --drawer-overlay: rgba(0, 0, 0, 0.8) !important;
+  }
+
+  /* Radio component in dark mode */
+  mz-radio {
+    --radio-bg: rgba(255, 255, 255, 0.05) !important;
+    --radio-border: rgba(255, 255, 255, 0.3) !important;
+    --radio-color: #e5e5e5 !important;
+  }
+
+  mz-radio[checked] {
+    --radio-bg: rgba(6, 182, 212, 0.9) !important;
+    --radio-border: rgba(6, 182, 212, 1) !important;
+  }
+
+  /* Tree component in dark mode */
+  mz-tree-node {
+    --tree-color: #e5e5e5 !important;
+    --tree-hover-bg: rgba(255, 255, 255, 0.05) !important;
+    --tree-selected-bg: rgba(6, 182, 212, 0.2) !important;
+  }
+
+  /* DatePicker component in dark mode */
+  mz-date-picker {
+    --datepicker-bg: rgba(30, 30, 30, 0.98) !important;
+    --datepicker-color: #e5e5e5 !important;
+    --datepicker-border: rgba(255, 255, 255, 0.2) !important;
+  }
+}
+
+/* Apply dark mode styles when html has dark class */
+html.dark mz-card {
+  --card-background: rgba(30, 30, 30, 0.95) !important;
+  --card-border: 2px solid rgba(255, 255, 255, 0.1) !important;
+  color: #e5e5e5 !important;
+}
+
+html.dark mz-card[variant="outlined"] {
+  --card-border: 2px solid rgba(6, 182, 212, 0.3) !important;
+  background: linear-gradient(135deg, rgba(30, 30, 30, 0.9), rgba(6, 182, 212, 0.05)) !important;
+}
+
+html.dark mz-card[variant="elevated"] {
+  background: linear-gradient(135deg, rgba(40, 40, 40, 0.95), rgba(30, 30, 30, 0.95)) !important;
+}
+
+html.dark mz-button {
+  --button-bg: rgba(255, 255, 255, 0.1) !important;
+  --button-color: #e5e5e5 !important;
+  --button-border: rgba(255, 255, 255, 0.2) !important;
+}
+
+html.dark mz-button[variant="primary"] {
+  --button-bg: rgba(6, 182, 212, 0.9) !important;
+  --button-color: #ffffff !important;
+}
+
+html.dark mz-badge {
+  --badge-bg: rgba(255, 255, 255, 0.1) !important;
+  --badge-color: #e5e5e5 !important;
+}
+
+html.dark mz-badge[variant="primary"] {
+  --badge-bg: rgba(6, 182, 212, 0.2) !important;
+  --badge-color: #06b6d4 !important;
+}
+
+html.dark mz-badge[variant="success"] {
+  --badge-bg: rgba(34, 197, 94, 0.2) !important;
+  --badge-color: #22c55e !important;
+}
+
+html.dark mz-badge[variant="warning"] {
+  --badge-bg: rgba(234, 179, 8, 0.2) !important;
+  --badge-color: #eab308 !important;
+}
+
+html.dark mz-badge[variant="error"] {
+  --badge-bg: rgba(239, 68, 68, 0.2) !important;
+  --badge-color: #ef4444 !important;
+}
+
+html.dark mz-avatar {
+  --avatar-bg: rgba(255, 255, 255, 0.1) !important;
+  --avatar-color: #e5e5e5 !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+html.dark mz-alert {
+  --alert-bg: rgba(30, 30, 30, 0.95) !important;
+  --alert-color: #e5e5e5 !important;
+  --alert-border: rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark mz-modal {
+  --modal-bg: rgba(30, 30, 30, 0.98) !important;
+  --modal-color: #e5e5e5 !important;
+  --modal-border: rgba(255, 255, 255, 0.1) !important;
+  --modal-overlay: rgba(0, 0, 0, 0.8) !important;
+}
+
+html.dark mz-input {
+  --input-bg: rgba(255, 255, 255, 0.05) !important;
+  --input-color: #e5e5e5 !important;
+  --input-border: rgba(255, 255, 255, 0.2) !important;
+  --input-placeholder: rgba(255, 255, 255, 0.4) !important;
+}
+
+html.dark mz-checkbox {
+  --checkbox-bg: rgba(255, 255, 255, 0.05) !important;
+  --checkbox-border: rgba(255, 255, 255, 0.3) !important;
+  --checkbox-color: #e5e5e5 !important;
+}
+
+html.dark mz-switch {
+  --switch-bg: rgba(255, 255, 255, 0.2) !important;
+  --switch-thumb: #e5e5e5 !important;
+}
+
+html.dark mz-navbar {
+  background: rgba(30, 30, 30, 0.8) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark mz-toast {
+  --toast-bg: rgba(30, 30, 30, 0.98) !important;
+  --toast-color: #e5e5e5 !important;
+  --toast-border: rgba(255, 255, 255, 0.1) !important;
+}

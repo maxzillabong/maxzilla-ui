@@ -153,6 +153,8 @@ export class MzAvatar extends LitElement {
   @property({ type: String, reflect: true }) status: 'online' | 'offline' | 'busy' | 'away' | '' = '';
   @property({ type: Boolean, reflect: true }) interactive = false;
 
+  @property({ type: String, attribute: 'aria-label' }) ariaLabel?: string;
+  @property({ type: Boolean }) decorative = false;
   @state() private imageError = false;
 
   private handleImageError = () => {
@@ -200,26 +202,40 @@ export class MzAvatar extends LitElement {
 
     const showImage = this.src && !this.imageError;
 
+    // Determine appropriate alt text for the avatar
+    const avatarAlt = this.ariaLabel || this.alt || `Avatar ${this.initials ? 'for ' + this.initials : ''}`;
+    const role = this.decorative ? 'presentation' : 'img';
+    const ariaLabel = this.decorative ? undefined : avatarAlt;
+
     return html`
-      <div class=${classMap(classes)} @click=${this.handleClick}>
+      <div
+        class=${classMap(classes)}
+        role=${role}
+        aria-label=${ariaLabel}
+        @click=${this.handleClick}
+      >
         ${showImage
           ? html`
               <img
                 class="avatar-image"
                 src=${this.src}
-                alt=${this.alt}
+                alt=${this.decorative ? '' : this.alt}
                 @error=${this.handleImageError}
                 @load=${this.handleImageLoad}
               />
             `
           : html`
-              <div class="avatar-fallback">
+              <div class="avatar-fallback" aria-hidden=${this.decorative}>
                 <slot>${this.getInitials()}</slot>
               </div>
             `}
-        
+
         ${this.status
-          ? html`<div class=${classMap(statusClasses)}></div>`
+          ? html`<div
+              class=${classMap(statusClasses)}
+              role="status"
+              aria-label=${`Status: ${this.status}`}
+            ></div>`
           : ''}
       </div>
     `;

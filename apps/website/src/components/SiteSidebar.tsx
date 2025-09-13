@@ -29,21 +29,33 @@ export function SiteSidebar({
     const navEl = navRef.current
 
     if (navEl) {
-      // Restore scroll position
-      const savedPosition = sessionStorage.getItem(scrollKey)
-      if (savedPosition) {
-        navEl.scrollTop = parseInt(savedPosition, 10)
-      }
-
       // Save scroll position on scroll
       const handleScroll = () => {
         sessionStorage.setItem(scrollKey, navEl.scrollTop.toString())
       }
 
+      // Restore scroll position after a small delay to ensure DOM is ready
+      const restoreScroll = () => {
+        const savedPosition = sessionStorage.getItem(scrollKey)
+        if (savedPosition && navEl) {
+          navEl.scrollTop = parseInt(savedPosition, 10)
+        }
+      }
+
+      // Try to restore immediately
+      restoreScroll()
+
+      // Also try after a small delay in case content is still loading
+      const timeoutId = setTimeout(restoreScroll, 100)
+
       navEl.addEventListener('scroll', handleScroll)
-      return () => navEl.removeEventListener('scroll', handleScroll)
+
+      return () => {
+        navEl.removeEventListener('scroll', handleScroll)
+        clearTimeout(timeoutId)
+      }
     }
-  }, [])
+  }, [current, pathname]) // Re-run when current or pathname changes
 
   const grouped = useMemo<Category[]>(() => {
     const map = new Map<string, { slug: string; name: string }[]>()

@@ -289,6 +289,9 @@ export class MzCard extends LitElement {
   @property({ type: Boolean, reflect: true, attribute: 'full-height' }) fullHeight = false;
   @property({ type: Boolean, reflect: true, attribute: 'has-avatar' }) hasAvatar = false;
 
+  @property({ type: String, attribute: 'aria-label' }) ariaLabel?: string;
+  @property({ type: String, attribute: 'aria-describedby' }) ariaDescribedBy?: string;
+  @property({ type: String, attribute: 'aria-labelledby' }) ariaLabelledBy?: string;
   private handleClick = (event: MouseEvent) => {
     if (this.disabled || this.loading || !this.interactive) {
       return;
@@ -303,6 +306,14 @@ export class MzCard extends LitElement {
     );
   };
 
+  
+  private handleKeyDown = (e: KeyboardEvent) => {
+    if (this.interactive && !this.disabled && !this.loading && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      this.handleClick(new MouseEvent('click'));
+    }
+  }
+
   render() {
     const classes = {
       card: true,
@@ -310,10 +321,21 @@ export class MzCard extends LitElement {
       'card--interactive': this.interactive,
     };
 
+    const role = this.interactive ? 'button' : 'article';
+    const tabindex = this.interactive && !this.disabled && !this.loading ? '0' : undefined;
+
     return html`
       <div
         class=${classMap(classes)}
+        role=${role}
+        tabindex=${tabindex}
+        aria-label=${this.ariaLabel || ''}
+        aria-labelledby=${this.ariaLabelledBy || ''}
+        aria-describedby=${this.ariaDescribedBy || ''}
+        aria-disabled=${this.disabled}
+        aria-busy=${this.loading}
         @click=${this.handleClick}
+        @keydown=${this.handleKeyDown}
       >
         <slot name="image"></slot>
         <slot name="header"></slot>

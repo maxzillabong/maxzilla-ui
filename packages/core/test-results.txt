@@ -1,0 +1,1577 @@
+
+> maxzilla-ui-core@0.1.5 test
+> web-test-runner
+
+
+Chromium: |██████████                    | 0/15 test files | 0 passed, 0 failed
+
+Running tests...
+
+Running 15 test files...
+
+
+[2K[1A[2K[Gsrc/components/badge/mz-badge.test.ts:
+
+ 🚧 Browser logs:
+      Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+
+
+[2K[1A[2K[Gsrc/components/card/mz-card.test.ts:
+
+ 🚧 Browser logs:
+      Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+
+ 🚧 404 network requests:
+    - test.jpg
+
+ ❌ mz-card > variants > should render interactive variant
+      AssertionError: expected false to be true
+      + expected - actual
+      
+      -false
+      +true
+      
+      at n4.<anonymous> (src/components/card/mz-card.test.ts:113:69)
+
+ ❌ mz-card > edge cases > should handle all slots together
+      AssertionError: expected '\n          ' to equal 'Body'
+      + expected - actual
+      
+      -
+      -          
+      +Body
+      
+      at n4.<anonymous> (src/components/card/mz-card.test.ts:344:61)
+
+
+[2K[1A[2K[Gsrc/components/avatar/mz-avatar.test.ts:
+
+ 🚧 Browser logs:
+      Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+
+ 🚧 404 network requests:
+    - avatar.jpg
+    - nonexistent.jpg
+    - wide-image.jpg
+
+ ❌ mz-avatar > rendering > should render with default properties
+      AssertionError: expected undefined to equal ''
+        at n4.<anonymous> (src/components/avatar/mz-avatar.test.ts:16:25)
+
+ ❌ mz-avatar > image avatar > should show loading state while image loads
+      AssertionError: expected undefined to be true
+        at n4.<anonymous> (src/components/avatar/mz-avatar.test.ts:86:31)
+
+ ❌ mz-avatar > initials generation > should generate initials from name
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/avatar/mz-avatar.test.ts:99:26)
+
+ ❌ mz-avatar > initials generation > should handle single name
+      AssertionError: expected undefined to equal 'J'
+        at n4.<anonymous> (src/components/avatar/mz-avatar.test.ts:109:47)
+
+ ❌ mz-avatar > initials generation > should handle multiple names
+      AssertionError: expected undefined to equal 'JD'
+        at n4.<anonymous> (src/components/avatar/mz-avatar.test.ts:118:47)
+
+ ❌ mz-avatar > initials generation > should handle empty name
+      AssertionError: expected undefined to equal ''
+        at n4.<anonymous> (src/components/avatar/mz-avatar.test.ts:127:47)
+
+ ❌ mz-avatar > initials generation > should handle special characters in name
+      AssertionError: expected undefined to equal 'JM'
+        at n4.<anonymous> (src/components/avatar/mz-avatar.test.ts:136:47)
+
+ ❌ mz-avatar > shapes > should apply circle shape
+      AssertionError: expected false to be true
+      + expected - actual
+      
+      -false
+      +true
+      
+      at n4.<anonymous> (src/components/avatar/mz-avatar.test.ts:172:69)
+
+ ❌ mz-avatar > shapes > should apply square shape
+      AssertionError: expected false to be true
+      + expected - actual
+      
+      -false
+      +true
+      
+      at n4.<anonymous> (src/components/avatar/mz-avatar.test.ts:172:69)
+
+ ❌ mz-avatar > shapes > should apply rounded shape
+      AssertionError: expected false to be true
+      + expected - actual
+      
+      -false
+      +true
+      
+      at n4.<anonymous> (src/components/avatar/mz-avatar.test.ts:172:69)
+
+ ❌ mz-avatar > shapes > should default to circle shape
+      AssertionError: expected false to be true
+      + expected - actual
+      
+      -false
+      +true
+      
+      at n4.<anonymous> (src/components/avatar/mz-avatar.test.ts:181:65)
+
+ ❌ mz-avatar > clickable behavior > should not be clickable by default
+      AssertionError: expected undefined to be false
+        at n4.<anonymous> (src/components/avatar/mz-avatar.test.ts:189:33)
+
+ ❌ mz-avatar > clickable behavior > should apply clickable styles when clickable is true
+      AssertionError: expected undefined to be true
+        at n4.<anonymous> (src/components/avatar/mz-avatar.test.ts:199:33)
+
+ ❌ mz-avatar > clickable behavior > should emit click event when clickable and clicked
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/avatar/mz-avatar.test.ts:218:29)
+
+ ❌ mz-avatar > accessibility > should have proper ARIA attributes for initials
+      AssertionError: expected 'Avatar ' to include 'John Doe'
+        at n4.<anonymous> (src/components/avatar/mz-avatar.test.ts:303:52)
+
+ ❌ mz-avatar > accessibility > should be focusable when clickable
+      AssertionError: expected -1 to equal 0
+      + expected - actual
+      
+      --1
+      +0
+      
+      at n4.<anonymous> (src/components/avatar/mz-avatar.test.ts:312:33)
+
+ ❌ mz-avatar > accessibility > should support keyboard interaction when clickable
+      AssertionError: expected false to be true
+      + expected - actual
+      
+      -false
+      +true
+      
+      at n4.<anonymous> (src/components/avatar/mz-avatar.test.ts:336:31)
+
+ ❌ mz-avatar > edge cases > should handle very long names
+      AssertionError: expected undefined to be a number or a date
+        at n4.<anonymous> (src/components/avatar/mz-avatar.test.ts:366:50)
+
+ ❌ mz-avatar > edge cases > should handle names with numbers
+      AssertionError: expected undefined to equal 'UT'
+        at n4.<anonymous> (src/components/avatar/mz-avatar.test.ts:375:47)
+
+ ❌ mz-avatar > edge cases > should handle emoji in names
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/avatar/mz-avatar.test.ts:384:26)
+
+ ❌ mz-avatar > edge cases > should handle dynamic property changes
+      AssertionError: expected false to be true
+      + expected - actual
+      
+      -false
+      +true
+      
+      at n4.<anonymous> (src/components/avatar/mz-avatar.test.ts:397:65)
+
+ ❌ mz-avatar > edge cases > should handle switching between image and initials
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/avatar/mz-avatar.test.ts:410:26)
+
+ ❌ mz-avatar > edge cases > should maintain aspect ratio for non-square images
+      AssertionError: expected '' to equal 'cover'
+      + expected - actual
+      
+      +cover
+      
+      at n4.<anonymous> (src/components/avatar/mz-avatar.test.ts:458:38)
+
+
+[2K[1A[2K[Gsrc/components/container/mz-container.test.ts:
+
+ 🚧 Browser logs:
+      Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+
+ ❌ mz-container > rendering > should render with default properties
+      AssertionError: expected 'lg' to equal 'default'
+      + expected - actual
+      
+      -lg
+      +default
+      
+      at n4.<anonymous> (src/components/container/mz-container.test.ts:12:25)
+
+ ❌ mz-container > sizes > should apply xs size
+      AssertionError: expected false to be true
+      + expected - actual
+      
+      -false
+      +true
+      
+      at n4.<anonymous> (src/components/container/mz-container.test.ts:56:76)
+
+ ❌ mz-container > sizes > should apply sm size
+      AssertionError: expected false to be true
+      + expected - actual
+      
+      -false
+      +true
+      
+      at n4.<anonymous> (src/components/container/mz-container.test.ts:56:76)
+
+ ❌ mz-container > sizes > should apply md size
+      AssertionError: expected false to be true
+      + expected - actual
+      
+      -false
+      +true
+      
+      at n4.<anonymous> (src/components/container/mz-container.test.ts:56:76)
+
+ ❌ mz-container > sizes > should apply lg size
+      AssertionError: expected false to be true
+      + expected - actual
+      
+      -false
+      +true
+      
+      at n4.<anonymous> (src/components/container/mz-container.test.ts:56:76)
+
+ ❌ mz-container > sizes > should apply xl size
+      AssertionError: expected false to be true
+      + expected - actual
+      
+      -false
+      +true
+      
+      at n4.<anonymous> (src/components/container/mz-container.test.ts:56:76)
+
+ ❌ mz-container > sizes > should default to default size
+      AssertionError: expected 'lg' to equal 'default'
+      + expected - actual
+      
+      -lg
+      +default
+      
+      at n4.<anonymous> (src/components/container/mz-container.test.ts:64:25)
+
+ ❌ mz-container > fluid mode > should not be fluid by default
+      AssertionError: expected undefined to be false
+        at n4.<anonymous> (src/components/container/mz-container.test.ts:74:29)
+
+ ❌ mz-container > fluid mode > should apply fluid class when fluid is true
+      AssertionError: expected undefined to be true
+        at n4.<anonymous> (src/components/container/mz-container.test.ts:84:29)
+
+ ❌ mz-container > fluid mode > should toggle fluid mode dynamically
+      AssertionError: expected false to be true
+      + expected - actual
+      
+      -false
+      +true
+      
+      at n4.<anonymous> (src/components/container/mz-container.test.ts:97:70)
+
+ ❌ mz-container > center content > should not center content by default
+      AssertionError: expected undefined to be false
+        at n4.<anonymous> (src/components/container/mz-container.test.ts:109:37)
+
+ ❌ mz-container > center content > should apply center class when centerContent is true
+      AssertionError: expected undefined to be true
+        at n4.<anonymous> (src/components/container/mz-container.test.ts:119:37)
+
+ ❌ mz-container > center content > should toggle center mode dynamically
+      AssertionError: expected false to be true
+      + expected - actual
+      
+      -false
+      +true
+      
+      at n4.<anonymous> (src/components/container/mz-container.test.ts:132:71)
+
+ ❌ mz-container > responsive behavior > should maintain responsive behavior when fluid
+      AssertionError: expected false to be true
+      + expected - actual
+      
+      -false
+      +true
+      
+      at n4.<anonymous> (src/components/container/mz-container.test.ts:173:70)
+
+ ❌ mz-container > edge cases > should handle nested containers
+      AssertionError: expected false to be true
+      + expected - actual
+      
+      -false
+      +true
+      
+      at n4.<anonymous> (src/components/container/mz-container.test.ts:210:72)
+
+ ❌ mz-container > edge cases > should handle multiple state changes
+      AssertionError: expected false to be true
+      + expected - actual
+      
+      -false
+      +true
+      
+      at n4.<anonymous> (src/components/container/mz-container.test.ts:226:66)
+
+ ❌ mz-container > edge cases > should handle conflicting size and fluid properties
+      AssertionError: expected false to be true
+      + expected - actual
+      
+      -false
+      +true
+      
+      at n4.<anonymous> (src/components/container/mz-container.test.ts:237:67)
+
+
+[2K[1A[2K[Gsrc/components/form/mz-form.test.ts:
+
+ 🚧 Browser logs:
+      Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+
+ ❌ mz-form-group > rendering > should render with default properties
+      AssertionError: expected undefined to equal ''
+        at n4.<anonymous> (src/components/form/mz-form.test.ts:14:26)
+
+ ❌ mz-form-group > rendering > should render form group container
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/form/mz-form.test.ts:25:27)
+
+ ❌ mz-form-group > label > should render label when provided
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/form/mz-form.test.ts:54:23)
+
+ ❌ mz-form-group > label > should show required indicator when required
+      AssertionError: expected undefined to exist
+        at n4.<anonymous> (src/components/form/mz-form.test.ts:67:35)
+
+ ❌ mz-form-group > label > should associate label with form control
+      AssertionError: expected undefined to exist
+        at n4.<anonymous> (src/components/form/mz-form.test.ts:79:44)
+
+ ❌ mz-form-group > helper text > should render helper text when provided
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/form/mz-form.test.ts:92:28)
+
+ ❌ mz-form-group > error state > should show error state when error is true
+      AssertionError: expected undefined to be true
+        at n4.<anonymous> (src/components/form/mz-form.test.ts:117:71)
+
+ ❌ mz-form-group > error state > should show error text when provided
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/form/mz-form.test.ts:128:27)
+
+ ❌ mz-form-group > error state > should replace helper text with error text when in error state
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/form/mz-form.test.ts:147:27)
+
+ ❌ mz-form-group > spacing > should apply proper spacing between elements
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/form/mz-form.test.ts:167:23)
+
+ ❌ mz-form-group > accessibility > should have proper ARIA attributes
+      AssertionError: expected undefined to equal 'alert'
+        at n4.<anonymous> (src/components/form/mz-form.test.ts:187:49)
+
+ ❌ mz-form-group > edge cases > should handle very long label text
+      AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+        at n4.<anonymous> (src/components/form/mz-form.test.ts:215:36)
+
+ ❌ mz-form-group > edge cases > should handle dynamic property changes
+      AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+        at n4.<anonymous> (src/components/form/mz-form.test.ts:234:36)
+
+ ❌ mz-form-actions > rendering > should render with default properties
+      AssertionError: expected undefined to equal 'end'
+        at n4.<anonymous> (src/components/form/mz-form.test.ts:247:26)
+
+ ❌ mz-form-actions > rendering > should render actions container
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/form/mz-form.test.ts:255:27)
+
+ ❌ mz-form-actions > alignment > should apply start alignment
+      AssertionError: expected undefined to equal 'start'
+        at n4.<anonymous> (src/components/form/mz-form.test.ts:288:28)
+
+ ❌ mz-form-actions > alignment > should apply center alignment
+      AssertionError: expected undefined to equal 'center'
+        at n4.<anonymous> (src/components/form/mz-form.test.ts:288:28)
+
+ ❌ mz-form-actions > alignment > should apply end alignment
+      AssertionError: expected undefined to equal 'end'
+        at n4.<anonymous> (src/components/form/mz-form.test.ts:288:28)
+
+ ❌ mz-form-actions > alignment > should apply space-between alignment
+      AssertionError: expected undefined to equal 'space-between'
+        at n4.<anonymous> (src/components/form/mz-form.test.ts:288:28)
+
+ ❌ mz-form-actions > alignment > should default to end alignment
+      AssertionError: expected undefined to equal 'end'
+        at n4.<anonymous> (src/components/form/mz-form.test.ts:301:26)
+
+ ❌ mz-form-actions > sticky behavior > should apply sticky class when sticky is true
+      AssertionError: expected undefined to be true
+        at n4.<anonymous> (src/components/form/mz-form.test.ts:315:30)
+
+ ❌ mz-form-actions > sticky behavior > should not apply sticky class when sticky is false
+      AssertionError: expected undefined to be false
+        at n4.<anonymous> (src/components/form/mz-form.test.ts:327:30)
+
+ ❌ mz-form-actions > edge cases > should handle no actions
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/form/mz-form.test.ts:355:27)
+
+ ❌ mz-form-actions > edge cases > should handle dynamic property changes
+      AssertionError: expected undefined to be true
+        at n4.<anonymous> (src/components/form/mz-form.test.ts:411:73)
+
+
+[2K[1A[2K[Gsrc/components/input/mz-input.test.ts:
+
+ 🚧 Browser logs:
+      Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+
+ ❌ mz-input > rendering > should render with default properties
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > rendering > should render input element
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > rendering > should render with custom value
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > rendering > should render with placeholder
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > input types > should render text type input
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > input types > should render email type input
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > input types > should render password type input
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > input types > should render number type input
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > input types > should handle password type correctly
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > input types > should handle number type correctly
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > sizes > should render sm size
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > sizes > should render md size
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > sizes > should render lg size
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > disabled state > should disable input when disabled is true
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > disabled state > should not emit input event when disabled
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > disabled state > should toggle disabled state dynamically
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > error state > should show error state
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > error state > should toggle error state dynamically
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > success state > should show success state
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > success state > should toggle success state dynamically
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > events > should emit mz-input event on input
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > events > should emit mz-focus event on focus
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > events > should emit mz-blur event on blur
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > events > should update value on input event
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > events > should handle multiple input events
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > accessibility > should be focusable when not disabled
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > accessibility > should not be focusable when disabled
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > accessibility > should have correct input role
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > CSS custom properties > should apply size-related CSS custom properties
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > CSS custom properties > should have transition CSS variable
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > edge cases > should handle empty value
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > edge cases > should handle very long value
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > edge cases > should handle special characters in value
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > edge cases > should handle value changes programmatically
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > edge cases > should handle rapid value changes
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > edge cases > should handle changing type dynamically
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > edge cases > should handle simultaneous error and success states
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-input > edge cases > should preserve value when toggling disabled
+      ReferenceError: nothing is not defined
+        at MzInput.render (src/components/input/mz-input.ts:406:28)
+        at MzInput.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzInput.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzInput.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzInput.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+
+[2K[1A[2K[Gsrc/components/modal/mz-modal.test.ts:
+
+ 🚧 Browser logs:
+      Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+
+ ❌ mz-modal > rendering > should render with default properties
+      AssertionError: expected undefined to be true
+        at n4.<anonymous> (src/components/modal/mz-modal.test.ts:14:38)
+
+ ❌ mz-modal > rendering > should render when open
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-modal > rendering > should render slots when open
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-modal > rendering > should render close button when open
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-modal > sizes > should render sm size
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-modal > sizes > should render md size
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-modal > sizes > should render lg size
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-modal > sizes > should render xl size
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-modal > sizes > should render full size
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-modal > open/close behavior > should toggle open state
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async n4.<anonymous> (src/components/modal/mz-modal.test.ts:84:6)
+
+ ❌ mz-modal > open/close behavior > should close on close button click
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-modal > open/close behavior > should close on overlay click when closeOnOverlay is true
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-modal > open/close behavior > should not close on overlay click when closeOnOverlay is false
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-modal > open/close behavior > should not close on modal content click
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-modal > keyboard interaction > should close on Escape key when closeOnEsc is true
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-modal > keyboard interaction > should not close on Escape key when closeOnEsc is false
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-modal > keyboard interaction > should not close on other keys
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-modal > events > should emit mz-close event when closing
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-modal > events > should emit mz-close event on overlay click
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-modal > events > should emit mz-close event on escape key
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-modal > accessibility > should have correct ARIA attributes
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-modal > accessibility > should trap focus when open
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-modal > edge cases > should handle empty content
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-modal > edge cases > should handle very long content
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-modal > edge cases > should handle rapid open/close toggling
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async n4.<anonymous> (src/components/modal/mz-modal.test.ts:263:8)
+
+ ❌ mz-modal > edge cases > should handle changing size while open
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+ ❌ mz-modal > edge cases > should handle all slots together
+      ReferenceError: nothing is not defined
+        at MzModal.render (src/components/modal/mz-modal.ts:409:57)
+        at MzModal.update (../../node_modules/lit-element/development/lit-element.js:124:27)
+        at MzModal.performUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:889:21)
+        at MzModal.scheduleUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:799:28)
+        at MzModal.__enqueueUpdate (../../node_modules/@lit/reactive-element/development/reactive-element.js:772:28)
+        at async elementUpdated (../../node_modules/@open-wc/testing-helpers/src/elementUpdated.js:24:4)
+        at async litFixture (../../node_modules/@open-wc/testing-helpers/src/litFixture.js:64:2)
+
+
+[2K[1A[2K[Gsrc/components/progress/mz-progress.test.ts:
+
+ 🚧 Browser logs:
+      Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+
+ ❌ mz-progress > rendering > should render with default properties
+      AssertionError: expected undefined to equal 'md'
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:14:25)
+
+ ❌ mz-progress > rendering > should render progress element
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:24:26)
+
+ ❌ mz-progress > rendering > should render progress bar
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:32:29)
+
+ ❌ mz-progress > rendering > should render progress track
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:40:31)
+
+ ❌ mz-progress > value and progress calculation > should update progress bar width dynamically
+      TypeError: Cannot read properties of null (reading 'style')
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:84:25)
+
+ ❌ mz-progress > variants > should render primary variant
+      AssertionError: expected undefined to equal 'primary'
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:97:30)
+
+ ❌ mz-progress > variants > should render secondary variant
+      AssertionError: expected undefined to equal 'secondary'
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:97:30)
+
+ ❌ mz-progress > variants > should render success variant
+      AssertionError: expected undefined to equal 'success'
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:97:30)
+
+ ❌ mz-progress > variants > should render warning variant
+      AssertionError: expected undefined to equal 'warning'
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:97:30)
+
+ ❌ mz-progress > variants > should render error variant
+      AssertionError: expected undefined to equal 'error'
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:97:30)
+
+ ❌ mz-progress > variants > should default to primary variant
+      AssertionError: expected undefined to equal 'primary'
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:106:28)
+
+ ❌ mz-progress > sizes > should apply xs size
+      AssertionError: expected undefined to equal 'xs'
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:121:27)
+
+ ❌ mz-progress > sizes > should apply sm size
+      AssertionError: expected undefined to equal 'sm'
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:121:27)
+
+ ❌ mz-progress > sizes > should apply md size
+      AssertionError: expected undefined to equal 'md'
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:121:27)
+
+ ❌ mz-progress > sizes > should apply lg size
+      AssertionError: expected undefined to equal 'lg'
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:121:27)
+
+ ❌ mz-progress > sizes > should default to md size
+      AssertionError: expected undefined to equal 'md'
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:129:25)
+
+ ❌ mz-progress > value display > should show value when showValue is true
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:149:30)
+
+ ❌ mz-progress > value display > should show custom value format
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:159:30)
+
+ ❌ mz-progress > value display > should update displayed value dynamically
+      AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:169:43)
+
+ ❌ mz-progress > indeterminate state > should not be indeterminate by default
+      AssertionError: expected undefined to be false
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:183:37)
+
+ ❌ mz-progress > indeterminate state > should apply indeterminate class when indeterminate is true
+      AssertionError: expected undefined to be true
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:191:37)
+
+ ❌ mz-progress > indeterminate state > should ignore value when indeterminate
+      AssertionError: expected undefined to be true
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:203:76)
+
+ ❌ mz-progress > indeterminate state > should toggle indeterminate state dynamically
+      AssertionError: expected undefined to be false
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:210:76)
+
+ ❌ mz-progress > label > should render label when provided
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:229:23)
+
+ ❌ mz-progress > accessibility > should have proper ARIA attributes for indeterminate state
+      AssertionError: expected true to be false
+      + expected - actual
+      
+      -true
+      +false
+      
+      at n4.<anonymous> (src/components/progress/mz-progress.test.ts:266:67)
+
+ ❌ mz-progress > edge cases > should handle zero value
+      TypeError: Cannot read properties of null (reading 'style')
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:284:25)
+
+ ❌ mz-progress > edge cases > should handle maximum value
+      TypeError: Cannot read properties of null (reading 'style')
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:292:25)
+
+ ❌ mz-progress > edge cases > should handle dynamic property changes
+      AssertionError: expected undefined to be true
+        at n4.<anonymous> (src/components/progress/mz-progress.test.ts:325:70)
+
+
+[2K[1A[2K[Gsrc/components/radio/mz-radio.test.ts:
+
+ 🚧 Browser logs:
+      Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+
+ ❌ mz-radio > rendering > should render with default properties
+      AssertionError: expected undefined to equal 'md'
+        at n4.<anonymous> (src/components/radio/mz-radio.test.ts:18:25)
+
+ ❌ mz-radio > rendering > should render label slot
+      AssertionError: expected undefined to exist
+        at n4.<anonymous> (src/components/radio/mz-radio.test.ts:37:22)
+
+ ❌ mz-radio > sizes > should apply sm size
+      AssertionError: expected undefined to equal 'sm'
+        at n4.<anonymous> (src/components/radio/mz-radio.test.ts:147:27)
+
+ ❌ mz-radio > sizes > should apply md size
+      AssertionError: expected undefined to equal 'md'
+        at n4.<anonymous> (src/components/radio/mz-radio.test.ts:147:27)
+
+ ❌ mz-radio > sizes > should apply lg size
+      AssertionError: expected undefined to equal 'lg'
+        at n4.<anonymous> (src/components/radio/mz-radio.test.ts:147:27)
+
+ ❌ mz-radio > accessibility > should have proper ARIA attributes
+      AssertionError: expected null to equal 'radio'
+        at n4.<anonymous> (src/components/radio/mz-radio.test.ts:211:44)
+
+ ❌ mz-radio > accessibility > should have aria-disabled when disabled
+      AssertionError: expected null to equal 'true'
+        at n4.<anonymous> (src/components/radio/mz-radio.test.ts:221:53)
+
+ ❌ mz-radio > accessibility > should associate label with input
+      AssertionError: expected null to equal ''
+        at n4.<anonymous> (src/components/radio/mz-radio.test.ts:234:44)
+
+ ❌ mz-radio > validation > should have invalid state when required and unchecked
+      AssertionError: expected false to be true
+      + expected - actual
+      
+      -false
+      +true
+      
+      at n4.<anonymous> (src/components/radio/mz-radio.test.ts:254:48)
+
+ ❌ mz-radio > edge cases > should handle empty label
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/radio/mz-radio.test.ts:264:23)
+
+ ❌ mz-radio-group > rendering > should render with default properties
+      AssertionError: expected null to equal ''
+        at n4.<anonymous> (src/components/radio/mz-radio.test.ts:314:26)
+
+ ❌ mz-radio-group > rendering > should render label when provided
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/radio/mz-radio.test.ts:341:23)
+
+ ❌ mz-radio-group > value management > should select radio with matching value
+      AssertionError: expected false to be true
+      + expected - actual
+      
+      -false
+      +true
+      
+      at n4.<anonymous> (src/components/radio/mz-radio.test.ts:358:38)
+
+ ❌ mz-radio-group > orientation > should default to vertical orientation
+      AssertionError: expected undefined to equal 'vertical'
+        at n4.<anonymous> (src/components/radio/mz-radio.test.ts:412:32)
+
+ ❌ mz-radio-group > orientation > should apply horizontal orientation
+      AssertionError: expected undefined to equal 'horizontal'
+        at n4.<anonymous> (src/components/radio/mz-radio.test.ts:424:32)
+
+ ❌ mz-radio-group > disabled state > should disable all radios when group is disabled
+      AssertionError: expected false to be true
+      + expected - actual
+      
+      -false
+      +true
+      
+      at src/components/radio/mz-radio.test.ts:441:37
+      at NodeList.forEach (<anonymous>)
+      at n4.<anonymous> (src/components/radio/mz-radio.test.ts:440:13)
+
+ ❌ mz-radio-group > validation > should support required attribute
+      AssertionError: expected undefined to be true
+        at n4.<anonymous> (src/components/radio/mz-radio.test.ts:454:32)
+
+ ❌ mz-radio-group > validation > should show error state
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/radio/mz-radio.test.ts:465:27)
+
+
+[2K[1A[2K[Gsrc/components/select/mz-select.test.ts:
+
+ 🚧 Browser logs:
+      Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+
+ ❌ mz-select > rendering > should render with default properties
+      AssertionError: expected null to equal ''
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:12:26)
+
+ ❌ mz-select > rendering > should render select trigger
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:26:25)
+
+ ❌ mz-select > rendering > should display placeholder when no value selected
+      AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:51:51)
+
+ ❌ mz-select > rendering > should display selected value
+      AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:64:51)
+
+ ❌ mz-select > dropdown behavior > should open dropdown on click
+      TypeError: Cannot read properties of null (reading 'click')
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:77:14)
+
+ ❌ mz-select > dropdown behavior > should close dropdown when option selected
+      TypeError: Cannot read properties of null (reading 'click')
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:94:14)
+
+ ❌ mz-select > dropdown behavior > should close dropdown on escape key
+      TypeError: Cannot read properties of null (reading 'click')
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:115:14)
+
+ ❌ mz-select > value selection > should update value when option selected
+      TypeError: Cannot read properties of null (reading 'click')
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:139:14)
+
+ ❌ mz-select > value selection > should emit change event when value changes
+      TypeError: Cannot read properties of null (reading 'click')
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:164:14)
+
+ ❌ mz-select > multiple selection > should allow multiple selections when multiple is true
+      AssertionError: expected false to be true
+      + expected - actual
+      
+      -false
+      +true
+      
+      at n4.<anonymous> (src/components/select/mz-select.test.ts:188:63)
+
+ ❌ mz-select > multiple selection > should display multiple selected values
+      AssertionError: expected '' to include 'Option 1'
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:203:22)
+
+ ❌ mz-select > searchable > should show search input when searchable is true
+      TypeError: Cannot read properties of null (reading 'click')
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:218:14)
+
+ ❌ mz-select > searchable > should filter options based on search
+      TypeError: Cannot read properties of null (reading 'click')
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:236:14)
+
+ ❌ mz-select > clearable > should show clear button when clearable and has value
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:262:29)
+
+ ❌ mz-select > clearable > should clear value when clear button clicked
+      TypeError: Cannot read properties of null (reading 'click')
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:273:18)
+
+ ❌ mz-select > disabled state > should not open dropdown when disabled
+      TypeError: Cannot read properties of null (reading 'click')
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:289:14)
+
+ ❌ mz-select > required validation > should have required attribute when required
+      AssertionError: expected undefined to be true
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:315:32)
+
+ ❌ mz-select > required validation > should show error state when required and empty
+      AssertionError: expected undefined to be true
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:328:73)
+
+ ❌ mz-select > sizes > should apply sm size
+      AssertionError: expected undefined to equal 'sm'
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:343:27)
+
+ ❌ mz-select > sizes > should apply md size
+      AssertionError: expected undefined to equal 'md'
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:343:27)
+
+ ❌ mz-select > sizes > should apply lg size
+      AssertionError: expected undefined to equal 'lg'
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:343:27)
+
+ ❌ mz-select > label and helper text > should render label when provided
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:358:23)
+
+ ❌ mz-select > label and helper text > should render helper text when provided
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:370:28)
+
+ ❌ mz-select > keyboard navigation > should navigate options with arrow keys
+      TypeError: Cannot read properties of null (reading 'click')
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:387:14)
+
+ ❌ mz-select > keyboard navigation > should select option with Enter key
+      TypeError: Cannot read properties of null (reading 'click')
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:410:14)
+
+ ❌ mz-select > accessibility > should have proper ARIA attributes
+      AssertionError: expected undefined to equal 'combobox'
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:436:47)
+
+ ❌ mz-select > accessibility > should have aria-expanded state
+      TypeError: Cannot read properties of null (reading 'getAttribute')
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:449:21)
+
+ ❌ mz-select > edge cases > should handle no options
+      TypeError: Cannot read properties of null (reading 'click')
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:463:14)
+
+ ❌ mz-select > edge cases > should handle options with same values
+      AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:482:43)
+
+ ❌ mz-select > edge cases > should handle very long option text
+      AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+        at n4.<anonymous> (src/components/select/mz-select.test.ts:513:43)
+
+
+[2K[1A[2K[Gsrc/components/button/mz-button.test.ts:
+
+ 🚧 Browser logs:
+      Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+
+ ❌ mz-button > slots > should render all slots together
+      AssertionError: expected '' to equal 'Middle'
+      + expected - actual
+      
+      +Middle
+      
+      at n4.<anonymous> (src/components/button/mz-button.test.ts:143:69)
+
+ ❌ mz-button > edge cases > should handle invalid href gracefully
+      AssertionError: expected null to exist
+        at n4.<anonymous> (src/components/button/mz-button.test.ts:361:24)
+
+
+[2K[1A[2K[Gsrc/components/switch/mz-switch.test.ts:
+
+ 🚧 Browser logs:
+      Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+
+
+[2K[1A[2K[Gsrc/components/textarea/mz-textarea.test.ts:
+
+ 🚧 Browser logs:
+      Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+
+ ❌ mz-textarea > rendering > should render with default properties
+      AssertionError: expected undefined to be false
+        at n4.<anonymous> (src/components/textarea/mz-textarea.test.ts:16:32)
+
+ ❌ mz-textarea > rendering > should render textarea element
+      AssertionError: expected false to be true
+      + expected - actual
+      
+      -false
+      +true
+      
+      at n4.<anonymous> (src/components/textarea/mz-textarea.test.ts:26:61)
+
+ ❌ mz-textarea > disabled state > should not allow input when disabled
+      AssertionError: expected 'changed' to equal 'initial'
+      + expected - actual
+      
+      -changed
+      +initial
+      
+      at n4.<anonymous> (src/components/textarea/mz-textarea.test.ts:72:26)
+
+ ❌ mz-textarea > readonly state > should set readonly when readonly is true
+      AssertionError: expected undefined to be true
+        at n4.<anonymous> (src/components/textarea/mz-textarea.test.ts:96:32)
+
+ ❌ mz-textarea > readonly state > should toggle readonly state dynamically
+      AssertionError: expected false to be true
+      + expected - actual
+      
+      -false
+      +true
+      
+      at n4.<anonymous> (src/components/textarea/mz-textarea.test.ts:108:38)
+
+ ❌ mz-textarea > error state > should show error state
+      AssertionError: expected undefined to be true
+        at n4.<anonymous> (src/components/textarea/mz-textarea.test.ts:120:29)
+
+ ❌ mz-textarea > error state > should toggle error state dynamically
+      AssertionError: expected undefined to be false
+        at n4.<anonymous> (src/components/textarea/mz-textarea.test.ts:127:29)
+
+ ❌ mz-textarea > success state > should show success state
+      AssertionError: expected undefined to be true
+        at n4.<anonymous> (src/components/textarea/mz-textarea.test.ts:143:31)
+
+ ❌ mz-textarea > success state > should toggle success state dynamically
+      AssertionError: expected undefined to be false
+        at n4.<anonymous> (src/components/textarea/mz-textarea.test.ts:150:31)
+
+ ❌ mz-textarea > events > should emit mz-input event on input
+      Error: Timeout of 10000ms exceeded. For async tests and hooks, ensure "done()" is called; if returning a Promise, ensure it resolves.
+        at createTimeoutError (__web-test-runner__/test-framework/Users/m.f.vananen/Documents/GitHub/maxzilla-ui/node_modules/@web/test-runner-mocha/dist/autorun.js:1:191472)
+        at ds._timeoutError (__web-test-runner__/test-framework/Users/m.f.vananen/Documents/GitHub/maxzilla-ui/node_modules/@web/test-runner-mocha/dist/autorun.js:1:195705)
+        at __web-test-runner__/test-framework/Users/m.f.vananen/Documents/GitHub/maxzilla-ui/node_modules/@web/test-runner-mocha/dist/autorun.js:1:193786
+
+ ❌ mz-textarea > events > should emit mz-focus event on focus
+      Error: Timeout of 10000ms exceeded. For async tests and hooks, ensure "done()" is called; if returning a Promise, ensure it resolves.
+        at createTimeoutError (__web-test-runner__/test-framework/Users/m.f.vananen/Documents/GitHub/maxzilla-ui/node_modules/@web/test-runner-mocha/dist/autorun.js:1:191472)
+        at ds._timeoutError (__web-test-runner__/test-framework/Users/m.f.vananen/Documents/GitHub/maxzilla-ui/node_modules/@web/test-runner-mocha/dist/autorun.js:1:195705)
+        at __web-test-runner__/test-framework/Users/m.f.vananen/Documents/GitHub/maxzilla-ui/node_modules/@web/test-runner-mocha/dist/autorun.js:1:193786
+
+ ❌ mz-textarea > events > should emit mz-blur event on blur
+      Error: Timeout of 10000ms exceeded. For async tests and hooks, ensure "done()" is called; if returning a Promise, ensure it resolves.
+        at createTimeoutError (__web-test-runner__/test-framework/Users/m.f.vananen/Documents/GitHub/maxzilla-ui/node_modules/@web/test-runner-mocha/dist/autorun.js:1:191472)
+        at ds._timeoutError (__web-test-runner__/test-framework/Users/m.f.vananen/Documents/GitHub/maxzilla-ui/node_modules/@web/test-runner-mocha/dist/autorun.js:1:195705)
+        at __web-test-runner__/test-framework/Users/m.f.vananen/Documents/GitHub/maxzilla-ui/node_modules/@web/test-runner-mocha/dist/autorun.js:1:193786
+
+ ❌ mz-textarea > events > should handle multiple input events
+      AssertionError: expected [] to have a length of 2 but got 0
+      + expected - actual
+      
+      -0
+      +2
+      
+      at n4.<anonymous> (src/components/textarea/mz-textarea.test.ts:230:29)
+
+ ❌ mz-textarea > edge cases > should handle simultaneous error and success states
+      AssertionError: expected undefined to be true
+        at n4.<anonymous> (src/components/textarea/mz-textarea.test.ts:331:29)
+
+ ❌ mz-textarea > edge cases > should handle both disabled and readonly
+      AssertionError: expected undefined to be true
+        at n4.<anonymous> (src/components/textarea/mz-textarea.test.ts:364:32)
+
+Chromium: |██████████████████████████████| 13/15 test files | 235 passed, 224 failed
+
+Running tests...
+
+
+[2K[1A[2K[Gsrc/components/alert/mz-alert.test.ts:
+
+ ❌ Browser tests did not finish within 120000ms. You can increase this timeout with the testsFinishTimeout option. Check the browser logs or open the browser in debug mode for more information. 
+
+Chromium: |██████████████████████████████| 14/15 test files | 235 passed, 224 failed
+
+Running tests...
+
+
+[2K[1A[2K[Gsrc/components/checkbox/mz-checkbox.test.ts:
+
+ ❌ Browser tests did not finish within 120000ms. You can increase this timeout with the testsFinishTimeout option. Check the browser logs or open the browser in debug mode for more information. 
+
+Chromium: |██████████████████████████████| 15/15 test files | 235 passed, 224 failed
+
+Finished running tests in 121.2s with 224 failed tests.
+
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path /Users/m.f.vananen/Documents/GitHub/maxzilla-ui/packages/core
+npm error workspace maxzilla-ui-core@0.1.5
+npm error location /Users/m.f.vananen/Documents/GitHub/maxzilla-ui/packages/core
+npm error command failed
+npm error command sh -c web-test-runner

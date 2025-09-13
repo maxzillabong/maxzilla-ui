@@ -1,0 +1,94 @@
+/* Aceternity-style Tab Animations */
+
+@keyframes tabUnderlineIn {
+  from {
+    opacity: 0;
+    transform: scaleX(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes tabUnderlineOut {
+  from {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  to {
+    opacity: 0;
+    transform: scaleX(0.3);
+  }
+}
+
+.tab-underline {
+  animation: tabUnderlineIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  transform-origin: center;
+}
+
+.tab-underline-exit {
+  animation: tabUnderlineOut 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  transform-origin: center;
+}
+
+/* Gradient underline with better fade */
+.tab-underline-gradient {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(59, 130, 246, 0.1) 10%,
+    rgba(59, 130, 246, 0.5) 25%,
+    rgba(59, 130, 246, 1) 50%,
+    rgba(59, 130, 246, 0.5) 75%,
+    rgba(59, 130, 246, 0.1) 90%,
+    transparent 100%
+  ) !important;
+}
+
+/* Hover effect for inactive tabs */
+.tab-hover-underline {
+  position: relative;
+}
+
+.tab-hover-underline::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(156, 163, 175, 0.2) 25%,
+    rgba(156, 163, 175, 0.3) 50%,
+    rgba(156, 163, 175, 0.2) 75%,
+    transparent 100%
+  );
+  opacity: 0;
+  transform: scaleX(0);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.tab-hover-underline:hover::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .tab-underline-gradient {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(96, 165, 250, 0.1) 10%,
+      rgba(96, 165, 250, 0.5) 25%,
+      rgba(96, 165, 250, 1) 50%,
+      rgba(96, 165, 250, 0.5) 75%,
+      rgba(96, 165, 250, 0.1) 90%,
+      transparent 100%
+    ) !important;
+  }
+}

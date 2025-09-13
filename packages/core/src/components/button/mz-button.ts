@@ -255,6 +255,12 @@ export class MzButton extends LitElement {
   @property({ type: Boolean }) loading = false;
   @property({ type: String }) href?: string;
   @property({ type: String }) target?: '_blank' | '_self' | '_parent' | '_top';
+  @property({ type: String }) rel?: string;
+  @property({ type: String, attribute: 'aria-label' }) ariaLabel?: string;
+  @property({ type: String, attribute: 'aria-describedby' }) ariaDescribedBy?: string;
+  @property({ type: Boolean, attribute: 'aria-pressed' }) ariaPressed?: boolean;
+  @property({ type: Boolean, attribute: 'aria-expanded' }) ariaExpanded?: boolean;
+  @property({ type: String, attribute: 'aria-controls' }) ariaControls?: string;
 
 
   private handlePointerDown = () => {
@@ -296,12 +302,25 @@ export class MzButton extends LitElement {
       <slot name="end"></slot>
     `;
 
+    // Common ARIA attributes
+    const ariaAttrs: any = {};
+    if (this.ariaLabel) ariaAttrs['aria-label'] = this.ariaLabel;
+    if (this.ariaDescribedBy) ariaAttrs['aria-describedby'] = this.ariaDescribedBy;
+    if (this.ariaPressed !== undefined) ariaAttrs['aria-pressed'] = String(this.ariaPressed);
+    if (this.ariaExpanded !== undefined) ariaAttrs['aria-expanded'] = String(this.ariaExpanded);
+    if (this.ariaControls) ariaAttrs['aria-controls'] = this.ariaControls;
+    if (this.loading) ariaAttrs['aria-busy'] = 'true';
+    if (this.disabled) ariaAttrs['aria-disabled'] = 'true';
+
     if (this.href && !this.disabled) {
       return html`
         <a
           class=${classMap(classes)}
           href=${this.href}
           target=${this.target || '_self'}
+          rel=${this.rel || (this.target === '_blank' ? 'noopener noreferrer' : '')}
+          role="button"
+          ...=${ariaAttrs}
           @click=${this.handleClick}
           @pointerdown=${this.handlePointerDown}
           @pointerup=${this.handlePointerUp}
@@ -316,6 +335,7 @@ export class MzButton extends LitElement {
         class=${classMap(classes)}
         type=${this.type}
         ?disabled=${this.disabled || this.loading}
+        ...=${ariaAttrs}
         @click=${this.handleClick}
         @pointerdown=${this.handlePointerDown}
         @pointerup=${this.handlePointerUp}
