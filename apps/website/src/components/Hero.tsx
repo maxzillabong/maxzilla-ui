@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { ArrowRight, Download, Sparkles, Zap, Code, Palette } from 'lucide-react'
 import { Button } from 'maxzilla-ui-react'
 import packageJson from '../../package.json'
+import '@/styles/hero.css'
 
 export function Hero() {
   const [mounted, setMounted] = useState(false)
@@ -46,20 +47,18 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight">
-            Build
-            <br />
-            <span className="relative">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8">
+            <span className="hero-title-line">Build</span>
+            <span className="hero-title-line text-decoration-spacing">
               <span className="text-gradient">Beautiful</span>
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: '100%' }}
-                transition={{ duration: 1, delay: 1 }}
-                className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-primary-500 to-green-500 rounded-full"
-              ></motion.div>
+                transition={{ duration: 1.2, delay: 1, ease: [0.4, 0, 0.2, 1] }}
+                className="absolute bottom-2 left-0 right-0 h-1 md:h-1.5 rounded-full hero-underline"
+              />
             </span>
-            <br />
-            Interfaces
+            <span className="hero-title-line">Interfaces</span>
           </h1>
         </motion.div>
 

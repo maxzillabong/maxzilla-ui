@@ -3,7 +3,9 @@ import { useMemo, useState } from 'react'
 import { findBySlug } from '../registry'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
-import { Copy, Check } from 'lucide-react'
+import { Copy, Check, FileCode, BookOpen } from 'lucide-react'
+import { ComponentAPI } from '@/components/ComponentAPI'
+import '@/styles/tabs.css'
 
 type Section = {
   id: string
@@ -16,6 +18,7 @@ export default function DetailClient({ slug }: { slug: string }) {
   const meta = findBySlug(slug)
   const [tabBySection, setTabBySection] = useState<Record<string, 'preview' | 'code'>>({})
   const [copiedSection, setCopiedSection] = useState<string | null>(null)
+  const [mainTab, setMainTab] = useState<'examples' | 'api'>('examples')
 
   const sections: Section[] = useMemo(() => {
     if (!meta) return []
@@ -34,26 +37,83 @@ export default function DetailClient({ slug }: { slug: string }) {
   if (!meta) return null
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-8">
+      {/* Main Tab Navigation */}
+      <div className="border-b border-neutral-200 dark:border-neutral-700">
+        <div className="flex items-center gap-1 -mb-px">
+          <button
+            onClick={() => setMainTab('examples')}
+            className={`relative flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all duration-200 ${
+              mainTab === 'examples'
+                ? 'text-primary-600 dark:text-primary-400'
+                : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white tab-hover-underline'
+            }`}
+          >
+            <FileCode className="w-4 h-4" />
+            <span>Examples</span>
+            {mainTab === 'examples' && (
+              <span
+                className="absolute bottom-0 left-0 right-0 h-0.5 tab-underline tab-underline-gradient"
+              />
+            )}
+          </button>
+          <button
+            onClick={() => setMainTab('api')}
+            className={`relative flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all duration-200 ${
+              mainTab === 'api'
+                ? 'text-primary-600 dark:text-primary-400'
+                : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white tab-hover-underline'
+            }`}
+          >
+            <BookOpen className="w-4 h-4" />
+            <span>API Reference</span>
+            {mainTab === 'api' && (
+              <span
+                className="absolute bottom-0 left-0 right-0 h-0.5 tab-underline tab-underline-gradient"
+              />
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Tab Content */}
+      {mainTab === 'examples' ? (
+        <div className="space-y-12">
       {sections.map((s) => {
         const tab = tabBySection[s.id] ?? 'preview'
         return (
           <section key={s.id} id={s.id} className="scroll-mt-24">
             <h2 className="text-2xl font-semibold mb-3">{s.title}</h2>
             <div className="border border-neutral-200 dark:border-neutral-800 rounded-xl overflow-hidden bg-white dark:bg-neutral-900">
-              <div className="flex items-center gap-2 border-b border-neutral-200 dark:border-neutral-800 px-3 py-2">
-                <button
-                  onClick={() => setTabBySection((m) => ({ ...m, [s.id]: 'preview' }))}
-                  className={`px-3 py-1.5 rounded-md text-sm ${tab === 'preview' ? 'bg-neutral-100 dark:bg-neutral-800 font-semibold' : 'text-neutral-600 dark:text-neutral-400'}`}
-                >
-                  Preview
-                </button>
-                <button
-                  onClick={() => setTabBySection((m) => ({ ...m, [s.id]: 'code' }))}
-                  className={`px-3 py-1.5 rounded-md text-sm ${tab === 'code' ? 'bg-neutral-100 dark:bg-neutral-800 font-semibold' : 'text-neutral-600 dark:text-neutral-400'}`}
-                >
-                  Code
-                </button>
+              <div className="border-b border-neutral-200 dark:border-neutral-800">
+                <div className="flex items-center gap-1 px-3 -mb-px">
+                  <button
+                    onClick={() => setTabBySection((m) => ({ ...m, [s.id]: 'preview' }))}
+                    className={`relative px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
+                      tab === 'preview'
+                        ? 'text-primary-600 dark:text-primary-400'
+                        : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white tab-hover-underline'
+                    }`}
+                  >
+                    Preview
+                    {tab === 'preview' && (
+                      <span className="absolute bottom-0 left-0 right-0 h-0.5 tab-underline tab-underline-gradient" />
+                    )}
+                  </button>
+                  <button
+                    onClick={() => setTabBySection((m) => ({ ...m, [s.id]: 'code' }))}
+                    className={`relative px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
+                      tab === 'code'
+                        ? 'text-primary-600 dark:text-primary-400'
+                        : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white tab-hover-underline'
+                    }`}
+                  >
+                    Code
+                    {tab === 'code' && (
+                      <span className="absolute bottom-0 left-0 right-0 h-0.5 tab-underline tab-underline-gradient" />
+                    )}
+                  </button>
+                </div>
               </div>
               {tab === 'preview' ? (
                 <div className="p-6">
@@ -151,6 +211,10 @@ export default function DetailClient({ slug }: { slug: string }) {
           </section>
         )
       })}
+        </div>
+      ) : (
+        <ComponentAPI componentName={slug} />
+      )}
     </div>
   )
 }
