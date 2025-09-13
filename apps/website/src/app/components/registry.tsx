@@ -15,6 +15,7 @@ export interface ComponentMeta {
     react: string
     html: string
   }
+  sections?: { id: string; title: string; Preview: React.FC; code: { react: string; html: string } }[]
 }
 
 const ButtonPreview: React.FC = () => (
@@ -204,8 +205,16 @@ const PaginationPreview: React.FC = () => (
 
 const AlertPreview: React.FC = () => (
   <div className="space-y-2">
-    <Alert variant="success">Saved successfully</Alert>
-    <Alert variant="warning">Be careful</Alert>
+    <Alert>Standard alert message</Alert>
+  </div>
+)
+
+const AlertVariantsPreview: React.FC = () => (
+  <div className="space-y-2">
+    <Alert variant="success">Success: Saved successfully</Alert>
+    <Alert variant="warning">Warning: Be careful</Alert>
+    <Alert variant="error">Error: Something went wrong</Alert>
+    <Alert variant="info">Info: Heads up</Alert>
   </div>
 )
 
@@ -361,7 +370,24 @@ export const registry: ComponentMeta[] = [
   { slug: 'table', name: 'Table', category: 'Data Display', description: 'Semantic table with styled header and rows.', Preview: TablePreview, code: { react: `<Table><th slot="header">Name</th>...</Table>`, html: `<mz-table><th slot="header">Name</th>...</mz-table>` } },
   { slug: 'form', name: 'Form', category: 'Forms', description: 'Form container with group and actions slots.', Preview: FormPreview, code: { react: `<Form><FormGroup>...</FormGroup><FormActions>...</FormActions></Form>`, html: `<mz-form><mz-form-group>...</mz-form-group><mz-form-actions>...</mz-form-actions></mz-form>` } },
   { slug: 'pagination', name: 'Pagination', category: 'Data Display', description: 'Page navigation with prev/next and pages.', Preview: PaginationPreview, code: { react: `<Pagination total={120} pageSize={10} current={1} />`, html: `<mz-pagination total="120" page-size="10" current="1"></mz-pagination>` } },
-  { slug: 'alert', name: 'Alert', category: 'Data Display', description: 'Contextual messages with variants and dismiss.', Preview: AlertPreview, code: { react: `<Alert variant="success">Saved</Alert>`, html: `<mz-alert variant="success">Saved</mz-alert>` } },
+  { 
+    slug: 'alert', name: 'Alert', category: 'Data Display', description: 'Contextual messages with variants and dismiss.', 
+    Preview: AlertPreview, 
+    code: { 
+      react: `import { Alert } from 'maxzilla-ui-react'\n\n<Alert>Standard alert message</Alert>`, 
+      html: `<mz-alert>Standard alert message</mz-alert>` 
+    },
+    sections: [
+      { id: 'examples', title: 'Examples', Preview: AlertPreview, code: { 
+        react: `import { Alert } from 'maxzilla-ui-react'\n\n<Alert>Standard alert message</Alert>`, 
+        html: `<mz-alert>Standard alert message</mz-alert>`
+      }},
+      { id: 'variants', title: 'Variants', Preview: AlertVariantsPreview, code: { 
+        react: `import { Alert } from 'maxzilla-ui-react'\n\n<div>\n  <Alert variant=\"success\">Success: Saved successfully</Alert>\n  <Alert variant=\"warning\">Warning: Be careful</Alert>\n  <Alert variant=\"error\">Error: Something went wrong</Alert>\n  <Alert variant=\"info\">Info: Heads up</Alert>\n</div>`, 
+        html: `<div>\n  <mz-alert variant=\"success\">Success: Saved successfully</mz-alert>\n  <mz-alert variant=\"warning\">Warning: Be careful</mz-alert>\n  <mz-alert variant=\"error\">Error: Something went wrong</mz-alert>\n  <mz-alert variant=\"info\">Info: Heads up</mz-alert>\n</div>`
+      }}
+    ]
+  },
   { slug: 'progress', name: 'Progress', category: 'Data Display', description: 'Progress indication (linear).', Preview: ProgressPreview, code: { react: `<Progress value={60} max={100} label="Upload" showValue />`, html: `<mz-progress value="60" max="100" label="Upload" show-value></mz-progress>` } },
   { slug: 'loading', name: 'Loading', category: 'Overlays', description: 'Loading spinner (inline or overlay).', Preview: LoadingPreview, code: { react: `<Loading overlay />`, html: `<mz-loading overlay></mz-loading>` } },
   { slug: 'toastcontainer', name: 'Toast Container', category: 'Overlays', description: 'Toast stack/queue with variants and timing.', Preview: ToastContainerPreview, code: { react: `<ToastContainer ref={setRef} />`, html: `<mz-toast-container></mz-toast-container>` } }

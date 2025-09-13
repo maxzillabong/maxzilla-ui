@@ -1,16 +1,33 @@
-'use client'
+"use client"
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { createPortal } from 'react-dom'
 import { Menu, X, Github, Sun, Moon } from 'lucide-react'
 import Link from 'next/link'
+import { Input } from 'maxzilla-ui-react'
+import { SiteSidebar } from './SiteSidebar'
 import packageJson from '../../package.json'
+
+const NAV_ITEMS = [
+  { href: '/docs', label: 'Documentation' },
+  { href: '/docs/getting-started', label: 'Getting Started' },
+  { href: '/docs/installation', label: 'Installation' },
+  { href: '/docs/theming', label: 'Theming' },
+  { href: '/docs/design-tokens', label: 'Design Tokens' },
+  { href: '/docs/accessibility', label: 'Accessibility' },
+  { href: '/docs/contributing', label: 'Contributing' },
+  { href: '/components', label: 'Components' },
+  { href: '/examples', label: 'Examples' },
+  { href: 'http://localhost:6006', label: 'Storybook', external: true },
+];
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [theme, setTheme] = useState<'light' | 'dark'>('light')
   const [mounted, setMounted] = useState(false)
+  const [query, setQuery] = useState('')
+  const [pathname, setPathname] = useState('')
 
   // Apply page transform when menu opens
   useEffect(() => {
@@ -31,6 +48,7 @@ export function Header() {
 
   useEffect(() => {
     setMounted(true)
+    setPathname(window.location.pathname)
     const stored = localStorage.getItem('theme')
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
     const initialTheme = (stored as 'light' | 'dark') || (prefersDark ? 'dark' : 'light')
@@ -74,16 +92,9 @@ export function Header() {
         detail: { theme: newTheme },
       })
     )
-  }
+  };
 
   // Render immediately; we handle theme updates after mount.
-
-  const navItems = [
-    { href: '/docs', label: 'Documentation' },
-    { href: '/components', label: 'Components' },
-    { href: '/examples', label: 'Examples' },
-    { href: 'http://localhost:6007', label: 'Storybook', external: true },
-  ]
 
   return (
     <header
@@ -91,8 +102,16 @@ export function Header() {
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
+          {/* Left cluster: hamburger + logo */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setIsMenuOpen(true)}
+              className="md:hidden p-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 transition-colors duration-200"
+              aria-label="Open menu"
+            >
+              <Menu className="w-5 h-5 text-neutral-600 dark:text-neutral-400" />
+            </button>
+            <Link href="/" className="flex items-center gap-3 group">
             <div className="relative">
               <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-green-500 rounded-lg flex items-center justify-center text-white font-bold text-sm group-hover:scale-110 transition-transform duration-300">
                 MZ
@@ -103,23 +122,11 @@ export function Header() {
               <div className="text-xl font-bold text-gradient">Maxzilla UI</div>
               <div className="text-xs text-neutral-500 dark:text-neutral-400 -mt-1">v{packageJson.version}</div>
             </div>
-          </Link>
+            </Link>
+          </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                target={item.external ? '_blank' : undefined}
-                rel={item.external ? 'noopener noreferrer' : undefined}
-                className="text-neutral-600 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400 font-medium transition-colors duration-200 relative group"
-              >
-                {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-600 transition-all duration-300 group-hover:w-full"></span>
-              </Link>
-            ))}
-          </div>
+          <div className="hidden md:flex items-center gap-8" aria-hidden="true"></div>
 
           {/* Actions */}
           <div className="flex items-center gap-4">
@@ -147,18 +154,7 @@ export function Header() {
               <span>GitHub</span>
             </Link>
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 transition-colors duration-200"
-              aria-label="Toggle menu"
-            >
-              {isMenuOpen ? (
-                <X className="w-5 h-5 text-neutral-600 dark:text-neutral-400" />
-              ) : (
-                <Menu className="w-5 h-5 text-neutral-600 dark:text-neutral-400" />
-              )}
-            </button>
+            {/* Mobile Menu Button moved to left */}
           </div>
         </div>
 
@@ -179,13 +175,13 @@ export function Header() {
                   onClick={() => setIsMenuOpen(false)}
                 />
 
-                {/* Sidebar */}
+                {/* Sidebar (left) */}
                 <motion.div
-                  initial={{ x: 320 }}
+                  initial={{ x: -320 }}
                   animate={{ x: 0 }}
-                  exit={{ x: 320 }}
+                  exit={{ x: -320 }}
                   transition={{ duration: 0.3, ease: 'easeInOut' }}
-                  className="fixed inset-y-0 right-0 w-80 bg-white dark:bg-neutral-900 mobile-menu-slide z-[9999] md:hidden shadow-xl"
+                  className="fixed inset-y-0 left-0 w-80 bg-white dark:bg-neutral-900 mobile-menu-slide z-[9999] md:hidden shadow-xl"
                   role="dialog"
                   aria-label="Mobile navigation"
                 >
@@ -209,23 +205,30 @@ export function Header() {
 
                   {/* Menu Content */}
                   <div className="flex-1 overflow-y-auto">
-                    <div className="p-6 space-y-6">
-                      {/* Navigation Links */}
-                      <div className="space-y-4" data-testid="mobile-menu-items">
-                        {navItems.map((item) => (
-                          <div key={item.href}>
-                            <a
-                              href={item.href}
-                              target={item.external ? '_blank' : undefined}
-                              rel={item.external ? 'noopener noreferrer' : undefined}
-                              className="block text-lg text-neutral-700 hover:text-primary-600 dark:text-neutral-300 dark:hover:text-primary-400 font-medium transition-colors duration-200 py-3 border-b border-neutral-100 dark:border-neutral-800"
-                              onClick={() => setIsMenuOpen(false)}
-                            >
-                              {item.label}
-                            </a>
-                          </div>
-                        ))}
+                    <div className="p-4 border-b border-neutral-200 dark:border-neutral-800">
+                      <Input label="Search" placeholder="Filter components…" value={query} onInput={(e: any) => setQuery(e.target?.value ?? '')} />
+                    </div>
+                    <div className="p-4" data-testid="mobile-menu-items">
+                      <SiteSidebar current={undefined} pathname={pathname} sticky={false} filter={query} />
+                      <div className="mt-6">
+                        <div className="px-2 py-1 mb-2 rounded-md bg-neutral-50 dark:bg-neutral-800/60 text-neutral-900 dark:text-neutral-100 font-semibold uppercase tracking-wide text-[0.7rem]">Quick Links</div>
+                        <ul className="space-y-1">
+                          {NAV_ITEMS.map((item) => (
+                            <li key={item.href}>
+                              <a
+                                href={item.href}
+                                target={item.external ? '_blank' : undefined}
+                                rel={item.external ? 'noopener noreferrer' : undefined}
+                                className="block px-2 py-1 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-800"
+                                onClick={() => setIsMenuOpen(false)}
+                              >
+                                {item.label}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
+                    </div>
 
                   {/* Theme Toggle */}
                   <motion.div
@@ -266,9 +269,8 @@ export function Header() {
                       <span>View on GitHub</span>
                     </Link>
                   </motion.div>
+                  </div>
                 </div>
-              </div>
-              </div>
                 </motion.div>
               </>
             )}

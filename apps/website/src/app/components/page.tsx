@@ -1,16 +1,13 @@
 "use client"
-import { Header } from '@/components/Header'
-import { Footer } from '@/components/Footer'
+import { TwoColumnLayout } from '@/components/TwoColumnLayout'
 import { Accordion, AccordionItem } from 'maxzilla-ui-react'
 import { ComponentCard } from '@/components/ComponentCard'
 import { byCategory } from './registry'
 
 export default function ComponentsPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-neutral-950">
-      <Header />
-      <main className="pt-20 px-4 pb-24 md:pb-32">
-        <div className="max-w-6xl mx-auto">
+    <TwoColumnLayout pathname="/components">
+      <div className="w-full max-w-6xl">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">Components</h1>
           <p className="text-neutral-600 dark:text-neutral-400 mb-8">
             Browse available web components and their props.
@@ -73,9 +70,7 @@ export default function ComponentsPage() {
               </AccordionItem>
             </Accordion>
           </section>
-        </div>
-      </main>
-      <Footer />
-    </div>
+      </div>
+    </TwoColumnLayout>
   )
 }

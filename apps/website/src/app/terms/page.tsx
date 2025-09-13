@@ -1,5 +1,5 @@
 import { Header } from '@/components/Header'
-import { Footer } from '@/components/Footer'
+import { InlineFooter } from '@/components/InlineFooter'
 
 export default function TermsPage() {
   return (
@@ -13,7 +13,11 @@ export default function TermsPage() {
           </p>
         </div>
       </main>
-      <Footer />
+      <div className="max-w-3xl mx-auto px-4 pb-8">
+        <div className="mt-16 pt-6 border-t border-neutral-200 dark:border-neutral-800">
+          <InlineFooter />
+        </div>
+      </div>
     </div>
   )
 }

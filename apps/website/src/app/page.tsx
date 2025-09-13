@@ -13,12 +13,13 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import { Header } from '@/components/Header'
+import { SiteSidebar } from '@/components/SiteSidebar'
 import { Hero } from '@/components/Hero'
 import { Features } from '@/components/Features'
 import { LiveComponentShowcase } from '@/components/LiveComponentShowcase'
 import { CodeExample } from '@/components/CodeExample'
 import { Stats } from '@/components/Stats'
-import { Footer } from '@/components/Footer'
+import { InlineFooter } from '@/components/InlineFooter'
 
 export default function HomePage() {
   const [mounted, setMounted] = useState(false)
@@ -32,21 +33,34 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-neutral-950 pb-24 md:pb-32">
+    <div className="min-h-screen bg-white dark:bg-neutral-950 flex flex-col">
       <Header />
 
-      {/* Hero Section */}
-      <Hero />
+      <div className="flex-1 flex overflow-hidden pt-20">
+        <div className="w-full flex">
+          {/* Left column - Sidebar */}
+          <aside className="hidden lg:block w-[17rem] flex-shrink-0 h-[calc(100vh-5rem)] overflow-y-auto">
+            <div className="py-8 px-4">
+              <SiteSidebar sticky={false} />
+            </div>
+          </aside>
 
-      {/* Features Section */}
-      <Features />
+          {/* Right column - Main content with scrollbar at browser edge */}
+          <main className="flex-1 h-[calc(100vh-5rem)] overflow-y-auto">
+            <div className="min-h-full flex flex-col">
+              <div className="flex-1 w-full max-w-[90rem] mx-auto px-8 py-8">
+          {/* Hero Section */}
+          <Hero />
 
-      {/* Component Showcase */}
-      <LiveComponentShowcase />
+          {/* Features Section */}
+          <Features />
+
+          {/* Component Showcase */}
+          <LiveComponentShowcase />
 
       {/* Code Examples */}
-      <section className="py-24 px-4 bg-neutral-50 dark:bg-neutral-900">
-        <div className="max-w-6xl mx-auto">
+          <section className="py-24 bg-neutral-50 dark:bg-neutral-900">
+            <div className="max-w-6xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -125,15 +139,15 @@ function App() {
               </Link>
             </motion.div>
           </div>
-        </div>
-      </section>
+            </div>
+          </section>
 
-      {/* Stats Section */}
-      <Stats />
+          {/* Stats Section */}
+          <Stats />
 
       {/* CTA Section */}
-      <section className="py-24 px-4 bg-gradient-to-br from-primary-50 via-neutral-50 to-green-50 dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900">
-        <div className="max-w-4xl mx-auto text-center">
+          <section className="py-24 px-4 bg-gradient-to-br from-primary-50 via-neutral-50 to-green-50 dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900">
+            <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -165,14 +179,16 @@ function App() {
                 View on GitHub
               </Link>
 
-              <Link
-                href="/storybook"
+              <a
+                href="http://localhost:6006"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-white dark:bg-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-700 text-neutral-900 dark:text-white border-2 border-neutral-200 dark:border-neutral-600 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105"
               >
                 <BookOpen className="w-5 h-5" />
                 Explore Storybook
                 <ArrowRight className="w-5 h-5" />
-              </Link>
+              </a>
             </div>
 
             <div className="flex items-center justify-center gap-6 mt-12 text-sm text-neutral-500 dark:text-neutral-400">
@@ -190,10 +206,19 @@ function App() {
               </div>
             </div>
           </motion.div>
-        </div>
-      </section>
+            </div>
+          </section>
+              </div>
 
-      <Footer />
+              <div className="max-w-[90rem] mx-auto px-8 pb-8">
+                <div className="mt-16 pt-6 border-t border-neutral-200 dark:border-neutral-800">
+                  <InlineFooter />
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
     </div>
   )
 }

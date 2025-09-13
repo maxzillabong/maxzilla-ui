@@ -1,8 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import '../styles/docs.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 /* Base styles */
 html {
@@ -37,11 +38,11 @@ html {
   ::-webkit-scrollbar-track {
     background: #1f2937;
   }
-  
+
   ::-webkit-scrollbar-thumb {
     background: #4b5563;
   }
-  
+
   ::-webkit-scrollbar-thumb:hover {
     background: #6b7280;
   }
@@ -166,22 +167,22 @@ mz-button, mz-card, mz-input, mz-badge, mz-avatar, mz-modal {
 }
 
 body.menu-open .site-wrapper {
-  transform: translateX(-320px); /* matches w-80 sidebar */
+  transform: translateX(320px); /* matches w-80 sidebar, pushes right */
 }
 
 /* Mobile menu positioning */
 .mobile-menu-slide {
-  box-shadow: 
-    -4px 0 15px rgba(0, 0, 0, 0.1),
-    -2px 0 8px rgba(0, 0, 0, 0.05);
+  box-shadow:
+    4px 0 15px rgba(0, 0, 0, 0.1),
+    2px 0 8px rgba(0, 0, 0, 0.05);
 }
 
 /* Dark mode menu styles */
 @media (prefers-color-scheme: dark) {
   .mobile-menu-slide {
-    box-shadow: 
-      -4px 0 15px rgba(0, 0, 0, 0.3),
-      -2px 0 8px rgba(0, 0, 0, 0.15);
+    box-shadow:
+      4px 0 15px rgba(0, 0, 0, 0.3),
+      2px 0 8px rgba(0, 0, 0, 0.15);
   }
 }
 

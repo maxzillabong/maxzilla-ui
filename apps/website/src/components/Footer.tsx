@@ -10,7 +10,7 @@ const footerLinks = {
     { label: 'Documentation', href: '/docs' },
     { label: 'Components', href: '/components' },
     { label: 'Examples', href: '/examples' },
-    { label: 'Storybook', href: 'http://localhost:6007', external: true }
+    { label: 'Storybook', href: 'http://localhost:6006', external: true }
   ],
   Resources: [
     { label: 'Getting Started', href: '/docs/installation' },
