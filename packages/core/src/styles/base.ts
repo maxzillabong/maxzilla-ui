@@ -1,5 +1,11 @@
 import { css } from 'lit';
 
+/**
+ * Base styles for all Maxzilla UI components.
+ * These styles define CSS custom properties that are available to all components.
+ * Note: CSS linters may show "unresolved custom property" errors, but these are
+ * false positives - the properties are defined and scoped correctly for Lit components.
+ */
 export const baseStyles = css`
   /* CSS Custom Properties for theming */
   :host {
@@ -61,11 +67,26 @@ export const baseStyles = css`
     --mz-radius-xl: 0.75rem;
     --mz-radius-full: 9999px;
 
-    /* Shadows */
+    /* Shadows - Box shadows */
+    --mz-shadow-none: none;
+    --mz-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     --mz-shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --mz-shadow-base: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     --mz-shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     --mz-shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --mz-shadow-xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    --mz-shadow-2xl: 0 50px 100px -20px rgb(0 0 0 / 0.25);
+
+    /* Colored shadows for interactive elements */
+    --mz-shadow-primary-glow: 0 0 20px rgb(6 182 212 / 0.3);
+    --mz-shadow-primary-glow-hover: 0 0 30px rgb(6 182 212 / 0.4);
+    --mz-shadow-error-glow: 0 0 20px rgb(239 68 68 / 0.3);
+    --mz-shadow-success-glow: 0 0 20px rgb(34 197 94 / 0.3);
     --mz-shadow-glow: 0 0 20px rgb(6 182 212 / 0.3);
+
+    /* Inner shadows for inset effects */
+    --mz-shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+    --mz-shadow-inner-lg: inset 0 4px 8px 0 rgb(0 0 0 / 0.1);
 
     /* Transitions */
     --mz-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -99,7 +120,7 @@ export const baseStyles = css`
   /* Base component styling */
   :host {
     box-sizing: border-box;
-    font-family: var(--mz-font-sans);
+    font-family: var(--mz-font-sans), sans-serif;
     font-size: var(--mz-text-base);
     line-height: 1.5;
   }
