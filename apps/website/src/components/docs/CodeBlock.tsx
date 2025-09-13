@@ -2,14 +2,8 @@
 
 import { useState } from 'react'
 import { Check, Copy } from 'lucide-react'
-import Prism from 'prismjs'
-import 'prismjs/components/prism-typescript'
-import 'prismjs/components/prism-jsx'
-import 'prismjs/components/prism-tsx'
-import 'prismjs/components/prism-bash'
-import 'prismjs/components/prism-json'
-import 'prismjs/themes/prism-tomorrow.css'
-import { useEffect } from 'react'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 interface CodeBlockProps {
   code: string
@@ -20,21 +14,27 @@ interface CodeBlockProps {
 
 export function CodeBlock({ code, language = 'typescript', title, showLineNumbers = false }: CodeBlockProps) {
   const [copied, setCopied] = useState(false)
-  const [highlighted, setHighlighted] = useState('')
-
-  useEffect(() => {
-    const grammar = Prism.languages[language]
-    if (grammar) {
-      setHighlighted(Prism.highlight(code, grammar, language))
-    } else {
-      setHighlighted(code)
-    }
-  }, [code, language])
 
   const copyToClipboard = async () => {
     await navigator.clipboard.writeText(code)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
+  }
+
+  // Map language names for syntax highlighter
+  const getLanguage = (lang: string) => {
+    switch (lang.toLowerCase()) {
+      case 'tsx':
+        return 'typescript'
+      case 'jsx':
+        return 'javascript'
+      case 'bash':
+        return 'bash'
+      case 'json':
+        return 'json'
+      default:
+        return lang.toLowerCase()
+    }
   }
 
   return (
@@ -44,23 +44,10 @@ export function CodeBlock({ code, language = 'typescript', title, showLineNumber
           {title}
         </div>
       )}
-      <pre className={`${title ? 'rounded-t-none' : ''} ${showLineNumbers ? 'pl-12' : ''} relative`}>
-        {showLineNumbers && (
-          <div className="absolute left-0 top-0 bottom-0 w-12 border-r border-neutral-800 text-neutral-500 text-right pr-2 pt-4 select-none">
-            {code.split('\n').map((_, i) => (
-              <div key={i} className="leading-relaxed text-sm">
-                {i + 1}
-              </div>
-            ))}
-          </div>
-        )}
-        <code
-          className={`language-${language}`}
-          dangerouslySetInnerHTML={{ __html: highlighted }}
-        />
+      <div className={`relative ${title ? 'rounded-t-none' : 'rounded-xl'} overflow-hidden`}>
         <button
           onClick={copyToClipboard}
-          className="absolute top-2 right-2 p-2 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-400 hover:text-white transition-all opacity-0 group-hover:opacity-100"
+          className="absolute top-2 right-2 z-10 p-2 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-400 hover:text-white transition-all opacity-0 group-hover:opacity-100"
           aria-label="Copy code"
         >
           {copied ? (
@@ -69,7 +56,28 @@ export function CodeBlock({ code, language = 'typescript', title, showLineNumber
             <Copy className="w-4 h-4" />
           )}
         </button>
-      </pre>
+        <SyntaxHighlighter
+          language={getLanguage(language)}
+          style={vscDarkPlus}
+          customStyle={{
+            margin: 0,
+            borderRadius: title ? 0 : '0.75rem',
+            background: '#1e1e1e',
+            padding: '1.5rem',
+            fontSize: '0.875rem',
+            lineHeight: '1.5'
+          }}
+          showLineNumbers={showLineNumbers}
+          lineNumberStyle={{
+            minWidth: '2.5em',
+            paddingRight: '1em',
+            color: '#6e7681',
+            userSelect: 'none'
+          }}
+        >
+          {code}
+        </SyntaxHighlighter>
+      </div>
     </div>
   )
 }

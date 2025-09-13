@@ -2,7 +2,8 @@
 import { useMemo, useState } from 'react'
 import { findBySlug } from '../registry'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import oneDark from 'react-syntax-highlighter/dist/esm/styles/prism/one-dark'
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { Copy, Check } from 'lucide-react'
 
 type Section = {
   id: string
@@ -14,6 +15,8 @@ type Section = {
 export default function DetailClient({ slug }: { slug: string }) {
   const meta = findBySlug(slug)
   const [tabBySection, setTabBySection] = useState<Record<string, 'preview' | 'code'>>({})
+  const [copiedSection, setCopiedSection] = useState<string | null>(null)
+
   const sections: Section[] = useMemo(() => {
     if (!meta) return []
     if (meta.sections && meta.sections.length) return meta.sections as Section[]
@@ -57,16 +60,90 @@ export default function DetailClient({ slug }: { slug: string }) {
                   <s.Preview />
                 </div>
               ) : (
-                <div className="grid md:grid-cols-2 gap-0">
-                  <div className="p-0 border-r border-neutral-200 dark:border-neutral-800">
-                    <SyntaxHighlighter language="tsx" style={oneDark} customStyle={{ margin: 0, borderRadius: 0, background: 'transparent' }}>
-                      {s.code.react}
-                    </SyntaxHighlighter>
-                  </div>
-                  <div className="p-0">
-                    <SyntaxHighlighter language="html" style={oneDark} customStyle={{ margin: 0, borderRadius: 0, background: 'transparent' }}>
-                      {s.code.html}
-                    </SyntaxHighlighter>
+                <div className="relative">
+                  <div className="grid md:grid-cols-2 divide-x divide-neutral-200 dark:divide-neutral-800">
+                    <div className="relative">
+                      <div className="absolute top-2 right-2 z-10 flex items-center gap-2">
+                        <span className="text-xs font-medium text-neutral-500 dark:text-neutral-400 bg-neutral-100 dark:bg-neutral-800 px-2 py-1 rounded">React</span>
+                        <button
+                          onClick={async () => {
+                            await navigator.clipboard.writeText(s.code.react)
+                            setCopiedSection(`${s.id}-react`)
+                            setTimeout(() => setCopiedSection(null), 2000)
+                          }}
+                          className="p-1.5 rounded-md bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-600 dark:text-neutral-400 transition-colors"
+                          aria-label="Copy React code"
+                        >
+                          {copiedSection === `${s.id}-react` ? (
+                            <Check className="w-3.5 h-3.5" />
+                          ) : (
+                            <Copy className="w-3.5 h-3.5" />
+                          )}
+                        </button>
+                      </div>
+                      <SyntaxHighlighter
+                        language="tsx"
+                        style={vscDarkPlus}
+                        customStyle={{
+                          margin: 0,
+                          borderRadius: 0,
+                          background: '#1e1e1e',
+                          padding: '1.5rem',
+                          fontSize: '0.875rem',
+                          lineHeight: '1.5'
+                        }}
+                        showLineNumbers={true}
+                        lineNumberStyle={{
+                          minWidth: '2.5em',
+                          paddingRight: '1em',
+                          color: '#6e7681',
+                          userSelect: 'none'
+                        }}
+                      >
+                        {s.code.react}
+                      </SyntaxHighlighter>
+                    </div>
+                    <div className="relative">
+                      <div className="absolute top-2 right-2 z-10 flex items-center gap-2">
+                        <span className="text-xs font-medium text-neutral-500 dark:text-neutral-400 bg-neutral-100 dark:bg-neutral-800 px-2 py-1 rounded">HTML</span>
+                        <button
+                          onClick={async () => {
+                            await navigator.clipboard.writeText(s.code.html)
+                            setCopiedSection(`${s.id}-html`)
+                            setTimeout(() => setCopiedSection(null), 2000)
+                          }}
+                          className="p-1.5 rounded-md bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-600 dark:text-neutral-400 transition-colors"
+                          aria-label="Copy HTML code"
+                        >
+                          {copiedSection === `${s.id}-html` ? (
+                            <Check className="w-3.5 h-3.5" />
+                          ) : (
+                            <Copy className="w-3.5 h-3.5" />
+                          )}
+                        </button>
+                      </div>
+                      <SyntaxHighlighter
+                        language="html"
+                        style={vscDarkPlus}
+                        customStyle={{
+                          margin: 0,
+                          borderRadius: 0,
+                          background: '#1e1e1e',
+                          padding: '1.5rem',
+                          fontSize: '0.875rem',
+                          lineHeight: '1.5'
+                        }}
+                        showLineNumbers={true}
+                        lineNumberStyle={{
+                          minWidth: '2.5em',
+                          paddingRight: '1em',
+                          color: '#6e7681',
+                          userSelect: 'none'
+                        }}
+                      >
+                        {s.code.html}
+                      </SyntaxHighlighter>
+                    </div>
                   </div>
                 </div>
               )}

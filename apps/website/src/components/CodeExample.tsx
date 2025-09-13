@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Copy, Check } from 'lucide-react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 interface CodeExampleProps {
   title: string
@@ -83,15 +83,22 @@ export function CodeExample({ title, language, code, className = '' }: CodeExamp
         <div className="overflow-x-auto">
           <SyntaxHighlighter
             language={getLanguage(language)}
-            style={oneDark}
+            style={vscDarkPlus}
             customStyle={{
               margin: 0,
               padding: '1.5rem',
               fontSize: '0.875rem',
               lineHeight: '1.5',
-              background: 'rgb(23, 23, 23)', // neutral-900
+              background: '#1e1e1e',
             }}
             wrapLongLines={false}
+            showLineNumbers={true}
+            lineNumberStyle={{
+              minWidth: '2.5em',
+              paddingRight: '1em',
+              color: '#6e7681',
+              userSelect: 'none'
+            }}
           >
             {code}
           </SyntaxHighlighter>
