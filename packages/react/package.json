@@ -16,7 +16,7 @@
     "src"
   ],
   "scripts": {
-    "generate": "node scripts/generate-wrappers.js",
+    "generate": "node scripts/generate-wrappers-improved.js",
     "build": "npm run generate && tsc",
     "dev": "tsc --watch",
     "clean": "rm -rf dist"

@@ -69,11 +69,109 @@ export class MzTreeNode extends LitElement {
   ]
   @property({type:String}) label = ''
   @property({type:Boolean}) expandable = false
+  @property({type:Boolean}) selected = false
   @state() private _open = false
-  private toggle(){ if(this.expandable){ this._open=!this._open } }
+
+  public expand() {
+    if (!this.expandable || this._open) return;
+
+    this._open = true;
+
+    this.dispatchEvent(
+      new CustomEvent('mz-expand', {
+        detail: {
+          label: this.label,
+          expanded: true
+        },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
+  public collapse() {
+    if (!this.expandable || !this._open) return;
+
+    this._open = false;
+
+    this.dispatchEvent(
+      new CustomEvent('mz-collapse', {
+        detail: {
+          label: this.label,
+          expanded: false
+        },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
+  public toggle() {
+    if (this._open) {
+      this.collapse();
+    } else {
+      this.expand();
+    }
+  }
+
+  public select() {
+    this.selected = true;
+
+    this.dispatchEvent(
+      new CustomEvent('mz-select', {
+        detail: {
+          label: this.label,
+          selected: true
+        },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
+  private handleClick = (event: MouseEvent) => {
+    this.select();
+
+    if (this.expandable) {
+      this.toggle();
+    }
+
+    this.dispatchEvent(
+      new CustomEvent('mz-click', {
+        detail: {
+          label: this.label,
+          expandable: this.expandable,
+          expanded: this._open,
+          selected: this.selected,
+          originalEvent: event
+        },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  private handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      this.handleClick(new MouseEvent('click'));
+    } else if (event.key === 'ArrowRight' && this.expandable && !this._open) {
+      this.expand();
+    } else if (event.key === 'ArrowLeft' && this.expandable && this._open) {
+      this.collapse();
+    }
+  };
   render(){
     return html`
-      <div class="node" role="treeitem" aria-expanded=${this.expandable?String(this._open):undefined} @click=${this.toggle}>
+      <div
+        class="node"
+        role="treeitem"
+        tabindex="0"
+        aria-expanded=${this.expandable?String(this._open):undefined}
+        aria-selected=${this.selected}
+        @click=${this.handleClick}
+        @keydown=${this.handleKeyDown}
+      >
         ${this.expandable? html`<button aria-label="Toggle">${this._open?'▼':'▶'}</button>`: html`<span style="width:var(--mz-space-4);display:inline-block"></span>`}
         <span>${this.label || html`<slot name="label"></slot>`}</span>
       </div>

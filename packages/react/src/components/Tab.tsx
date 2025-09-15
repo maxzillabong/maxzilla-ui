@@ -1,15 +1,63 @@
-import React from 'react'
-import { createReactWrapper, type WebComponentProps } from '../utils/createReactWrapper.js'
+'use client'
 
-export interface TabProps extends WebComponentProps {
+import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react'
+import 'maxzilla-ui-core'
+
+export interface TabProps {
   label?: string
-  active?: boolean
+  disabled?: boolean
+
+  className?: string
+  style?: React.CSSProperties
+  children?: React.ReactNode
 }
 
-const eventMap = {}
 
-const MzTab = createReactWrapper<HTMLElement>('mz-tab')
 
-export const Tab = MzTab as React.ForwardRefExoticComponent<TabProps>
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'mz-tab': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & TabProps,
+        HTMLElement
+      >
+    }
+  }
+}
+
+export const Tab = forwardRef<
+  HTMLElement,
+  TabProps
+>((props, ref) => {
+  const {
+    
+    className,
+    style,
+    children,
+    ...restProps
+  } = props
+
+  const elementRef = useRef<HTMLElement>(null)
+
+  useImperativeHandle(ref, () => elementRef.current as HTMLElement, [])
+
+  
+
+  // Handle controlled components
+  
+
+  
+
+  return (
+    <mz-tab
+      ref={elementRef}
+      className={className}
+      style={style}
+      {...restProps}
+    >
+      {children}
+    </mz-tab>
+  )
+})
 
 Tab.displayName = 'Tab'

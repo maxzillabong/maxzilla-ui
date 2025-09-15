@@ -38,7 +38,7 @@ export class MzTooltip extends LitElement {
         transform: rotate(45deg);
       }
 
-      :host([data-open="true"]) .tip {
+      .tip[data-open="true"] {
         opacity: 1;
         transform: translateY(0);
       }
@@ -50,8 +50,102 @@ export class MzTooltip extends LitElement {
   @property({ type: String, attribute: 'aria-describedby' }) ariaDescribedBy?: string;
 
   @state() private _open = false
-  private _show(){ this._open=true }
-  private _hide(){ this._open=false }
+
+  public show() {
+    if (this._open) return;
+
+    // Dispatch show event
+    this.dispatchEvent(
+      new CustomEvent('mz-show', {
+        bubbles: true,
+        composed: true,
+      })
+    );
+
+    this._open = true;
+
+    // Dispatch after-show event after animation
+    setTimeout(() => {
+      this.dispatchEvent(
+        new CustomEvent('mz-after-show', {
+          bubbles: true,
+          composed: true,
+        })
+      );
+    }, 200);
+  }
+
+  public hide() {
+    if (!this._open) return;
+
+    // Dispatch hide event
+    this.dispatchEvent(
+      new CustomEvent('mz-hide', {
+        bubbles: true,
+        composed: true,
+      })
+    );
+
+    this._open = false;
+
+    // Dispatch after-hide event after animation
+    setTimeout(() => {
+      this.dispatchEvent(
+        new CustomEvent('mz-after-hide', {
+          bubbles: true,
+          composed: true,
+        })
+      );
+    }, 200);
+  }
+
+  private handleMouseEnter = (event: MouseEvent) => {
+    this.show();
+
+    this.dispatchEvent(
+      new CustomEvent('mz-mouseenter', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  private handleMouseLeave = (event: MouseEvent) => {
+    this.hide();
+
+    this.dispatchEvent(
+      new CustomEvent('mz-mouseleave', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  private handleFocus = (event: FocusEvent) => {
+    this.show();
+
+    this.dispatchEvent(
+      new CustomEvent('mz-focus', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  private handleBlur = (event: FocusEvent) => {
+    this.hide();
+
+    this.dispatchEvent(
+      new CustomEvent('mz-blur', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
   render(){
     const pos = this.placement
     const style = pos==='top'? 'bottom:100%;left:50%;transform:translate(-50%,var(--mz-space-1))' : pos==='bottom'? 'top:100%;left:50%;transform:translate(-50%,calc(-1 * var(--mz-space-1)))' : pos==='left'? 'right:100%;top:50%;transform:translate(var(--mz-space-1),-50%)' : 'left:100%;top:50%;transform:translate(calc(-1 * var(--mz-space-1)),-50%)'
@@ -59,10 +153,10 @@ export class MzTooltip extends LitElement {
 
     return html`
       <span
-        @mouseenter=${this._show}
-        @mouseleave=${this._hide}
-        @focus=${this._show}
-        @blur=${this._hide}
+        @mouseenter=${this.handleMouseEnter}
+        @mouseleave=${this.handleMouseLeave}
+        @focus=${this.handleFocus}
+        @blur=${this.handleBlur}
         aria-describedby=${this.ariaDescribedBy || tooltipId}
       >
         <slot></slot>

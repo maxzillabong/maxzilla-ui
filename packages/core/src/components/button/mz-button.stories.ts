@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
+import { action } from '@storybook/addon-actions';
 import './mz-button.js';
 
 const meta: Meta = {
@@ -87,11 +88,35 @@ const meta: Meta = {
   parameters: {
     docs: {
       description: {
-        component: 'A versatile button component with multiple variants, sizes, and states. Supports icons, loading states, and can be rendered as a link.'
+        component: `A versatile button component with multiple variants, sizes, and states. Supports icons, loading states, and can be rendered as a link.
+
+## Events
+
+The button component emits the following custom events:
+
+- **mz-click**: Fired when the button is clicked. Includes the original mouse/keyboard event in \`detail.originalEvent\`
+- **mz-focus**: Fired when the button receives focus. Includes the original focus event in \`detail.originalEvent\`
+- **mz-blur**: Fired when the button loses focus. Includes the original blur event in \`detail.originalEvent\`
+- **mz-mouseenter**: Fired when mouse enters the button. Includes the original mouseenter event in \`detail.originalEvent\`
+- **mz-mouseleave**: Fired when mouse leaves the button. Includes the original mouseleave event in \`detail.originalEvent\`
+
+### Event Usage Example
+
+\`\`\`javascript
+const button = document.querySelector('mz-button');
+
+button.addEventListener('mz-click', (event) => {
+  console.log('Button clicked', event.detail.originalEvent);
+});
+
+button.addEventListener('mz-focus', (event) => {
+  console.log('Button focused', event.detail.originalEvent);
+});
+\`\`\``
       }
     },
     actions: {
-      handles: ['mz-click']
+      handles: ['mz-click', 'mz-focus', 'mz-blur', 'mz-mouseenter', 'mz-mouseleave']
     }
   }
 };
@@ -118,7 +143,11 @@ export const Default: Story = {
       ?loading="${args.loading}"
       href="${args.href}"
       target="${args.target}"
-      @mz-click="${(e: CustomEvent) => console.log('Button clicked', e)}"
+      @mz-click="${action('mz-click')}"
+      @mz-focus="${action('mz-focus')}"
+      @mz-blur="${action('mz-blur')}"
+      @mz-mouseenter="${action('mz-mouseenter')}"
+      @mz-mouseleave="${action('mz-mouseleave')}"
     >
       Click me
     </mz-button>
@@ -135,6 +164,163 @@ export const Variants: Story = {
       <mz-button variant="destructive">Destructive</mz-button>
     </div>
   `
+};
+
+export const EventHandling: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: `This story demonstrates all available button events. Open the Actions panel in Storybook to see events firing in real-time.
+
+The button emits custom events that include the original browser event in the \`detail.originalEvent\` property, allowing you to access all native event properties and methods.`
+      }
+    }
+  },
+  render: () => {
+    // Track event counts for visual feedback
+    let eventCounts = {
+      click: 0,
+      focus: 0,
+      blur: 0,
+      mouseenter: 0,
+      mouseleave: 0
+    };
+
+    const updateEventDisplay = (eventType: string, displayEl: HTMLElement) => {
+      eventCounts[eventType]++;
+      displayEl.textContent = `${eventType}: ${eventCounts[eventType]}`;
+      displayEl.style.fontWeight = 'bold';
+      setTimeout(() => {
+        displayEl.style.fontWeight = 'normal';
+      }, 200);
+    };
+
+    return html`
+      <div style="display: flex; gap: 2rem; flex-direction: column;">
+        <div>
+          <h3 style="margin-bottom: 1rem;">Interactive Event Demo</h3>
+          <p style="margin-bottom: 1rem; color: var(--mz-color-text-secondary);">
+            Interact with the button below to see events fire. Check the Actions panel for detailed event logs.
+          </p>
+
+          <mz-button
+            variant="primary"
+            size="lg"
+            @mz-click="${(e: CustomEvent) => {
+              action('mz-click')(e.detail);
+              updateEventDisplay('click', document.getElementById('click-count')!);
+            }}"
+            @mz-focus="${(e: CustomEvent) => {
+              action('mz-focus')(e.detail);
+              updateEventDisplay('focus', document.getElementById('focus-count')!);
+            }}"
+            @mz-blur="${(e: CustomEvent) => {
+              action('mz-blur')(e.detail);
+              updateEventDisplay('blur', document.getElementById('blur-count')!);
+            }}"
+            @mz-mouseenter="${(e: CustomEvent) => {
+              action('mz-mouseenter')(e.detail);
+              updateEventDisplay('mouseenter', document.getElementById('mouseenter-count')!);
+            }}"
+            @mz-mouseleave="${(e: CustomEvent) => {
+              action('mz-mouseleave')(e.detail);
+              updateEventDisplay('mouseleave', document.getElementById('mouseleave-count')!);
+            }}"
+          >
+            Interact With Me
+          </mz-button>
+        </div>
+
+        <div style="background: var(--mz-color-background-secondary); padding: 1rem; border-radius: var(--mz-radius-md);">
+          <h4 style="margin-bottom: 0.5rem;">Event Counters:</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.5rem; font-family: monospace; font-size: 0.875rem;">
+            <div id="click-count" style="transition: font-weight 0.2s;">click: 0</div>
+            <div id="focus-count" style="transition: font-weight 0.2s;">focus: 0</div>
+            <div id="blur-count" style="transition: font-weight 0.2s;">blur: 0</div>
+            <div id="mouseenter-count" style="transition: font-weight 0.2s;">mouseenter: 0</div>
+            <div id="mouseleave-count" style="transition: font-weight 0.2s;">mouseleave: 0</div>
+          </div>
+        </div>
+
+        <div>
+          <h3 style="margin-bottom: 1rem;">Multiple Event Handlers Example</h3>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <mz-button
+              variant="secondary"
+              @mz-click="${(e: CustomEvent) => {
+                action('button-1-click')(e.detail);
+                console.log('Button 1 clicked', e.detail.originalEvent);
+              }}"
+              @mz-focus="${action('button-1-focus')}"
+              @mz-blur="${action('button-1-blur')}"
+            >
+              Button with Logging
+            </mz-button>
+
+            <mz-button
+              variant="outline"
+              @mz-click="${(e: CustomEvent) => {
+                action('button-2-click')(e.detail);
+                const target = e.target as HTMLElement;
+                target.setAttribute('loading', 'true');
+                setTimeout(() => target.removeAttribute('loading'), 1500);
+              }}"
+            >
+              Click to Load
+            </mz-button>
+
+            <mz-button
+              variant="ghost"
+              @mz-mouseenter="${(e: CustomEvent) => {
+                action('hover-button-enter')(e.detail);
+                const target = e.target as HTMLElement;
+                target.textContent = 'Mouse Entered!';
+              }}"
+              @mz-mouseleave="${(e: CustomEvent) => {
+                action('hover-button-leave')(e.detail);
+                const target = e.target as HTMLElement;
+                target.textContent = 'Hover Me';
+              }}"
+            >
+              Hover Me
+            </mz-button>
+          </div>
+        </div>
+
+        <div>
+          <h3 style="margin-bottom: 1rem;">Keyboard Navigation</h3>
+          <p style="margin-bottom: 1rem; color: var(--mz-color-text-secondary);">
+            Tab through these buttons and press Space or Enter to trigger click events.
+          </p>
+          <div style="display: flex; gap: 1rem;">
+            <mz-button
+              @mz-click="${action('keyboard-nav-1')}"
+              @mz-focus="${action('keyboard-focus-1')}"
+              @mz-blur="${action('keyboard-blur-1')}"
+            >
+              First
+            </mz-button>
+            <mz-button
+              variant="secondary"
+              @mz-click="${action('keyboard-nav-2')}"
+              @mz-focus="${action('keyboard-focus-2')}"
+              @mz-blur="${action('keyboard-blur-2')}"
+            >
+              Second
+            </mz-button>
+            <mz-button
+              variant="outline"
+              @mz-click="${action('keyboard-nav-3')}"
+              @mz-focus="${action('keyboard-focus-3')}"
+              @mz-blur="${action('keyboard-blur-3')}"
+            >
+              Third
+            </mz-button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
 };
 
 export const Sizes: Story = {
@@ -272,6 +458,180 @@ export const Interactive: Story = {
           Click to load
         </mz-button>
       </div>
+    `;
+  }
+};
+
+export const EventDetails: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: `This story demonstrates how to access the original browser event from the custom event's detail property.
+
+Each custom event includes the original event in \`detail.originalEvent\`, giving you access to:
+- Event coordinates (clientX, clientY)
+- Modifier keys (ctrlKey, shiftKey, altKey, metaKey)
+- Event prevention (preventDefault, stopPropagation)
+- Target information
+- Timestamp and other native properties`
+      }
+    }
+  },
+  render: () => {
+    const handleAdvancedClick = (e: CustomEvent) => {
+      const originalEvent = e.detail.originalEvent as MouseEvent;
+      const info = {
+        type: originalEvent.type,
+        button: originalEvent.button,
+        clientX: originalEvent.clientX,
+        clientY: originalEvent.clientY,
+        ctrlKey: originalEvent.ctrlKey,
+        shiftKey: originalEvent.shiftKey,
+        altKey: originalEvent.altKey,
+        metaKey: originalEvent.metaKey,
+        timestamp: originalEvent.timeStamp
+      };
+
+      const displayEl = document.getElementById('event-details-display');
+      if (displayEl) {
+        displayEl.textContent = JSON.stringify(info, null, 2);
+      }
+
+      action('detailed-click')(info);
+    };
+
+    const handleFormSubmit = (e: CustomEvent) => {
+      // Access original event to prevent default form submission
+      const originalEvent = e.detail.originalEvent as Event;
+      originalEvent.preventDefault();
+
+      action('form-submit-prevented')({
+        defaultPrevented: originalEvent.defaultPrevented,
+        timestamp: originalEvent.timeStamp
+      });
+
+      const resultEl = document.getElementById('form-result');
+      if (resultEl) {
+        resultEl.textContent = 'Form submission prevented!';
+        resultEl.style.color = 'var(--mz-color-success)';
+        setTimeout(() => {
+          resultEl.textContent = '';
+        }, 2000);
+      }
+    };
+
+    return html`
+      <div style="display: flex; gap: 2rem; flex-direction: column;">
+        <div>
+          <h3 style="margin-bottom: 1rem;">Access Original Event Properties</h3>
+          <p style="margin-bottom: 1rem; color: var(--mz-color-text-secondary);">
+            Click the button with different modifier keys held down to see the event details.
+          </p>
+          <mz-button
+            variant="primary"
+            size="lg"
+            @mz-click="${handleAdvancedClick}"
+          >
+            Click with Modifiers (Ctrl, Shift, Alt)
+          </mz-button>
+          <pre id="event-details-display" style="
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--mz-color-background-secondary);
+            border-radius: var(--mz-radius-md);
+            font-size: 0.875rem;
+            min-height: 200px;
+            font-family: monospace;
+          ">Click the button to see event details...</pre>
+        </div>
+
+        <div>
+          <h3 style="margin-bottom: 1rem;">Prevent Default Behavior</h3>
+          <p style="margin-bottom: 1rem; color: var(--mz-color-text-secondary);">
+            This example shows how to prevent default form submission using the original event.
+          </p>
+          <form style="display: flex; gap: 1rem; align-items: center;">
+            <input
+              type="text"
+              placeholder="Enter text..."
+              style="
+                padding: 0.5rem;
+                border: 1px solid var(--mz-color-border);
+                border-radius: var(--mz-radius-sm);
+                background: var(--mz-color-background);
+                color: var(--mz-color-text);
+              "
+            />
+            <mz-button
+              type="submit"
+              variant="secondary"
+              @mz-click="${handleFormSubmit}"
+            >
+              Submit Form
+            </mz-button>
+            <span id="form-result" style="font-size: 0.875rem; font-weight: 500;"></span>
+          </form>
+        </div>
+
+        <div>
+          <h3 style="margin-bottom: 1rem;">Event Coordinates</h3>
+          <p style="margin-bottom: 1rem; color: var(--mz-color-text-secondary);">
+            Track mouse position during click events.
+          </p>
+          <div style="
+            position: relative;
+            padding: 2rem;
+            background: var(--mz-color-background-secondary);
+            border-radius: var(--mz-radius-md);
+            min-height: 150px;
+          ">
+            <mz-button
+              variant="outline"
+              @mz-click="${(e: CustomEvent) => {
+                const originalEvent = e.detail.originalEvent as MouseEvent;
+                const marker = document.createElement('div');
+                marker.style.cssText = `
+                  position: absolute;
+                  left: ${originalEvent.offsetX}px;
+                  top: ${originalEvent.offsetY}px;
+                  width: 10px;
+                  height: 10px;
+                  background: var(--mz-color-primary);
+                  border-radius: 50%;
+                  pointer-events: none;
+                  animation: pulse 1s ease-out;
+                  transform: translate(-50%, -50%);
+                `;
+                const container = e.currentTarget as HTMLElement;
+                container.parentElement?.appendChild(marker);
+                setTimeout(() => marker.remove(), 1000);
+
+                action('click-coordinates')({
+                  offsetX: originalEvent.offsetX,
+                  offsetY: originalEvent.offsetY,
+                  clientX: originalEvent.clientX,
+                  clientY: originalEvent.clientY
+                });
+              }}"
+            >
+              Click to Mark Position
+            </mz-button>
+          </div>
+        </div>
+      </div>
+
+      <style>
+        @keyframes pulse {
+          0% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+          }
+          100% {
+            transform: translate(-50%, -50%) scale(3);
+            opacity: 0;
+          }
+        }
+      </style>
     `;
   }
 };

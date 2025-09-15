@@ -46,10 +46,99 @@ export class MzTextarea extends LitElement {
   @property({ type: Boolean, attribute: 'aria-invalid' }) ariaInvalid = false;
   @property({ type: Boolean, attribute: 'aria-required' }) ariaRequired = false;
   private onInput(e: Event) {
-    const v = (e.target as HTMLTextAreaElement).value
-    this.value = v
-    this.dispatchEvent(new Event('input', { bubbles: true }))
-    this.dispatchEvent(new Event('change', { bubbles: true }))
+    const textarea = e.target as HTMLTextAreaElement
+    this.value = textarea.value
+
+    // Dispatch standard input event
+    this.dispatchEvent(new Event('input', { bubbles: true, composed: true }))
+
+    // Dispatch custom input event with detail
+    this.dispatchEvent(new CustomEvent('mz-input', {
+      detail: {
+        value: this.value,
+        originalEvent: e
+      },
+      bubbles: true,
+      composed: true
+    }))
+  }
+
+  private onChange(e: Event) {
+    const textarea = e.target as HTMLTextAreaElement
+    this.value = textarea.value
+
+    // Dispatch standard change event
+    this.dispatchEvent(new Event('change', { bubbles: true, composed: true }))
+
+    // Dispatch custom change event with detail
+    this.dispatchEvent(new CustomEvent('mz-change', {
+      detail: {
+        value: this.value,
+        originalEvent: e
+      },
+      bubbles: true,
+      composed: true
+    }))
+  }
+
+  private onFocus(e: FocusEvent) {
+    // Dispatch standard focus event
+    this.dispatchEvent(new Event('focus', { bubbles: true, composed: true }))
+
+    // Dispatch custom focus event
+    this.dispatchEvent(new CustomEvent('mz-focus', {
+      detail: { originalEvent: e },
+      bubbles: true,
+      composed: true
+    }))
+  }
+
+  private onBlur(e: FocusEvent) {
+    // Dispatch standard blur event
+    this.dispatchEvent(new Event('blur', { bubbles: true, composed: true }))
+
+    // Dispatch custom blur event
+    this.dispatchEvent(new CustomEvent('mz-blur', {
+      detail: { originalEvent: e },
+      bubbles: true,
+      composed: true
+    }))
+  }
+
+  private onKeyDown(e: KeyboardEvent) {
+    // Dispatch custom keydown event
+    this.dispatchEvent(new CustomEvent('mz-keydown', {
+      detail: {
+        key: e.key,
+        originalEvent: e
+      },
+      bubbles: true,
+      composed: true
+    }))
+
+    // Special handling for Enter key (check if Shift/Ctrl/Meta is pressed)
+    if (e.key === 'Enter' && !e.shiftKey) {
+      this.dispatchEvent(new CustomEvent('mz-enter', {
+        detail: {
+          value: this.value,
+          originalEvent: e
+        },
+        bubbles: true,
+        composed: true
+      }))
+    }
+  }
+
+  private onKeyUp(e: KeyboardEvent) {
+    // Dispatch custom keyup event
+    this.dispatchEvent(new CustomEvent('mz-keyup', {
+      detail: {
+        key: e.key,
+        originalEvent: e
+      },
+      bubbles: true,
+      composed: true
+    }))
   }
 
   render() {
@@ -68,6 +157,11 @@ export class MzTextarea extends LitElement {
         aria-required=${this.ariaRequired}
         aria-multiline="true"
         @input=${this.onInput}
+        @change=${this.onChange}
+        @focus=${this.onFocus}
+        @blur=${this.onBlur}
+        @keydown=${this.onKeyDown}
+        @keyup=${this.onKeyUp}
       ></textarea>
       ${this.helperText ? html`<div id="helper-text" class="helper">${this.helperText}</div>` : null}
     `

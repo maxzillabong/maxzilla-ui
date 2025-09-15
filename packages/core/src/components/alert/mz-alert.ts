@@ -236,17 +236,77 @@ export class MzAlert extends LitElement {
     return icons[this.variant]
   }
 
-  private close() {
-    this.style.animation = 'slideOutRight 0.3s forwards'
+  private handleClose = (event: MouseEvent) => {
+    // Dispatch request-close event that can be cancelled
+    const requestCloseEvent = this.dispatchEvent(
+      new CustomEvent('mz-request-close', {
+        detail: {
+          source: 'close-button',
+          originalEvent: event
+        },
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      })
+    );
+
+    if (requestCloseEvent) {
+      this.close();
+    }
+  };
+
+  public close() {
+    // Dispatch close event
+    this.dispatchEvent(
+      new CustomEvent('mz-close', {
+        detail: { source: 'method' },
+        bubbles: true,
+        composed: true,
+      })
+    );
+
+    this.style.animation = 'slideOutRight 0.3s forwards';
+
     setTimeout(() => {
-      this.style.display = 'none'
-      this.dispatchEvent(new Event('close', { bubbles: true }))
-    }, 300)
+      this.style.display = 'none';
+
+      // Dispatch after-close event
+      this.dispatchEvent(
+        new CustomEvent('mz-after-close', {
+          bubbles: true,
+          composed: true,
+        })
+      );
+    }, 300);
   }
+
+  private handleMouseEnter = (event: MouseEvent) => {
+    this.dispatchEvent(
+      new CustomEvent('mz-mouseenter', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  private handleMouseLeave = (event: MouseEvent) => {
+    this.dispatchEvent(
+      new CustomEvent('mz-mouseleave', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
 
   render() {
     return html`
-      <div class="alert alert--${this.variant}">
+      <div
+        class="alert alert--${this.variant}"
+        @mouseenter=${this.handleMouseEnter}
+        @mouseleave=${this.handleMouseLeave}
+      >
         <div class="alert-icon">
           <div class="alert-icon-content">
             <slot name="icon">${this.getIcon()}</slot>
@@ -262,7 +322,7 @@ export class MzAlert extends LitElement {
           <button
             class="alert-close"
             aria-label="Close alert"
-            @click=${this.close}
+            @click=${this.handleClose}
           ></button>
         ` : ''}
       </div>

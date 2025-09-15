@@ -216,6 +216,237 @@ const componentDefinitions = {
       onBlur: { webEvent: 'mz-blur', hasDetail: false }
     },
     methods: ['focus', 'blur', 'select', 'setSelectionRange', 'validate']
+  },
+  // Simple wrapper components (no special props or events)
+  'mz-accordion': {
+    props: {},
+    events: {},
+    methods: []
+  },
+  'mz-accordion-item': {
+    props: {
+      header: 'string',
+      expanded: 'boolean',
+      disabled: 'boolean'
+    },
+    events: {},
+    methods: []
+  },
+  'mz-divider': {
+    props: {
+      orientation: "'horizontal' | 'vertical'"
+    },
+    events: {},
+    methods: []
+  },
+  'mz-stack': {
+    props: {
+      direction: "'row' | 'column'",
+      spacing: 'string | number',
+      align: 'string',
+      justify: 'string'
+    },
+    events: {},
+    methods: []
+  },
+  'mz-container': {
+    props: {
+      maxWidth: "'sm' | 'md' | 'lg' | 'xl' | 'full'"
+    },
+    events: {},
+    methods: []
+  },
+  'mz-navbar': {
+    props: {},
+    events: {},
+    methods: []
+  },
+  'mz-breadcrumb': {
+    props: {},
+    events: {},
+    methods: []
+  },
+  'mz-breadcrumb-item': {
+    props: {
+      href: 'string'
+    },
+    events: {},
+    methods: []
+  },
+  'mz-radio-group': {
+    props: {
+      value: 'string',
+      name: 'string'
+    },
+    events: {
+      onChange: { webEvent: 'change', hasDetail: false }
+    },
+    methods: []
+  },
+  'mz-radio': {
+    props: {
+      value: 'string',
+      checked: 'boolean',
+      disabled: 'boolean'
+    },
+    events: {},
+    methods: []
+  },
+  'mz-tab': {
+    props: {
+      label: 'string',
+      disabled: 'boolean'
+    },
+    events: {},
+    methods: []
+  },
+  'mz-option': {
+    props: {
+      value: 'string',
+      label: 'string',
+      disabled: 'boolean'
+    },
+    events: {},
+    methods: []
+  },
+  'mz-tooltip': {
+    props: {
+      content: 'string',
+      placement: "'top' | 'bottom' | 'left' | 'right'"
+    },
+    events: {},
+    methods: []
+  },
+  'mz-toast': {
+    props: {
+      message: 'string',
+      type: "'info' | 'success' | 'warning' | 'error'",
+      duration: 'number'
+    },
+    events: {},
+    methods: ['show', 'hide']
+  },
+  'mz-sidebar': {
+    props: {
+      open: 'boolean',
+      position: "'left' | 'right'"
+    },
+    events: {},
+    methods: []
+  },
+  'mz-row': {
+    props: {
+      gutter: 'number',
+      align: 'string',
+      justify: 'string'
+    },
+    events: {},
+    methods: []
+  },
+  'mz-col': {
+    props: {
+      span: 'number',
+      offset: 'number',
+      xs: 'number',
+      sm: 'number',
+      md: 'number',
+      lg: 'number',
+      xl: 'number'
+    },
+    events: {},
+    methods: []
+  },
+  'mz-popover': {
+    props: {
+      content: 'string',
+      trigger: "'hover' | 'click'",
+      placement: "'top' | 'bottom' | 'left' | 'right'"
+    },
+    events: {},
+    methods: []
+  },
+  'mz-table': {
+    props: {},
+    events: {},
+    methods: []
+  },
+  'mz-form': {
+    props: {},
+    events: {
+      onSubmit: { webEvent: 'submit', hasDetail: false }
+    },
+    methods: []
+  },
+  'mz-form-group': {
+    props: {
+      label: 'string'
+    },
+    events: {},
+    methods: []
+  },
+  'mz-form-actions': {
+    props: {},
+    events: {},
+    methods: []
+  },
+  'mz-pagination': {
+    props: {
+      current: 'number',
+      total: 'number',
+      pageSize: 'number'
+    },
+    events: {
+      onChange: { webEvent: 'change', hasDetail: true }
+    },
+    methods: []
+  },
+  'mz-progress': {
+    props: {
+      value: 'number',
+      max: 'number',
+      type: "'line' | 'circle'"
+    },
+    events: {},
+    methods: []
+  },
+  'mz-loading': {
+    props: {
+      size: "'sm' | 'md' | 'lg'",
+      color: 'string'
+    },
+    events: {},
+    methods: []
+  },
+  'mz-toast-container': {
+    props: {
+      position: "'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'"
+    },
+    events: {},
+    methods: []
+  },
+  'mz-tree': {
+    props: {},
+    events: {},
+    methods: []
+  },
+  'mz-tree-node': {
+    props: {
+      label: 'string',
+      expanded: 'boolean'
+    },
+    events: {},
+    methods: []
+  },
+  'mz-date-picker': {
+    props: {
+      value: 'string',
+      format: 'string',
+      placeholder: 'string'
+    },
+    events: {
+      onChange: { webEvent: 'change', hasDetail: false }
+    },
+    methods: []
   }
 }
 
@@ -255,10 +486,10 @@ function generateReactWrapper(componentName, definition) {
     .map(method => {
       if (method === 'setSelectionRange') {
         return `    ${method}: (start: number, end: number, direction?: 'forward' | 'backward' | 'none') => {
-      elementRef.current?.${method}(start, end, direction)
+      (elementRef.current as any)?.${method}(start, end, direction)
     }`
       }
-      return `    ${method}: () => elementRef.current?.${method}()`
+      return `    ${method}: () => (elementRef.current as any)?.${method}()`
     })
     .join(',\n')
 
@@ -283,10 +514,12 @@ function generateReactWrapper(componentName, definition) {
   const hasEvents = Object.keys(definition.events || {}).length > 0
   const hasMethods = publicMethods.length > 0
 
-  return `import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react'
-import 'maxzilla-ui-core/${componentName.slice(3)}'
+  return `'use client'
 
-interface ${componentNamePascal}Props {
+import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react'
+import 'maxzilla-ui-core'
+
+export interface ${componentNamePascal}Props {
 ${propsInterface}
 ${eventHandlers}
   className?: string
@@ -390,7 +623,10 @@ function generateIndexFile(componentNames) {
     })
     .join('\n')
 
-  return `// Auto-generated React wrappers for Maxzilla UI web components
+  return `// Auto-generated React wrapper components for Maxzilla UI
+// Do not edit this file directly - use npm run generate to regenerate
+
+export { useWebComponents } from '../utils/createReactWrapper'
 ${exports}
 
 // Type exports for components with ref methods

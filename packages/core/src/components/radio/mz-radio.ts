@@ -122,6 +122,7 @@ export class MzRadio extends LitElement {
   private handleChange(e: Event) {
     if (this.disabled) return
     const input = e.target as HTMLInputElement
+    const previousChecked = this.checked
     this.checked = input.checked
 
     // Dispatch radio-select for group handling
@@ -137,9 +138,84 @@ export class MzRadio extends LitElement {
       composed: true
     }))
 
-    // Dispatch custom mz-change event
+    // Dispatch custom mz-change event with detail
     this.dispatchEvent(new CustomEvent('mz-change', {
-      detail: { checked: this.checked, value: this.value },
+      detail: {
+        checked: this.checked,
+        previousChecked,
+        value: this.value,
+        originalEvent: e
+      },
+      bubbles: true,
+      composed: true
+    }))
+  }
+
+  private handleInput(e: Event) {
+    // Dispatch standard input event
+    this.dispatchEvent(new Event('input', { bubbles: true, composed: true }))
+
+    // Dispatch custom input event
+    this.dispatchEvent(new CustomEvent('mz-input', {
+      detail: {
+        checked: this.checked,
+        value: this.value,
+        originalEvent: e
+      },
+      bubbles: true,
+      composed: true
+    }))
+  }
+
+  private handleFocus(e: FocusEvent) {
+    // Dispatch standard focus event
+    this.dispatchEvent(new Event('focus', { bubbles: true, composed: true }))
+
+    // Dispatch custom focus event
+    this.dispatchEvent(new CustomEvent('mz-focus', {
+      detail: { originalEvent: e },
+      bubbles: true,
+      composed: true
+    }))
+  }
+
+  private handleBlur(e: FocusEvent) {
+    // Dispatch standard blur event
+    this.dispatchEvent(new Event('blur', { bubbles: true, composed: true }))
+
+    // Dispatch custom blur event
+    this.dispatchEvent(new CustomEvent('mz-blur', {
+      detail: { originalEvent: e },
+      bubbles: true,
+      composed: true
+    }))
+  }
+
+  private handleKeyDown(e: KeyboardEvent) {
+    // Dispatch custom keydown event
+    this.dispatchEvent(new CustomEvent('mz-keydown', {
+      detail: {
+        key: e.key,
+        originalEvent: e
+      },
+      bubbles: true,
+      composed: true
+    }))
+
+    // Handle space key for selection
+    if (e.key === ' ') {
+      e.preventDefault()
+      this.click()
+    }
+  }
+
+  private handleKeyUp(e: KeyboardEvent) {
+    // Dispatch custom keyup event
+    this.dispatchEvent(new CustomEvent('mz-keyup', {
+      detail: {
+        key: e.key,
+        originalEvent: e
+      },
       bubbles: true,
       composed: true
     }))
@@ -172,6 +248,11 @@ export class MzRadio extends LitElement {
           aria-label=${this.ariaLabel || this.label}
           aria-describedby=${this.ariaDescribedBy}
           @change=${this.handleChange}
+          @input=${this.handleInput}
+          @focus=${this.handleFocus}
+          @blur=${this.handleBlur}
+          @keydown=${this.handleKeyDown}
+          @keyup=${this.handleKeyUp}
         />
         <div class="outer">
           <div class="dot"></div>

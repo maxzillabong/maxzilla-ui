@@ -1,19 +1,77 @@
-import React from 'react'
-import { createReactWrapper, type WebComponentProps } from '../utils/createReactWrapper.js'
+'use client'
 
-export interface PaginationProps extends WebComponentProps {
+import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react'
+import 'maxzilla-ui-core'
+
+export interface PaginationProps {
+  current?: number
   total?: number
   pageSize?: number
-  current?: number
-  onPageChange?: (event: Event) => void
+  onChange?: (event: CustomEvent<any>) => void
+  className?: string
+  style?: React.CSSProperties
+  children?: React.ReactNode
 }
 
-const eventMap = {
-  onPageChange: 'page-change'
+
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'mz-pagination': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & PaginationProps,
+        HTMLElement
+      >
+    }
+  }
 }
 
-const MzPagination = createReactWrapper<HTMLElement>('mz-pagination', eventMap)
+export const Pagination = forwardRef<
+  HTMLElement,
+  PaginationProps
+>((props, ref) => {
+  const {
+    onChange,
+    className,
+    style,
+    children,
+    ...restProps
+  } = props
 
-export const Pagination = MzPagination as React.ForwardRefExoticComponent<PaginationProps>
+  const elementRef = useRef<HTMLElement>(null)
+
+  useImperativeHandle(ref, () => elementRef.current as HTMLElement, [])
+
+  useEffect(() => {
+    const element = elementRef.current
+    if (!element) return
+
+      if (onChange) {
+        element.addEventListener('change', onChange as EventListener)
+      }
+
+    return () => {
+        if (onChange) {
+          element.removeEventListener('change', onChange as EventListener)
+        }
+    }
+  }, [onChange])
+
+  // Handle controlled components
+  
+
+  
+
+  return (
+    <mz-pagination
+      ref={elementRef}
+      className={className}
+      style={style}
+      {...restProps}
+    >
+      {children}
+    </mz-pagination>
+  )
+})
 
 Pagination.displayName = 'Pagination'

@@ -39,22 +39,123 @@ export class MzPopover extends LitElement {
   @property({type:Boolean}) hover = false
   @state() private _coords = ''
 
-  private _toggle(){ this.open = !this.open }
-  private _open(){ this.open = true }
-  private _close(){ this.open = false }
+  public show() {
+    if (this.open) return;
+
+    // Dispatch show event
+    this.dispatchEvent(
+      new CustomEvent('mz-show', {
+        bubbles: true,
+        composed: true,
+      })
+    );
+
+    this.open = true;
+
+    // Dispatch after-show event after animation
+    setTimeout(() => {
+      this.dispatchEvent(
+        new CustomEvent('mz-after-show', {
+          bubbles: true,
+          composed: true,
+        })
+      );
+    }, 200);
+  }
+
+  public hide() {
+    if (!this.open) return;
+
+    // Dispatch hide event
+    this.dispatchEvent(
+      new CustomEvent('mz-hide', {
+        bubbles: true,
+        composed: true,
+      })
+    );
+
+    this.open = false;
+
+    // Dispatch after-hide event after animation
+    setTimeout(() => {
+      this.dispatchEvent(
+        new CustomEvent('mz-after-hide', {
+          bubbles: true,
+          composed: true,
+        })
+      );
+    }, 200);
+  }
+
+  public toggle() {
+    if (this.open) {
+      this.hide();
+    } else {
+      this.show();
+    }
+  }
+
+  private handleTriggerClick = (event: MouseEvent) => {
+    if (!this.hover) {
+      this.toggle();
+
+      // Dispatch click event
+      this.dispatchEvent(
+        new CustomEvent('mz-trigger-click', {
+          detail: { originalEvent: event },
+          bubbles: true,
+          composed: true,
+        })
+      );
+    }
+  };
+
+  private handleTriggerMouseEnter = (event: MouseEvent) => {
+    if (this.hover) {
+      this.show();
+    }
+
+    this.dispatchEvent(
+      new CustomEvent('mz-trigger-mouseenter', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  private handleTriggerMouseLeave = (event: MouseEvent) => {
+    if (this.hover) {
+      this.hide();
+    }
+
+    this.dispatchEvent(
+      new CustomEvent('mz-trigger-mouseleave', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  private handlePanelMouseLeave = (event: MouseEvent) => {
+    if (this.hover) {
+      this.hide();
+    }
+  };
 
   render(){
     const pos = this.placement
     const style = pos==='top'? 'bottom:100%;left:50%;transform:translate(-50%,var(--mz-space-1))' : pos==='bottom'? 'top:100%;left:50%;transform:translate(-50%,calc(-1 * var(--mz-space-1)))' : pos==='left'? 'right:100%;top:50%;transform:translate(var(--mz-space-1),-50%)' : 'left:100%;top:50%;transform:translate(calc(-1 * var(--mz-space-1)),-50%)'
     return html`
       <span
-        @click=${this.hover ? undefined : this._toggle}
-        @mouseenter=${this.hover ? this._open : undefined}
-        @mouseleave=${this.hover ? this._close : undefined}
+        @click=${this.handleTriggerClick}
+        @mouseenter=${this.handleTriggerMouseEnter}
+        @mouseleave=${this.handleTriggerMouseLeave}
       >
         <slot name="trigger"></slot>
       </span>
-      <div class="panel ${this.open?'open':''}" style=${style} role="dialog" @mouseleave=${this.hover?this._close:undefined}>
+      <div class="panel ${this.open?'open':''}" style=${style} role="dialog" @mouseleave=${this.handlePanelMouseLeave}>
         <div style="position:absolute;width:var(--mz-space-2);height:var(--mz-space-2);background:var(--mz-color-neutral-0);transform:rotate(45deg);${pos==='top'?'top:100%;left:50%;margin-left:calc(-1 * var(--mz-space-1))':'display:none'}"></div>
         <slot></slot>
       </div>

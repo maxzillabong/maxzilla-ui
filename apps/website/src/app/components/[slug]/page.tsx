@@ -3,7 +3,7 @@ import { InlineFooter } from '@/components/InlineFooter'
 import { componentsData, findDataBySlug } from '../registry-data'
 import dynamic from 'next/dynamic'
 const DetailClient = dynamic(() => import('./DetailClient'), { ssr: false })
-const ComponentsSidebar = dynamic(() => import('./ComponentsSidebar').then(m => m.ComponentsSidebar), { ssr: false })
+const SidebarScrollWrapper = dynamic(() => import('./SidebarScrollWrapper').then(m => m.SidebarScrollWrapper), { ssr: false })
 const TOCClient = dynamic(() => import('./TOCClient').then(m => m.TOCClient), { ssr: false })
 const MobileDocNav = dynamic(() => import('./MobileDocNav'), { ssr: false })
 
@@ -32,11 +32,7 @@ export default function ComponentDetail({ params }: { params: { slug: string } }
       <div className="flex-1 flex overflow-hidden pt-20">
         <div className="w-full flex">
           {/* Left column - Sidebar */}
-          <aside className="hidden lg:block w-[17rem] flex-shrink-0 h-[calc(100vh-5rem)] overflow-y-auto">
-            <div className="py-8 px-4">
-              <ComponentsSidebar current={params.slug} sticky={false} />
-            </div>
-          </aside>
+          <SidebarScrollWrapper current={params.slug} />
 
           {/* Middle and Right columns container */}
           <main className="flex-1 h-[calc(100vh-5rem)] overflow-y-auto xl:overflow-visible xl:h-auto">

@@ -1,6 +1,6 @@
 "use client"
 import { useMemo, useState } from 'react'
-import { findBySlug } from '../registry'
+import { findBySlug } from '../registry/index'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { Copy, Check, FileCode, BookOpen } from 'lucide-react'

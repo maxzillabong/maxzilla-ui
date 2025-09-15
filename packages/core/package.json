@@ -161,7 +161,8 @@
     "build-storybook": "storybook build",
     "test": "web-test-runner",
     "test:watch": "web-test-runner --watch",
-    "clean": "rm -rf dist storybook-static"
+    "clean": "rm -rf dist storybook-static",
+    "generate:api-docs": "node scripts/generate-api-docs.js"
   },
   "keywords": [
     "web-components",

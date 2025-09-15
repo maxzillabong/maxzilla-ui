@@ -1,3 +1,5 @@
+'use client'
+
 import React, { forwardRef, useEffect, useRef, type ComponentPropsWithRef } from 'react'
 
 // Props interface for web component wrappers
@@ -89,7 +91,8 @@ export function useWebComponents() {
     // Import web components if not already loaded
     if (typeof window !== 'undefined' && 'customElements' in window) {
       // Use dynamic import with type assertion to avoid TS errors
-      import('maxzilla-ui-core' as any).catch(console.error)
+      // @ts-ignore - maxzilla-ui-core is a sibling package
+      void import('maxzilla-ui-core').catch(console.error)
     }
   }, [])
 }

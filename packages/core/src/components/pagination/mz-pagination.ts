@@ -61,15 +61,73 @@ export class MzPagination extends LitElement {
   @property({type:Number}) current = 1
 
   private pages(){ return Math.max(1, Math.ceil(this.total/this.pageSize)) }
-  private setPage(p:number){ const max=this.pages(); const np=Math.min(max, Math.max(1,p)); if(np!==this.current){ this.current=np; this.dispatchEvent(new CustomEvent('page-change',{detail:{page:np},bubbles:true})) } }
+
+  private setPage = (newPage: number, event?: Event) => {
+    const maxPage = this.pages();
+    const previousPage = this.current;
+    const validatedPage = Math.min(maxPage, Math.max(1, newPage));
+
+    if (validatedPage !== this.current) {
+      this.current = validatedPage;
+
+      // Dispatch page change event with full details
+      this.dispatchEvent(
+        new CustomEvent('mz-page-change', {
+          detail: {
+            page: validatedPage,
+            previousPage: previousPage,
+            totalPages: maxPage,
+            pageSize: this.pageSize,
+            total: this.total,
+            originalEvent: event
+          },
+          bubbles: true,
+          composed: true,
+        })
+      );
+
+      // Also dispatch legacy event for backwards compatibility
+      this.dispatchEvent(new CustomEvent('page-change', { detail: { page: validatedPage }, bubbles: true }));
+    }
+  };
+
+  private handlePreviousClick = (event: MouseEvent) => {
+    this.setPage(this.current - 1, event);
+  };
+
+  private handleNextClick = (event: MouseEvent) => {
+    this.setPage(this.current + 1, event);
+  };
+
+  private handlePageClick = (page: number) => (event: MouseEvent) => {
+    this.setPage(page, event);
+  };
   render(){
-    const max = this.pages(); const items = [] as any[]
-    for(let i=1;i<=Math.min(max,7);i++){ items.push(html`<button class=${i===this.current?'active':''} @click=${()=>this.setPage(i)}>${i}</button>`) }
+    const max = this.pages();
+    const items = [] as any[];
+
+    for(let i=1; i<=Math.min(max,7); i++){
+      items.push(html`<button
+        class=${i===this.current?'active':''}
+        @click=${this.handlePageClick(i)}
+        aria-label="Page ${i}"
+        aria-current=${i === this.current ? 'page' : 'false'}
+      >${i}</button>`);
+    }
+
     return html`
-      <button @click=${()=>this.setPage(this.current-1)} ?disabled=${this.current<=1} aria-label="Previous">‹</button>
+      <button
+        @click=${this.handlePreviousClick}
+        ?disabled=${this.current<=1}
+        aria-label="Previous page"
+      >‹</button>
       ${items}
-      <button @click=${()=>this.setPage(this.current+1)} ?disabled=${this.current>=max} aria-label="Next">›</button>
-    `
+      <button
+        @click=${this.handleNextClick}
+        ?disabled=${this.current>=max}
+        aria-label="Next page"
+      >›</button>
+    `;
   }
 }
 

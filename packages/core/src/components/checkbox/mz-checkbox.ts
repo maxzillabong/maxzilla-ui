@@ -197,25 +197,103 @@ export class MzCheckbox extends ValidatableMixin(LitElement) {
       this.validate()
     }
 
-    // Dispatch change event
+    // Dispatch standard change event
     this.dispatchEvent(new Event('change', {
       bubbles: true,
       composed: true
     }))
 
-    // Dispatch custom event with detail
+    // Dispatch custom change event with detail
     this.dispatchEvent(new CustomEvent('mz-change', {
-      detail: { checked: this.checked, value: this.value },
+      detail: {
+        checked: this.checked,
+        value: this.value,
+        originalEvent: e
+      },
       bubbles: true,
       composed: true
     }))
   }
 
-  private handleBlur() {
+  private handleInput(e: Event) {
+    const input = e.target as HTMLInputElement
+
+    // Dispatch custom input event for real-time updates
+    this.dispatchEvent(new CustomEvent('mz-input', {
+      detail: {
+        checked: input.checked,
+        value: this.value,
+        originalEvent: e
+      },
+      bubbles: true,
+      composed: true
+    }))
+
+    // Dispatch standard input event
+    this.dispatchEvent(new Event('input', {
+      bubbles: true,
+      composed: true
+    }))
+  }
+
+  private handleFocus(e: FocusEvent) {
+    // Dispatch custom focus event
+    this.dispatchEvent(new CustomEvent('mz-focus', {
+      detail: { originalEvent: e },
+      bubbles: true,
+      composed: true
+    }))
+
+    // Dispatch standard focus event
+    this.dispatchEvent(new Event('focus', {
+      bubbles: true,
+      composed: true
+    }))
+  }
+
+  private handleBlur(e: FocusEvent) {
     this.touched = true
     this.validate()
 
+    // Dispatch custom blur event
+    this.dispatchEvent(new CustomEvent('mz-blur', {
+      detail: { originalEvent: e },
+      bubbles: true,
+      composed: true
+    }))
+
+    // Dispatch standard blur event
     this.dispatchEvent(new Event('blur', {
+      bubbles: true,
+      composed: true
+    }))
+  }
+
+  private handleKeyDown(e: KeyboardEvent) {
+    // Dispatch custom keydown event
+    this.dispatchEvent(new CustomEvent('mz-keydown', {
+      detail: {
+        key: e.key,
+        originalEvent: e
+      },
+      bubbles: true,
+      composed: true
+    }))
+
+    // Handle space key for toggling
+    if (e.key === ' ') {
+      e.preventDefault()
+      this._input?.click()
+    }
+  }
+
+  private handleKeyUp(e: KeyboardEvent) {
+    // Dispatch custom keyup event
+    this.dispatchEvent(new CustomEvent('mz-keyup', {
+      detail: {
+        key: e.key,
+        originalEvent: e
+      },
       bubbles: true,
       composed: true
     }))
@@ -284,7 +362,11 @@ export class MzCheckbox extends ValidatableMixin(LitElement) {
           aria-describedby=${this.ariaDescribedBy}
           aria-invalid=${showError ? 'true' : 'false'}
           @change=${this.handleChange}
+          @input=${this.handleInput}
+          @focus=${this.handleFocus}
           @blur=${this.handleBlur}
+          @keydown=${this.handleKeyDown}
+          @keyup=${this.handleKeyUp}
         />
         <div class="box">
           ${this.indeterminate

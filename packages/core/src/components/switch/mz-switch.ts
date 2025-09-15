@@ -81,14 +81,120 @@ export class MzSwitch extends LitElement {
   @property({ type: Boolean, reflect: true }) checked = false
   @property({ type: Boolean, reflect: true }) disabled = false
   @property({ type: String }) label = ''
+  @property({ type: String, attribute: 'aria-label' }) ariaLabel = ''
+  @property({ type: String, attribute: 'aria-describedby' }) ariaDescribedBy = ''
 
-  private toggle() { if (!this.disabled) { this.checked = !this.checked; this.dispatchEvent(new Event('change', { bubbles: true })) } }
-  private onKey(e: KeyboardEvent) { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); this.toggle() } }
+  private toggle(event?: MouseEvent) {
+    if (!this.disabled) {
+      const previousChecked = this.checked
+      this.checked = !this.checked
+
+      // Dispatch standard change event
+      this.dispatchEvent(new Event('change', { bubbles: true, composed: true }))
+
+      // Dispatch custom change event with detail
+      this.dispatchEvent(new CustomEvent('mz-change', {
+        detail: {
+          checked: this.checked,
+          previousChecked,
+          originalEvent: event
+        },
+        bubbles: true,
+        composed: true
+      }))
+
+      // Also dispatch input event for real-time updates
+      this.dispatchEvent(new Event('input', { bubbles: true, composed: true }))
+      this.dispatchEvent(new CustomEvent('mz-input', {
+        detail: {
+          checked: this.checked,
+          originalEvent: event
+        },
+        bubbles: true,
+        composed: true
+      }))
+    }
+  }
+
+  private onClick(e: MouseEvent) {
+    this.toggle(e)
+
+    // Dispatch custom click event
+    this.dispatchEvent(new CustomEvent('mz-click', {
+      detail: { originalEvent: e },
+      bubbles: true,
+      composed: true
+    }))
+  }
+
+  private onFocus(e: FocusEvent) {
+    // Dispatch standard focus event
+    this.dispatchEvent(new Event('focus', { bubbles: true, composed: true }))
+
+    // Dispatch custom focus event
+    this.dispatchEvent(new CustomEvent('mz-focus', {
+      detail: { originalEvent: e },
+      bubbles: true,
+      composed: true
+    }))
+  }
+
+  private onBlur(e: FocusEvent) {
+    // Dispatch standard blur event
+    this.dispatchEvent(new Event('blur', { bubbles: true, composed: true }))
+
+    // Dispatch custom blur event
+    this.dispatchEvent(new CustomEvent('mz-blur', {
+      detail: { originalEvent: e },
+      bubbles: true,
+      composed: true
+    }))
+  }
+
+  private onKeyDown(e: KeyboardEvent) {
+    // Dispatch custom keydown event
+    this.dispatchEvent(new CustomEvent('mz-keydown', {
+      detail: {
+        key: e.key,
+        originalEvent: e
+      },
+      bubbles: true,
+      composed: true
+    }))
+
+    // Handle space and enter keys for toggling
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault()
+      this.toggle()
+    }
+  }
+
+  private onKeyUp(e: KeyboardEvent) {
+    // Dispatch custom keyup event
+    this.dispatchEvent(new CustomEvent('mz-keyup', {
+      detail: {
+        key: e.key,
+        originalEvent: e
+      },
+      bubbles: true,
+      composed: true
+    }))
+  }
 
   render() {
     return html`
-      <div class="root ${this.checked ? 'on' : ''}" role="switch" aria-checked=${this.checked} tabindex=${this.disabled ? -1 : 0}
-        aria-disabled=${this.disabled} @click=${this.toggle} @keydown=${this.onKey}>
+      <div class="root ${this.checked ? 'on' : ''}"
+        role="switch"
+        aria-checked=${this.checked}
+        aria-label=${this.ariaLabel || this.label}
+        aria-describedby=${this.ariaDescribedBy}
+        tabindex=${this.disabled ? -1 : 0}
+        aria-disabled=${this.disabled}
+        @click=${this.onClick}
+        @focus=${this.onFocus}
+        @blur=${this.onBlur}
+        @keydown=${this.onKeyDown}
+        @keyup=${this.onKeyUp}>
         <div class="track"><div class="thumb"></div></div>
         ${this.label ? html`<span>${this.label}</span>` : html`<slot></slot>`}
       </div>

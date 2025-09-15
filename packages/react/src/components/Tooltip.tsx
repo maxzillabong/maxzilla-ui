@@ -1,15 +1,63 @@
-import React from 'react'
-import { createReactWrapper, type WebComponentProps } from '../utils/createReactWrapper.js'
+'use client'
 
-export interface TooltipProps extends WebComponentProps {
-  text?: string
+import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react'
+import 'maxzilla-ui-core'
+
+export interface TooltipProps {
+  content?: string
   placement?: 'top' | 'bottom' | 'left' | 'right'
+
+  className?: string
+  style?: React.CSSProperties
+  children?: React.ReactNode
 }
 
-const eventMap = {}
 
-const MzTooltip = createReactWrapper<HTMLElement>('mz-tooltip')
 
-export const Tooltip = MzTooltip as React.ForwardRefExoticComponent<TooltipProps>
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'mz-tooltip': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & TooltipProps,
+        HTMLElement
+      >
+    }
+  }
+}
+
+export const Tooltip = forwardRef<
+  HTMLElement,
+  TooltipProps
+>((props, ref) => {
+  const {
+    
+    className,
+    style,
+    children,
+    ...restProps
+  } = props
+
+  const elementRef = useRef<HTMLElement>(null)
+
+  useImperativeHandle(ref, () => elementRef.current as HTMLElement, [])
+
+  
+
+  // Handle controlled components
+  
+
+  
+
+  return (
+    <mz-tooltip
+      ref={elementRef}
+      className={className}
+      style={style}
+      {...restProps}
+    >
+      {children}
+    </mz-tooltip>
+  )
+})
 
 Tooltip.displayName = 'Tooltip'

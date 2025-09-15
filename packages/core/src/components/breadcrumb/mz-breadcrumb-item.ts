@@ -35,9 +35,49 @@ export class MzBreadcrumbItem extends LitElement {
   @property({ type: String }) href: string | null = null
   @property({ type: Boolean }) current = false
 
+  private handleClick = (event: MouseEvent) => {
+    // Dispatch navigation event
+    this.dispatchEvent(
+      new CustomEvent('mz-click', {
+        detail: {
+          href: this.href,
+          current: this.current,
+          originalEvent: event
+        },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  private handleFocus = (event: FocusEvent) => {
+    this.dispatchEvent(
+      new CustomEvent('mz-focus', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  private handleBlur = (event: FocusEvent) => {
+    this.dispatchEvent(
+      new CustomEvent('mz-blur', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
   render() {
     if (this.href && !this.current) {
-      return html`<li><a href=${this.href}><slot></slot></a></li>`
+      return html`<li><a
+        href=${this.href}
+        @click=${this.handleClick}
+        @focus=${this.handleFocus}
+        @blur=${this.handleBlur}
+      ><slot></slot></a></li>`
     }
     return html`<li><span aria-current="page"><slot></slot></span></li>`
   }

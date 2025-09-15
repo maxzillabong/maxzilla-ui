@@ -1,19 +1,64 @@
-import React from 'react'
-import { createReactWrapper, type WebComponentProps } from '../utils/createReactWrapper.js'
+'use client'
 
-export interface RadioProps extends WebComponentProps {
+import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react'
+import 'maxzilla-ui-core'
+
+export interface RadioProps {
   value?: string
   checked?: boolean
   disabled?: boolean
-  onSelect?: (event: Event) => void
+
+  className?: string
+  style?: React.CSSProperties
+  children?: React.ReactNode
 }
 
-const eventMap = {
-  onSelect: 'radio-select'
+
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'mz-radio': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & RadioProps,
+        HTMLElement
+      >
+    }
+  }
 }
 
-const MzRadio = createReactWrapper<HTMLElement>('mz-radio', eventMap)
+export const Radio = forwardRef<
+  HTMLElement,
+  RadioProps
+>((props, ref) => {
+  const {
+    
+    className,
+    style,
+    children,
+    ...restProps
+  } = props
 
-export const Radio = MzRadio as React.ForwardRefExoticComponent<RadioProps>
+  const elementRef = useRef<HTMLElement>(null)
+
+  useImperativeHandle(ref, () => elementRef.current as HTMLElement, [])
+
+  
+
+  // Handle controlled components
+  
+
+  
+
+  return (
+    <mz-radio
+      ref={elementRef}
+      className={className}
+      style={style}
+      {...restProps}
+    >
+      {children}
+    </mz-radio>
+  )
+})
 
 Radio.displayName = 'Radio'

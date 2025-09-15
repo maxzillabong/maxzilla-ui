@@ -293,10 +293,23 @@ export class MzCard extends LitElement {
   @property({ type: String, attribute: 'aria-describedby' }) ariaDescribedBy?: string;
   @property({ type: String, attribute: 'aria-labelledby' }) ariaLabelledBy?: string;
   private handleClick = (event: MouseEvent) => {
-    if (this.disabled || this.loading || !this.interactive) {
+    if (this.disabled || this.loading) {
       return;
     }
 
+    // Dispatch custom click event (following Shoelace naming)
+    this.dispatchEvent(
+      new CustomEvent('mz-click', {
+        detail: {
+          interactive: this.interactive,
+          originalEvent: event
+        },
+        bubbles: true,
+        composed: true,
+      })
+    );
+
+    // Also dispatch legacy event for backwards compatibility
     this.dispatchEvent(
       new CustomEvent('mz-card-click', {
         detail: { originalEvent: event },
@@ -306,13 +319,61 @@ export class MzCard extends LitElement {
     );
   };
 
-  
-  private handleKeyDown = (e: KeyboardEvent) => {
-    if (this.interactive && !this.disabled && !this.loading && (e.key === 'Enter' || e.key === ' ')) {
-      e.preventDefault();
-      this.handleClick(new MouseEvent('click'));
+  private handleMouseEnter = (event: MouseEvent) => {
+    this.dispatchEvent(
+      new CustomEvent('mz-mouseenter', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  private handleMouseLeave = (event: MouseEvent) => {
+    this.dispatchEvent(
+      new CustomEvent('mz-mouseleave', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  private handleFocus = (event: FocusEvent) => {
+    this.dispatchEvent(
+      new CustomEvent('mz-focus', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  private handleBlur = (event: FocusEvent) => {
+    this.dispatchEvent(
+      new CustomEvent('mz-blur', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  private handleKeyDown = (event: KeyboardEvent) => {
+    if (this.interactive && !this.disabled && !this.loading && (event.key === 'Enter' || event.key === ' ')) {
+      event.preventDefault();
+      this.handleClick(new MouseEvent('click', { detail: 1 }));
     }
-  }
+
+    // Dispatch key down event
+    this.dispatchEvent(
+      new CustomEvent('mz-keydown', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
 
   render() {
     const classes = {
@@ -336,6 +397,10 @@ export class MzCard extends LitElement {
         aria-busy=${this.loading}
         @click=${this.handleClick}
         @keydown=${this.handleKeyDown}
+        @mouseenter=${this.handleMouseEnter}
+        @mouseleave=${this.handleMouseLeave}
+        @focus=${this.handleFocus}
+        @blur=${this.handleBlur}
       >
         <slot name="image"></slot>
         <slot name="header"></slot>

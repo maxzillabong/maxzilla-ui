@@ -1,21 +1,79 @@
-import React from 'react'
-import { createReactWrapper, type WebComponentProps } from '../utils/createReactWrapper.js'
+'use client'
 
-export interface CardProps extends WebComponentProps {
+import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react'
+import 'maxzilla-ui-core'
+
+export interface CardProps {
   elevation?: 'none' | 'sm' | 'md' | 'lg' | 'xl'
   clickable?: boolean
   href?: string
   target?: string
   rel?: string
   onClick?: (event: Event) => void
+  className?: string
+  style?: React.CSSProperties
+  children?: React.ReactNode
 }
 
-const eventMap = {
-  onClick: 'click'
+
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'mz-card': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & CardProps,
+        HTMLElement
+      >
+    }
+  }
 }
 
-const MzCard = createReactWrapper<HTMLElement>('mz-card', eventMap)
+export const Card = forwardRef<
+  HTMLElement,
+  CardProps
+>((props, ref) => {
+  const {
+    onClick,
+    className,
+    style,
+    children,
+    ...restProps
+  } = props
 
-export const Card = MzCard as React.ForwardRefExoticComponent<CardProps>
+  const elementRef = useRef<HTMLElement>(null)
+
+  useImperativeHandle(ref, () => elementRef.current as HTMLElement, [])
+
+  useEffect(() => {
+    const element = elementRef.current
+    if (!element) return
+
+      if (onClick) {
+        element.addEventListener('click', onClick as EventListener)
+      }
+
+    return () => {
+        if (onClick) {
+          element.removeEventListener('click', onClick as EventListener)
+        }
+    }
+  }, [onClick])
+
+  // Handle controlled components
+  
+
+  
+
+  return (
+    <mz-card
+      ref={elementRef}
+      className={className}
+      style={style}
+      {...restProps}
+    >
+      {children}
+    </mz-card>
+  )
+})
 
 Card.displayName = 'Card'

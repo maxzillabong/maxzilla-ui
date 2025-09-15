@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { baseStyles } from '../../styles/base.js';
@@ -244,18 +244,64 @@ export class MzModal extends LitElement {
 
   private handleBackdropClick = (event: MouseEvent) => {
     if (event.target === event.currentTarget && !this.noCloseOnBackdrop) {
-      this.close();
+      // Dispatch request-close event with overlay source
+      const requestCloseEvent = this.dispatchEvent(
+        new CustomEvent('mz-request-close', {
+          detail: {
+            source: 'overlay',
+            originalEvent: event
+          },
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        })
+      );
+
+      if (requestCloseEvent) {
+        this.close();
+      }
     }
   };
 
-  private handleCloseClick = () => {
-    this.close();
+  private handleCloseClick = (event: MouseEvent) => {
+    // Dispatch request-close event with close-button source
+    const requestCloseEvent = this.dispatchEvent(
+      new CustomEvent('mz-request-close', {
+        detail: {
+          source: 'close-button',
+          originalEvent: event
+        },
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      })
+    );
+
+    if (requestCloseEvent) {
+      this.close();
+    }
   };
 
   private handleKeyDown(event: KeyboardEvent) {
     if (event.key === 'Escape' && this.open && !this.noCloseOnBackdrop) {
       event.preventDefault();
-      this.close();
+
+      // Dispatch request-close event with keyboard source
+      const requestCloseEvent = this.dispatchEvent(
+        new CustomEvent('mz-request-close', {
+          detail: {
+            source: 'keyboard',
+            originalEvent: event
+          },
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        })
+      );
+
+      if (requestCloseEvent) {
+        this.close();
+      }
     }
   }
 
@@ -289,7 +335,15 @@ export class MzModal extends LitElement {
     // Prevent body scroll
     this.preventBodyScroll();
 
-    // Dispatch show event
+    // Dispatch show event (following Shoelace naming convention)
+    this.dispatchEvent(
+      new CustomEvent('mz-show', {
+        bubbles: true,
+        composed: true,
+      })
+    );
+
+    // Also dispatch the legacy event name for backwards compatibility
     this.dispatchEvent(
       new CustomEvent('mz-modal-show', {
         bubbles: true,
@@ -308,6 +362,14 @@ export class MzModal extends LitElement {
       setTimeout(() => {
         this.isAnimating = false;
 
+        // Dispatch after-show event
+        this.dispatchEvent(
+          new CustomEvent('mz-after-show', {
+            bubbles: true,
+            composed: true,
+          })
+        );
+
         // Announce to screen readers
         this.announceToScreenReader('Dialog opened');
       }, 300);
@@ -319,7 +381,29 @@ export class MzModal extends LitElement {
 
     this.isAnimating = true;
 
-    // Dispatch close event (can be cancelled)
+    // Dispatch request-close event (can be cancelled) - following Shoelace pattern
+    const requestCloseEvent = this.dispatchEvent(
+      new CustomEvent('mz-request-close', {
+        detail: {
+          source: 'method' // Can be 'method', 'overlay', 'keyboard', 'close-button'
+        },
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      })
+    );
+
+    if (!requestCloseEvent) return; // Event was cancelled
+
+    // Dispatch hide event
+    this.dispatchEvent(
+      new CustomEvent('mz-hide', {
+        bubbles: true,
+        composed: true,
+      })
+    );
+
+    // Also dispatch legacy close event for backwards compatibility
     const closeEvent = this.dispatchEvent(
       new CustomEvent('mz-modal-close', {
         bubbles: true,
@@ -343,7 +427,15 @@ export class MzModal extends LitElement {
       // Cleanup
       this.cleanup();
 
-      // Dispatch closed event
+      // Dispatch after-hide event
+      this.dispatchEvent(
+        new CustomEvent('mz-after-hide', {
+          bubbles: true,
+          composed: true,
+        })
+      );
+
+      // Also dispatch legacy closed event for backwards compatibility
       this.dispatchEvent(
         new CustomEvent('mz-modal-closed', {
           bubbles: true,
@@ -374,13 +466,10 @@ export class MzModal extends LitElement {
     }, 1000);
   }
 
-  protected updated(changedProperties: Map<string, any>) {
-    if (changedProperties.has('open')) {
-      if (this.open) {
-        this.show();
-      } else if (!this.isAnimating) {
-        this.close();
-      }
+  protected firstUpdated() {
+    // Ensure modal starts closed on initial render
+    if (this.open) {
+      this.open = false;
     }
   }
 

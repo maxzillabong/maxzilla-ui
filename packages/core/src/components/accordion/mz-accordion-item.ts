@@ -46,9 +46,56 @@ export class MzAccordionItem extends LitElement {
     }
   }
 
-  private toggle() {
+  private toggle(event?: Event) {
+    const wasOpen = this.open
+
+    // Dispatch show/hide event (can be cancelled)
+    const eventType = !wasOpen ? 'mz-show' : 'mz-hide'
+    const showHideEvent = this.dispatchEvent(new CustomEvent(eventType, {
+      detail: {
+        originalEvent: event
+      },
+      bubbles: true,
+      composed: true,
+      cancelable: true
+    }))
+
+    if (!showHideEvent) return // Event was cancelled
+
     this.open = !this.open
-    this.dispatchEvent(new CustomEvent('accordion-toggle', { detail: { open: this.open }, bubbles: true }))
+
+    // Dispatch standard change event
+    this.dispatchEvent(new Event('change', { bubbles: true, composed: true }))
+
+    // Dispatch custom accordion-toggle for parent
+    this.dispatchEvent(new CustomEvent('accordion-toggle', {
+      detail: { open: this.open },
+      bubbles: true
+    }))
+
+    // Dispatch custom change event with detail
+    this.dispatchEvent(new CustomEvent('mz-change', {
+      detail: {
+        open: this.open,
+        wasOpen,
+        header: this.header,
+        originalEvent: event
+      },
+      bubbles: true,
+      composed: true
+    }))
+
+    // Dispatch after-show/after-hide event after animation
+    setTimeout(() => {
+      const afterEventType = this.open ? 'mz-after-show' : 'mz-after-hide'
+      this.dispatchEvent(new CustomEvent(afterEventType, {
+        detail: {
+          originalEvent: event
+        },
+        bubbles: true,
+        composed: true
+      }))
+    }, 300) // Match transition duration
   }
 
   private onHeaderKeydown(e: KeyboardEvent) {
@@ -56,7 +103,7 @@ export class MzAccordionItem extends LitElement {
     if (!keys.includes(e.key)) return
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault()
-      this.toggle()
+      this.toggle(e)
       return
     }
     e.preventDefault()
@@ -76,7 +123,7 @@ export class MzAccordionItem extends LitElement {
           id=${this._buttonId}
           class="header"
           type="button"
-          @click=${this.toggle}
+          @click=${(e: MouseEvent) => this.toggle(e)}
           @keydown=${this.onHeaderKeydown}
           aria-expanded=${this.open}
           aria-controls=${this._panelId}

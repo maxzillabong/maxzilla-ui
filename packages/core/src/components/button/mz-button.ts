@@ -288,6 +288,46 @@ export class MzButton extends LitElement {
     );
   };
 
+  private handleFocus = (event: FocusEvent) => {
+    this.dispatchEvent(
+      new CustomEvent('mz-focus', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  private handleBlur = (event: FocusEvent) => {
+    this.dispatchEvent(
+      new CustomEvent('mz-blur', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  private handleMouseEnter = (event: MouseEvent) => {
+    this.dispatchEvent(
+      new CustomEvent('mz-mouseenter', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  private handleMouseLeave = (event: MouseEvent) => {
+    this.dispatchEvent(
+      new CustomEvent('mz-mouseleave', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
   render() {
     const classes = {
       button: true,
@@ -322,6 +362,10 @@ export class MzButton extends LitElement {
           role="button"
           ...=${ariaAttrs}
           @click=${this.handleClick}
+          @focus=${this.handleFocus}
+          @blur=${this.handleBlur}
+          @mouseenter=${this.handleMouseEnter}
+          @mouseleave=${this.handleMouseLeave}
           @pointerdown=${this.handlePointerDown}
           @pointerup=${this.handlePointerUp}
         >
@@ -337,6 +381,10 @@ export class MzButton extends LitElement {
         ?disabled=${this.disabled || this.loading}
         ...=${ariaAttrs}
         @click=${this.handleClick}
+        @focus=${this.handleFocus}
+        @blur=${this.handleBlur}
+        @mouseenter=${this.handleMouseEnter}
+        @mouseleave=${this.handleMouseLeave}
         @pointerdown=${this.handlePointerDown}
         @pointerup=${this.handlePointerUp}
       >

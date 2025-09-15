@@ -36,6 +36,48 @@ export class MzProgress extends LitElement {
   @property({type:String}) label = ''
   @property({type:Boolean, attribute:'show-value'}) showValue = false
 
+  private previousValue = 0;
+
+  updated(changedProperties: Map<string | number | symbol, unknown>) {
+    super.updated(changedProperties);
+
+    if (changedProperties.has('value')) {
+      const currentPercentage = (this.value / this.max) * 100;
+      const previousPercentage = (this.previousValue / this.max) * 100;
+
+      // Dispatch change event
+      this.dispatchEvent(
+        new CustomEvent('mz-change', {
+          detail: {
+            value: this.value,
+            previousValue: this.previousValue,
+            percentage: currentPercentage,
+            previousPercentage: previousPercentage,
+            max: this.max
+          },
+          bubbles: true,
+          composed: true,
+        })
+      );
+
+      // Dispatch completion event when reaching 100%
+      if (currentPercentage >= 100 && previousPercentage < 100) {
+        this.dispatchEvent(
+          new CustomEvent('mz-complete', {
+            detail: {
+              value: this.value,
+              max: this.max
+            },
+            bubbles: true,
+            composed: true,
+          })
+        );
+      }
+
+      this.previousValue = this.value;
+    }
+  }
+
   render() {
     const pct = Math.max(0, Math.min(100, (this.value / this.max) * 100));
 

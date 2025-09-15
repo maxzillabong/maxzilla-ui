@@ -1,14 +1,62 @@
-import React from 'react'
-import { createReactWrapper, type WebComponentProps } from '../utils/createReactWrapper.js'
+'use client'
 
-export interface NavbarProps extends WebComponentProps {
+import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react'
+import 'maxzilla-ui-core'
 
+export interface NavbarProps {
+
+
+  className?: string
+  style?: React.CSSProperties
+  children?: React.ReactNode
 }
 
-const eventMap = {}
 
-const MzNavbar = createReactWrapper<HTMLElement>('mz-navbar')
 
-export const Navbar = MzNavbar as React.ForwardRefExoticComponent<NavbarProps>
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'mz-navbar': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & NavbarProps,
+        HTMLElement
+      >
+    }
+  }
+}
+
+export const Navbar = forwardRef<
+  HTMLElement,
+  NavbarProps
+>((props, ref) => {
+  const {
+    
+    className,
+    style,
+    children,
+    ...restProps
+  } = props
+
+  const elementRef = useRef<HTMLElement>(null)
+
+  useImperativeHandle(ref, () => elementRef.current as HTMLElement, [])
+
+  
+
+  // Handle controlled components
+  
+
+  
+
+  return (
+    <mz-navbar
+      ref={elementRef}
+      className={className}
+      style={style}
+      {...restProps}
+    >
+      {children}
+    </mz-navbar>
+  )
+})
 
 Navbar.displayName = 'Navbar'

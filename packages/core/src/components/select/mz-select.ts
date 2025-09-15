@@ -61,10 +61,89 @@ export class MzSelect extends LitElement {
   @property({ type: String, attribute: 'aria-describedby' }) ariaDescribedBy?: string;
   @property({ type: Boolean, attribute: 'aria-expanded' }) ariaExpanded = false;
   @property({ type: String, attribute: 'aria-activedescendant' }) ariaActiveDescendant?: string;
-  private _onChange(e: Event){
+  private _onChange(e: Event) {
     const sel = e.target as HTMLSelectElement
+    const previousValue = this.value
     this.value = sel.value
-    this.dispatchEvent(new Event('change', { bubbles: true }))
+
+    // Dispatch standard change event
+    this.dispatchEvent(new Event('change', { bubbles: true, composed: true }))
+
+    // Dispatch custom change event with detail
+    this.dispatchEvent(new CustomEvent('mz-change', {
+      detail: {
+        value: this.value,
+        previousValue,
+        originalEvent: e
+      },
+      bubbles: true,
+      composed: true
+    }))
+  }
+
+  private _onInput(e: Event) {
+    const sel = e.target as HTMLSelectElement
+
+    // Dispatch standard input event
+    this.dispatchEvent(new Event('input', { bubbles: true, composed: true }))
+
+    // Dispatch custom input event
+    this.dispatchEvent(new CustomEvent('mz-input', {
+      detail: {
+        value: sel.value,
+        originalEvent: e
+      },
+      bubbles: true,
+      composed: true
+    }))
+  }
+
+  private _onFocus(e: FocusEvent) {
+    // Dispatch standard focus event
+    this.dispatchEvent(new Event('focus', { bubbles: true, composed: true }))
+
+    // Dispatch custom focus event
+    this.dispatchEvent(new CustomEvent('mz-focus', {
+      detail: { originalEvent: e },
+      bubbles: true,
+      composed: true
+    }))
+  }
+
+  private _onBlur(e: FocusEvent) {
+    // Dispatch standard blur event
+    this.dispatchEvent(new Event('blur', { bubbles: true, composed: true }))
+
+    // Dispatch custom blur event
+    this.dispatchEvent(new CustomEvent('mz-blur', {
+      detail: { originalEvent: e },
+      bubbles: true,
+      composed: true
+    }))
+  }
+
+  private _onKeyDown(e: KeyboardEvent) {
+    // Dispatch custom keydown event
+    this.dispatchEvent(new CustomEvent('mz-keydown', {
+      detail: {
+        key: e.key,
+        originalEvent: e
+      },
+      bubbles: true,
+      composed: true
+    }))
+  }
+
+  private _onKeyUp(e: KeyboardEvent) {
+    // Dispatch custom keyup event
+    this.dispatchEvent(new CustomEvent('mz-keyup', {
+      detail: {
+        key: e.key,
+        originalEvent: e
+      },
+      bubbles: true,
+      composed: true
+    }))
   }
 
   render(){
@@ -79,6 +158,11 @@ export class MzSelect extends LitElement {
         aria-expanded=${this.ariaExpanded}
         aria-activedescendant=${this.ariaActiveDescendant || ''}
         @change=${this._onChange}
+        @input=${this._onInput}
+        @focus=${this._onFocus}
+        @blur=${this._onBlur}
+        @keydown=${this._onKeyDown}
+        @keyup=${this._onKeyUp}
         ?multiple=${this.multiple}
         .value=${this.value ?? ''}
       >

@@ -2,7 +2,7 @@
 import { TwoColumnLayout } from '@/components/TwoColumnLayout'
 import { Accordion, AccordionItem } from 'maxzilla-ui-react'
 import { ComponentCard } from '@/components/ComponentCard'
-import { byCategory } from './registry'
+import { byCategory } from './registry/index'
 
 export default function ComponentsPage() {
   return (

@@ -1,4 +1,4 @@
-import { LitElement, css, html } from 'lit'
+import { LitElement, css, html, nothing } from 'lit'
 import { customElement, property, query } from 'lit/decorators.js'
 import { baseStyles } from '../../styles/base.js'
 import { FocusTrap } from '../../utils/focus-trap.js'
@@ -160,7 +160,7 @@ export class MzDrawer extends LitElement {
   private handleKeyDown(e: KeyboardEvent) {
     if (this.open && this.closable && e.key === 'Escape') {
       e.preventDefault()
-      this.close()
+      this.close('keyboard')
     }
   }
 
@@ -183,6 +183,19 @@ export class MzDrawer extends LitElement {
   public show() {
     if (this.open) return
 
+    // Dispatch mz-show event (can be cancelled)
+    const showEvent = this.dispatchEvent(new CustomEvent('mz-show', {
+      detail: {
+        placement: this.placement,
+        size: this.size
+      },
+      bubbles: true,
+      composed: true,
+      cancelable: true
+    }))
+
+    if (!showEvent) return // Event was cancelled
+
     this.open = true
 
     // Add event listener
@@ -202,19 +215,57 @@ export class MzDrawer extends LitElement {
 
       // Announce to screen readers
       this.announceToScreenReader('Navigation drawer opened')
+
+      // Dispatch after-show event
+      this.dispatchEvent(new CustomEvent('mz-after-show', {
+        detail: {
+          placement: this.placement,
+          size: this.size
+        },
+        bubbles: true,
+        composed: true
+      }))
     })
 
-    // Dispatch event
+    // Dispatch legacy event for backwards compatibility
     this.dispatchEvent(new CustomEvent('mz-drawer-open', {
       bubbles: true,
       composed: true
     }))
   }
 
-  public close() {
+  public close(source: 'overlay' | 'keyboard' | 'close-button' | 'method' = 'method') {
     if (!this.open) return
 
-    // Dispatch close event (can be cancelled)
+    // Dispatch mz-request-close event (can be cancelled)
+    const requestCloseEvent = this.dispatchEvent(new CustomEvent('mz-request-close', {
+      detail: {
+        source,
+        placement: this.placement,
+        size: this.size
+      },
+      bubbles: true,
+      composed: true,
+      cancelable: true
+    }))
+
+    if (!requestCloseEvent) return // Event was cancelled
+
+    // Dispatch mz-hide event (can be cancelled)
+    const hideEvent = this.dispatchEvent(new CustomEvent('mz-hide', {
+      detail: {
+        source,
+        placement: this.placement,
+        size: this.size
+      },
+      bubbles: true,
+      composed: true,
+      cancelable: true
+    }))
+
+    if (!hideEvent) return // Event was cancelled
+
+    // Dispatch legacy close event (can be cancelled)
     const closeEvent = this.dispatchEvent(new CustomEvent('mz-drawer-close', {
       bubbles: true,
       composed: true,
@@ -228,7 +279,20 @@ export class MzDrawer extends LitElement {
     // Cleanup
     this.cleanup()
 
-    // Dispatch closed event
+    // Dispatch after-hide event after animation
+    setTimeout(() => {
+      this.dispatchEvent(new CustomEvent('mz-after-hide', {
+        detail: {
+          source,
+          placement: this.placement,
+          size: this.size
+        },
+        bubbles: true,
+        composed: true
+      }))
+    }, 300) // Match CSS transition duration
+
+    // Dispatch legacy closed event
     this.dispatchEvent(new CustomEvent('mz-drawer-closed', {
       bubbles: true,
       composed: true
@@ -256,24 +320,37 @@ export class MzDrawer extends LitElement {
     }, 1000)
   }
 
-  protected updated(changedProperties: Map<string, any>) {
-    if (changedProperties.has('open')) {
-      if (this.open) {
-        this.show()
-      } else {
-        this.close()
-      }
+  protected firstUpdated() {
+    // Ensure drawer starts closed on initial render
+    if (this.open) {
+      this.open = false;
     }
   }
 
-  private handleScrimClick() {
+  private handleScrimClick(e: MouseEvent) {
     if (this.closable) {
-      this.close()
+      // Dispatch overlay click event
+      this.dispatchEvent(new CustomEvent('mz-overlay-click', {
+        detail: {
+          originalEvent: e
+        },
+        bubbles: true,
+        composed: true
+      }))
+      this.close('overlay')
     }
   }
 
-  private handleCloseClick() {
-    this.close()
+  private handleCloseClick(e: MouseEvent) {
+    // Dispatch close button click event
+    this.dispatchEvent(new CustomEvent('mz-close-button-click', {
+      detail: {
+        originalEvent: e
+      },
+      bubbles: true,
+      composed: true
+    }))
+    this.close('close-button')
   }
 
   render() {
@@ -283,7 +360,7 @@ export class MzDrawer extends LitElement {
     return html`
       <div
         class="scrim ${this.open ? 'open' : ''}"
-        @click=${this.handleScrimClick}
+        @click=${(e: MouseEvent) => this.handleScrimClick(e)}
         aria-hidden="true"
       ></div>
       <aside
@@ -298,7 +375,7 @@ export class MzDrawer extends LitElement {
           <button
             class="close-button"
             aria-label="Close drawer"
-            @click=${this.handleCloseClick}
+            @click=${(e: MouseEvent) => this.handleCloseClick(e)}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M18 6L6 18M6 6l12 12"/>

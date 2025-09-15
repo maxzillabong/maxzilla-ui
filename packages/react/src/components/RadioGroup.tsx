@@ -1,18 +1,76 @@
-import React from 'react'
-import { createReactWrapper, type WebComponentProps } from '../utils/createReactWrapper.js'
+'use client'
 
-export interface RadioGroupProps extends WebComponentProps {
-  name?: string
+import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react'
+import 'maxzilla-ui-core'
+
+export interface RadioGroupProps {
   value?: string
+  name?: string
   onChange?: (event: Event) => void
+  className?: string
+  style?: React.CSSProperties
+  children?: React.ReactNode
 }
 
-const eventMap = {
-  onChange: 'change'
+
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'mz-radio-group': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & RadioGroupProps,
+        HTMLElement
+      >
+    }
+  }
 }
 
-const MzRadioGroup = createReactWrapper<HTMLElement>('mz-radio-group', eventMap)
+export const RadioGroup = forwardRef<
+  HTMLElement,
+  RadioGroupProps
+>((props, ref) => {
+  const {
+    onChange,
+    className,
+    style,
+    children,
+    ...restProps
+  } = props
 
-export const RadioGroup = MzRadioGroup as React.ForwardRefExoticComponent<RadioGroupProps>
+  const elementRef = useRef<HTMLElement>(null)
+
+  useImperativeHandle(ref, () => elementRef.current as HTMLElement, [])
+
+  useEffect(() => {
+    const element = elementRef.current
+    if (!element) return
+
+      if (onChange) {
+        element.addEventListener('change', onChange as EventListener)
+      }
+
+    return () => {
+        if (onChange) {
+          element.removeEventListener('change', onChange as EventListener)
+        }
+    }
+  }, [onChange])
+
+  // Handle controlled components
+  
+
+  
+
+  return (
+    <mz-radio-group
+      ref={elementRef}
+      className={className}
+      style={style}
+      {...restProps}
+    >
+      {children}
+    </mz-radio-group>
+  )
+})
 
 RadioGroup.displayName = 'RadioGroup'

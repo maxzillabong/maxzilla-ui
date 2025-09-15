@@ -1,15 +1,62 @@
-import React from 'react'
-import { createReactWrapper, type WebComponentProps } from '../utils/createReactWrapper.js'
+'use client'
 
-export interface BreadcrumbItemProps extends WebComponentProps {
+import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react'
+import 'maxzilla-ui-core'
+
+export interface BreadcrumbItemProps {
   href?: string
-  current?: boolean
+
+  className?: string
+  style?: React.CSSProperties
+  children?: React.ReactNode
 }
 
-const eventMap = {}
 
-const MzBreadcrumbItem = createReactWrapper<HTMLElement>('mz-breadcrumb-item')
 
-export const BreadcrumbItem = MzBreadcrumbItem as React.ForwardRefExoticComponent<BreadcrumbItemProps>
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'mz-breadcrumb-item': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & BreadcrumbItemProps,
+        HTMLElement
+      >
+    }
+  }
+}
+
+export const BreadcrumbItem = forwardRef<
+  HTMLElement,
+  BreadcrumbItemProps
+>((props, ref) => {
+  const {
+    
+    className,
+    style,
+    children,
+    ...restProps
+  } = props
+
+  const elementRef = useRef<HTMLElement>(null)
+
+  useImperativeHandle(ref, () => elementRef.current as HTMLElement, [])
+
+  
+
+  // Handle controlled components
+  
+
+  
+
+  return (
+    <mz-breadcrumb-item
+      ref={elementRef}
+      className={className}
+      style={style}
+      {...restProps}
+    >
+      {children}
+    </mz-breadcrumb-item>
+  )
+})
 
 BreadcrumbItem.displayName = 'BreadcrumbItem'

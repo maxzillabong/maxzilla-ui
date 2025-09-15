@@ -1,14 +1,63 @@
-import React from 'react'
-import { createReactWrapper, type WebComponentProps } from '../utils/createReactWrapper.js'
+'use client'
 
-export interface SidebarProps extends WebComponentProps {
+import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react'
+import 'maxzilla-ui-core'
 
+export interface SidebarProps {
+  open?: boolean
+  position?: 'left' | 'right'
+
+  className?: string
+  style?: React.CSSProperties
+  children?: React.ReactNode
 }
 
-const eventMap = {}
 
-const MzSidebar = createReactWrapper<HTMLElement>('mz-sidebar')
 
-export const Sidebar = MzSidebar as React.ForwardRefExoticComponent<SidebarProps>
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'mz-sidebar': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & SidebarProps,
+        HTMLElement
+      >
+    }
+  }
+}
+
+export const Sidebar = forwardRef<
+  HTMLElement,
+  SidebarProps
+>((props, ref) => {
+  const {
+    
+    className,
+    style,
+    children,
+    ...restProps
+  } = props
+
+  const elementRef = useRef<HTMLElement>(null)
+
+  useImperativeHandle(ref, () => elementRef.current as HTMLElement, [])
+
+  
+
+  // Handle controlled components
+  
+
+  
+
+  return (
+    <mz-sidebar
+      ref={elementRef}
+      className={className}
+      style={style}
+      {...restProps}
+    >
+      {children}
+    </mz-sidebar>
+  )
+})
 
 Sidebar.displayName = 'Sidebar'

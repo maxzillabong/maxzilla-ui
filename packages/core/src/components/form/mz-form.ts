@@ -21,10 +21,46 @@ export class MzForm extends LitElement {
   @property({ type: String, attribute: 'aria-label' }) ariaLabel?: string;
   @property({ type: String, attribute: 'aria-labelledby' }) ariaLabelledBy?: string;
 
-  private onSubmit(e: Event) {
-    e.preventDefault()
-    this.dispatchEvent(new Event('submit', { bubbles: true }))
-  }
+  private handleSubmit = (event: Event) => {
+    event.preventDefault();
+
+    // Dispatch submit event with form data
+    const formData = new FormData(event.target as HTMLFormElement);
+
+    this.dispatchEvent(
+      new CustomEvent('mz-submit', {
+        detail: {
+          formData: formData,
+          originalEvent: event
+        },
+        bubbles: true,
+        composed: true,
+      })
+    );
+
+    // Also dispatch legacy event for backwards compatibility
+    this.dispatchEvent(new Event('submit', { bubbles: true }));
+  };
+
+  private handleReset = (event: Event) => {
+    this.dispatchEvent(
+      new CustomEvent('mz-reset', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  private handleInvalid = (event: Event) => {
+    this.dispatchEvent(
+      new CustomEvent('mz-invalid', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
 
   render() {
     return html`
@@ -32,7 +68,9 @@ export class MzForm extends LitElement {
         role="form"
         aria-label=${this.ariaLabel || ''}
         aria-labelledby=${this.ariaLabelledBy || ''}
-        @submit=${this.onSubmit}
+        @submit=${this.handleSubmit}
+        @reset=${this.handleReset}
+        @invalid=${this.handleInvalid}
       >
         <slot></slot>
       </form>

@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import { baseStyles } from '../../styles/base.js';
 import { ValidatableMixin, ValidationSchemas } from '../../mixins/validation.js';
@@ -284,10 +284,13 @@ export class MzInput extends ValidatableMixin(LitElement) {
 
     this._updateFormValue();
 
-    // Dispatch custom event
+    // Dispatch custom event with value and original event
     this.dispatchEvent(
       new CustomEvent('mz-input', {
-        detail: { value: this.value },
+        detail: {
+          value: this.value,
+          originalEvent: event
+        },
         bubbles: true,
         composed: true,
       })
@@ -305,10 +308,13 @@ export class MzInput extends ValidatableMixin(LitElement) {
     this.validate();
     this._updateFormValue();
 
-    // Dispatch custom event
+    // Dispatch custom event with value and original event
     this.dispatchEvent(
       new CustomEvent('mz-change', {
-        detail: { value: this.value },
+        detail: {
+          value: this.value,
+          originalEvent: event
+        },
         bubbles: true,
         composed: true,
       })
@@ -318,18 +324,72 @@ export class MzInput extends ValidatableMixin(LitElement) {
     this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
   };
 
-  private handleFocus = () => {
-    this.dispatchEvent(new CustomEvent('mz-focus', { bubbles: true, composed: true }));
+  private handleFocus = (event: FocusEvent) => {
+    this.dispatchEvent(
+      new CustomEvent('mz-focus', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true
+      })
+    );
     this.dispatchEvent(new Event('focus', { bubbles: true, composed: true }));
   };
 
-  private handleBlur = () => {
+  private handleBlur = (event: FocusEvent) => {
     this.touched = true;
     this.validate();
     this._updateFormValue();
 
-    this.dispatchEvent(new CustomEvent('mz-blur', { bubbles: true, composed: true }));
+    this.dispatchEvent(
+      new CustomEvent('mz-blur', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true
+      })
+    );
     this.dispatchEvent(new Event('blur', { bubbles: true, composed: true }));
+  };
+
+  private handleKeyDown = (event: KeyboardEvent) => {
+    // Dispatch custom keydown event
+    this.dispatchEvent(
+      new CustomEvent('mz-keydown', {
+        detail: {
+          key: event.key,
+          originalEvent: event
+        },
+        bubbles: true,
+        composed: true,
+      })
+    );
+
+    // Special handling for Enter key
+    if (event.key === 'Enter') {
+      this.dispatchEvent(
+        new CustomEvent('mz-enter', {
+          detail: {
+            value: this.value,
+            originalEvent: event
+          },
+          bubbles: true,
+          composed: true,
+        })
+      );
+    }
+  };
+
+  private handleKeyUp = (event: KeyboardEvent) => {
+    // Dispatch custom keyup event
+    this.dispatchEvent(
+      new CustomEvent('mz-keyup', {
+        detail: {
+          key: event.key,
+          originalEvent: event
+        },
+        bubbles: true,
+        composed: true,
+      })
+    );
   };
 
   // Form associated lifecycle callbacks
@@ -416,6 +476,8 @@ export class MzInput extends ValidatableMixin(LitElement) {
           @change=${this.handleChange}
           @focus=${this.handleFocus}
           @blur=${this.handleBlur}
+          @keydown=${this.handleKeyDown}
+          @keyup=${this.handleKeyUp}
         />
 
         ${this.hasSuffix ? html`

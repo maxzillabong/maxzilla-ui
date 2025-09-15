@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from 'react'
 import { Copy, Check, ChevronDown, ChevronRight, Code, Zap, Package, Palette } from 'lucide-react'
+import { generatedComponentAPIs } from '../data/generated-component-apis'
 
-// Component metadata - this would ideally come from build-time introspection
-// For now, we'll manually define the API for each component
+// Component metadata - manually curated for better descriptions
+// Falls back to auto-generated APIs for components not defined here
 export const componentAPIs: Record<string, ComponentAPIData> = {
   button: {
     properties: [
@@ -776,7 +777,8 @@ export function ComponentAPI({ componentName }: { componentName: string }) {
   })
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
 
-  const api = componentAPIs[componentName]
+  // Use manually curated API if available, otherwise fall back to generated
+  const api = componentAPIs[componentName] || generatedComponentAPIs[componentName]
 
   if (!api) {
     return (

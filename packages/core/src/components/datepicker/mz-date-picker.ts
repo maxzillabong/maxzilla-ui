@@ -47,10 +47,67 @@ export class MzDatePicker extends LitElement {
   @property({ type: String, attribute: 'aria-label' }) ariaLabel?: string;
   @property({ type: String, attribute: 'aria-describedby' }) ariaDescribedBy?: string;
 
-  private onInput(e: Event) {
-    this.value = (e.target as HTMLInputElement).value;
-    this.dispatchEvent(new Event('change', { bubbles: true }));
-  }
+  private handleInput = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    const previousValue = this.value;
+    this.value = target.value;
+
+    // Dispatch input event with previous value
+    this.dispatchEvent(
+      new CustomEvent('mz-input', {
+        detail: {
+          value: this.value,
+          previousValue: previousValue,
+          originalEvent: event
+        },
+        bubbles: true,
+        composed: true,
+      })
+    );
+
+    // Dispatch change event for backwards compatibility
+    this.dispatchEvent(
+      new CustomEvent('mz-change', {
+        detail: {
+          value: this.value,
+          previousValue: previousValue,
+          originalEvent: event
+        },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  private handleFocus = (event: FocusEvent) => {
+    this.dispatchEvent(
+      new CustomEvent('mz-focus', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  private handleBlur = (event: FocusEvent) => {
+    this.dispatchEvent(
+      new CustomEvent('mz-blur', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  private handleKeyDown = (event: KeyboardEvent) => {
+    this.dispatchEvent(
+      new CustomEvent('mz-keydown', {
+        detail: { originalEvent: event },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
   
   private handleCalendarKeyDown(e: KeyboardEvent) {
     const key = e.key;
@@ -94,7 +151,10 @@ export class MzDatePicker extends LitElement {
         aria-label=${this.ariaLabel || this.label || 'Select date'}
         aria-describedby=${this.ariaDescribedBy || ''}
         role="textbox"
-        @input=${this.onInput}
+        @input=${this.handleInput}
+        @focus=${this.handleFocus}
+        @blur=${this.handleBlur}
+        @keydown=${this.handleKeyDown}
       />
     `;
   }

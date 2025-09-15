@@ -278,6 +278,21 @@ export class MzToast extends LitElement {
     duration?: number
     avatar?: string
   }) {
+    // Dispatch mz-show event (can be cancelled)
+    const showEvent = this.dispatchEvent(new CustomEvent('mz-show', {
+      detail: {
+        message: options.message,
+        title: options.title,
+        variant: options.variant || 'info',
+        duration: options.duration || 3000
+      },
+      bubbles: true,
+      composed: true,
+      cancelable: true
+    }))
+
+    if (!showEvent) return // Event was cancelled
+
     this.message = options.message
     this.title = options.title || ''
     this.variant = options.variant || 'info'
@@ -289,17 +304,70 @@ export class MzToast extends LitElement {
 
     if (this.timeoutId) clearTimeout(this.timeoutId)
 
+    // Dispatch after-show event after animation
+    setTimeout(() => {
+      this.dispatchEvent(new CustomEvent('mz-after-show', {
+        detail: {
+          message: this.message,
+          title: this.title,
+          variant: this.variant,
+          duration: this.duration
+        },
+        bubbles: true,
+        composed: true
+      }))
+    }, 300) // Match CSS transition duration
+
     this.timeoutId = setTimeout(() => {
-      this.hide()
+      this.hide('timeout')
     }, this.duration)
   }
 
-  private hide() {
+  private hide(source: 'close-button' | 'timeout' | 'method' = 'method') {
+    // Dispatch mz-hide event (can be cancelled)
+    const hideEvent = this.dispatchEvent(new CustomEvent('mz-hide', {
+      detail: {
+        source,
+        message: this.message,
+        title: this.title,
+        variant: this.variant
+      },
+      bubbles: true,
+      composed: true,
+      cancelable: true
+    }))
+
+    if (!hideEvent) return // Event was cancelled
+
     this._hiding = true
+
+    // Clear timeout if hiding manually
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId)
+      this.timeoutId = null
+    }
+
     setTimeout(() => {
       this._show = false
       this._hiding = false
+
+      // Dispatch after-hide event
+      this.dispatchEvent(new CustomEvent('mz-after-hide', {
+        detail: {
+          source,
+          message: this.message,
+          title: this.title,
+          variant: this.variant
+        },
+        bubbles: true,
+        composed: true
+      }))
     }, 300)
+  }
+
+  // Public API
+  public close() {
+    this.hide('method')
   }
 
   private getIcon() {
@@ -310,6 +378,21 @@ export class MzToast extends LitElement {
       info: 'i'
     }
     return icons[this.variant]
+  }
+
+  private handleActionClick(e: Event) {
+    const target = e.target as HTMLElement
+    if (target.tagName === 'BUTTON' || target.closest('button')) {
+      // Dispatch action event
+      this.dispatchEvent(new CustomEvent('mz-action', {
+        detail: {
+          action: target.textContent || 'unknown',
+          originalEvent: e
+        },
+        bubbles: true,
+        composed: true
+      }))
+    }
   }
 
   render() {
@@ -332,13 +415,13 @@ export class MzToast extends LitElement {
           ${this.title ? html`<h4 class="toast-title">${this.title}</h4>` : ''}
           <div class="toast-message">${this.message}</div>
           <div class="toast-time">${this.time}</div>
-          <slot name="actions"></slot>
+          <slot name="actions" @click=${this.handleActionClick}></slot>
         </div>
 
         ${this.closable ? html`
           <button
             class="toast-close"
-            @click=${this.hide}
+            @click=${() => this.hide('close-button')}
             aria-label="Close"
           >✕</button>
         ` : ''}

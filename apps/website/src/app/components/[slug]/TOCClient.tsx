@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useMemo, useState } from 'react'
-import { findBySlug } from '../registry'
+import { findBySlug } from '../registry/index'
 
 export function TOCClient({ slug, sticky = true }: { slug: string; sticky?: boolean }) {
   const meta = findBySlug(slug)

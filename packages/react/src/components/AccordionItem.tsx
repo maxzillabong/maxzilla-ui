@@ -1,18 +1,64 @@
-import React from 'react'
-import { createReactWrapper, type WebComponentProps } from '../utils/createReactWrapper.js'
+'use client'
 
-export interface AccordionItemProps extends WebComponentProps {
+import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react'
+import 'maxzilla-ui-core'
+
+export interface AccordionItemProps {
   header?: string
-  open?: boolean
-  onToggle?: (event: Event) => void
+  expanded?: boolean
+  disabled?: boolean
+
+  className?: string
+  style?: React.CSSProperties
+  children?: React.ReactNode
 }
 
-const eventMap = {
-  onToggle: 'accordion-toggle'
+
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'mz-accordion-item': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & AccordionItemProps,
+        HTMLElement
+      >
+    }
+  }
 }
 
-const MzAccordionItem = createReactWrapper<HTMLElement>('mz-accordion-item', eventMap)
+export const AccordionItem = forwardRef<
+  HTMLElement,
+  AccordionItemProps
+>((props, ref) => {
+  const {
+    
+    className,
+    style,
+    children,
+    ...restProps
+  } = props
 
-export const AccordionItem = MzAccordionItem as React.ForwardRefExoticComponent<AccordionItemProps>
+  const elementRef = useRef<HTMLElement>(null)
+
+  useImperativeHandle(ref, () => elementRef.current as HTMLElement, [])
+
+  
+
+  // Handle controlled components
+  
+
+  
+
+  return (
+    <mz-accordion-item
+      ref={elementRef}
+      className={className}
+      style={style}
+      {...restProps}
+    >
+      {children}
+    </mz-accordion-item>
+  )
+})
 
 AccordionItem.displayName = 'AccordionItem'

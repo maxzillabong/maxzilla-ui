@@ -11,43 +11,183 @@ export class MzTabs extends LitElement {
         display: block;
         color: var(--mz-color-neutral-900);
       }
+
+      .tabs-container {
+        position: relative;
+      }
+
       .list {
         display: flex;
-        gap: var(--mz-space-2);
-        border-bottom: var(--mz-space-px) solid var(--mz-color-neutral-200);
+        gap: var(--mz-space-1);
+        border-bottom: 1px solid var(--mz-color-neutral-200);
+        position: relative;
       }
+
       .btn {
-        padding: var(--mz-space-2) var(--mz-space-3);
-        border-radius: var(--mz-radius-lg);
+        position: relative;
+        padding: var(--mz-space-3) var(--mz-space-4);
         cursor: pointer;
         background: transparent;
         border: 0;
-        color: inherit;
-        font-size: var(--mz-text-base);
+        color: var(--mz-color-neutral-600);
+        font-size: var(--mz-text-sm);
         line-height: var(--mz-leading-normal);
         letter-spacing: var(--mz-tracking-normal);
-        font-weight: var(--mz-font-normal);
-        transition: all var(--mz-transition-normal);
+        font-weight: var(--mz-font-medium);
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        white-space: nowrap;
       }
+
       .btn[aria-selected="true"] {
-        background: var(--mz-color-neutral-100);
+        color: var(--mz-color-primary-600);
         font-weight: var(--mz-font-semibold);
       }
+
       .btn:hover:not([aria-selected="true"]) {
-        background: var(--mz-color-neutral-50);
+        color: var(--mz-color-neutral-900);
       }
+
       .btn:focus-visible {
         outline: 2px solid var(--mz-color-primary-500);
         outline-offset: var(--mz-space-0-5);
+        border-radius: var(--mz-radius-md);
       }
+
+      /* Animated underline */
+      .underline {
+        position: absolute;
+        bottom: -1px;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(59, 130, 246, 0.1) 10%,
+          rgba(59, 130, 246, 0.5) 25%,
+          rgba(59, 130, 246, 1) 50%,
+          rgba(59, 130, 246, 0.5) 75%,
+          rgba(59, 130, 246, 0.1) 90%,
+          transparent 100%
+        );
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        opacity: 1;
+        transform-origin: center;
+      }
+
+      /* Hover underline effect */
+      .btn::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(156, 163, 175, 0.2) 25%,
+          rgba(156, 163, 175, 0.3) 50%,
+          rgba(156, 163, 175, 0.2) 75%,
+          transparent 100%
+        );
+        opacity: 0;
+        transform: scaleX(0);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transform-origin: center;
+      }
+
+      .btn:hover:not([aria-selected="true"])::after {
+        opacity: 1;
+        transform: scaleX(1);
+      }
+
       .panels {
         padding: var(--mz-space-4) 0;
+      }
+
+      /* Dark mode adjustments */
+      :host([theme="dark"]) .list {
+        border-color: var(--mz-color-neutral-800);
+      }
+
+      :host([theme="dark"]) .btn {
+        color: var(--mz-color-neutral-400);
+      }
+
+      :host([theme="dark"]) .btn[aria-selected="true"] {
+        color: var(--mz-color-primary-400);
+      }
+
+      :host([theme="dark"]) .btn:hover:not([aria-selected="true"]) {
+        color: var(--mz-color-neutral-100);
+      }
+
+      :host([theme="dark"]) .underline {
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(96, 165, 250, 0.1) 10%,
+          rgba(96, 165, 250, 0.5) 25%,
+          rgba(96, 165, 250, 1) 50%,
+          rgba(96, 165, 250, 0.5) 75%,
+          rgba(96, 165, 250, 0.1) 90%,
+          transparent 100%
+        );
+      }
+
+      /* Animation keyframes */
+      @keyframes slideUnderline {
+        from {
+          opacity: 0;
+          transform: scaleX(0.3);
+        }
+        to {
+          opacity: 1;
+          transform: scaleX(1);
+        }
+      }
+
+      .underline {
+        animation: slideUnderline 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+
+      /* Vertical orientation */
+      :host([orientation="vertical"]) .list {
+        flex-direction: column;
+        border-bottom: none;
+        border-right: 1px solid var(--mz-color-neutral-200);
+        padding-right: var(--mz-space-4);
+        gap: var(--mz-space-1);
+      }
+
+      :host([orientation="vertical"]) .btn {
+        text-align: left;
+        padding: var(--mz-space-2) var(--mz-space-3);
+      }
+
+      :host([orientation="vertical"]) .underline {
+        top: 0;
+        bottom: 0;
+        left: auto;
+        right: -1px;
+        width: 2px;
+        height: auto;
+        background: linear-gradient(
+          180deg,
+          transparent 0%,
+          rgba(59, 130, 246, 0.1) 10%,
+          rgba(59, 130, 246, 0.5) 25%,
+          rgba(59, 130, 246, 1) 50%,
+          rgba(59, 130, 246, 0.5) 75%,
+          rgba(59, 130, 246, 0.1) 90%,
+          transparent 100%
+        );
       }
     `
   ]
 
   @state() private _labels: string[] = []
   @state() private _index = 0
+  @state() private _underlineStyle = ''
   @property({ type: Number }) initial = 0
   @property({ type: String }) orientation: 'horizontal' | 'vertical' = 'horizontal'
 
@@ -67,6 +207,14 @@ export class MzTabs extends LitElement {
     this._collect()
     this._index = this.initial
     this._updatePanels()
+    this._updateUnderline()
+  }
+
+  updated(changedProperties: Map<string, any>) {
+    super.updated(changedProperties)
+    if (changedProperties.has('_index')) {
+      this._updateUnderline()
+    }
   }
 
   private _collect() {
@@ -74,14 +222,52 @@ export class MzTabs extends LitElement {
     this._labels = tabs.map(t => t.getAttribute('label') || 'Tab')
   }
 
-  private _select(i: number) {
+  private _select(i: number, event?: Event) {
     const oldIndex = this._index
+
+    // Dispatch tab-show event (can be cancelled)
+    const showEvent = this.dispatchEvent(new CustomEvent('mz-tab-show', {
+      detail: {
+        index: i,
+        previousIndex: oldIndex,
+        tab: this._labels[i],
+        originalEvent: event
+      },
+      bubbles: true,
+      composed: true,
+      cancelable: true
+    }))
+
+    if (!showEvent) return // Event was cancelled
+
+    // Hide previous tab
+    if (oldIndex !== i) {
+      this.dispatchEvent(new CustomEvent('mz-tab-hide', {
+        detail: {
+          index: oldIndex,
+          tab: this._labels[oldIndex],
+          originalEvent: event
+        },
+        bubbles: true,
+        composed: true
+      }))
+    }
+
     this._index = i
     this._updatePanels()
 
-    // Dispatch change event
+    // Dispatch standard change event
+    this.dispatchEvent(new Event('change', { bubbles: true, composed: true }))
+
+    // Dispatch custom change event with detail
     this.dispatchEvent(new CustomEvent('mz-tab-change', {
-      detail: { index: i, previousIndex: oldIndex },
+      detail: {
+        index: i,
+        previousIndex: oldIndex,
+        tab: this._labels[i],
+        previousTab: this._labels[oldIndex],
+        originalEvent: event
+      },
       bubbles: true,
       composed: true
     }))
@@ -100,6 +286,29 @@ export class MzTabs extends LitElement {
       t.setAttribute('role', 'tabpanel')
       t.setAttribute('aria-labelledby', `mz-tab-${this._uniqueId}-${i}`)
       t.setAttribute('hidden', i === this._index ? 'false' : 'true')
+    })
+  }
+
+  private _updateUnderline() {
+    requestAnimationFrame(() => {
+      const button = this.shadowRoot?.querySelector(`#mz-tab-${this._uniqueId}-${this._index}`) as HTMLElement
+      if (button) {
+        const listEl = this.shadowRoot?.querySelector('.list') as HTMLElement
+        if (listEl) {
+          const listRect = listEl.getBoundingClientRect()
+          const buttonRect = button.getBoundingClientRect()
+
+          if (this.orientation === 'horizontal') {
+            const left = buttonRect.left - listRect.left
+            const width = buttonRect.width
+            this._underlineStyle = `left: ${left}px; width: ${width}px;`
+          } else {
+            const top = buttonRect.top - listRect.top
+            const height = buttonRect.height
+            this._underlineStyle = `top: ${top}px; height: ${height}px;`
+          }
+        }
+      }
     })
   }
 
@@ -134,36 +343,41 @@ export class MzTabs extends LitElement {
     }
 
     if (newIndex !== this._index) {
-      this._select(newIndex)
+      this._select(newIndex, e)
     }
   }
 
   render() {
     return html`
       <div
-        class="list"
-        role="tablist"
-        aria-orientation=${this.orientation}
-        aria-label="Tab navigation"
+        class="tabs-container"
       >
-        ${this._labels.map((label, i) => {
-          const tabId = `mz-tab-${this._uniqueId}-${i}`
-          const panelId = `mz-tabpanel-${this._uniqueId}-${i}`
+        <div
+          class="list"
+          role="tablist"
+          aria-orientation=${this.orientation}
+          aria-label="Tab navigation"
+        >
+          ${this._labels.map((label, i) => {
+            const tabId = `mz-tab-${this._uniqueId}-${i}`
+            const panelId = `mz-tabpanel-${this._uniqueId}-${i}`
 
-          return html`
-            <button
-              id=${tabId}
-              class="btn"
-              role="tab"
-              aria-selected=${String(i === this._index)}
-              aria-controls=${panelId}
-              tabindex=${i === this._index ? '0' : '-1'}
-              @click=${() => this._select(i)}
-            >
-              ${label}
-            </button>
-          `
-        })}
+            return html`
+              <button
+                id=${tabId}
+                class="btn"
+                role="tab"
+                aria-selected=${String(i === this._index)}
+                aria-controls=${panelId}
+                tabindex=${i === this._index ? '0' : '-1'}
+                @click=${(e: MouseEvent) => this._select(i, e)}
+              >
+                ${label}
+              </button>
+            `
+          })}
+          <div class="underline" style=${this._underlineStyle}></div>
+        </div>
       </div>
       <div class="panels" role="presentation">
         <slot @slotchange=${() => { this._collect(); this._updatePanels() }}></slot>
