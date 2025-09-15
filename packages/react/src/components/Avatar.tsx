@@ -6,11 +6,14 @@ import 'maxzilla-ui-core'
 export interface AvatarProps {
   src?: string
   alt?: string
-  size?: 'sm' | 'md' | 'lg' | 'xl'
-  shape?: 'circle' | 'square'
-  online?: boolean
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  shape?: 'circle' | 'square' | 'rounded'
+  status?: 'online' | 'offline' | 'busy' | 'away' | ''
+  interactive?: boolean
   initials?: string
-
+  ariaLabel?: string
+  decorative?: boolean
+  onClick?: (event: CustomEvent<any>) => void
   className?: string
   style?: React.CSSProperties
   children?: React.ReactNode
@@ -34,7 +37,7 @@ export const Avatar = forwardRef<
   AvatarProps
 >((props, ref) => {
   const {
-    
+    onClick,
     className,
     style,
     children,
@@ -45,7 +48,20 @@ export const Avatar = forwardRef<
 
   useImperativeHandle(ref, () => elementRef.current as HTMLElement, [])
 
-  
+  useEffect(() => {
+    const element = elementRef.current
+    if (!element) return
+
+      if (onClick) {
+        element.addEventListener('mz-avatar-click', onClick as EventListener)
+      }
+
+    return () => {
+        if (onClick) {
+          element.removeEventListener('mz-avatar-click', onClick as EventListener)
+        }
+    }
+  }, [onClick])
 
   // Handle controlled components
   

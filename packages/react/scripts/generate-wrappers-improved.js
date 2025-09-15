@@ -141,12 +141,17 @@ const componentDefinitions = {
     props: {
       src: 'string',
       alt: 'string',
-      size: "'sm' | 'md' | 'lg' | 'xl'",
-      shape: "'circle' | 'square'",
-      online: 'boolean',
-      initials: 'string'
+      size: "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
+      shape: "'circle' | 'square' | 'rounded'",
+      status: "'online' | 'offline' | 'busy' | 'away' | ''",
+      interactive: 'boolean',
+      initials: 'string',
+      ariaLabel: 'string',
+      decorative: 'boolean'
     },
-    events: {},
+    events: {
+      onClick: { webEvent: 'mz-avatar-click', hasDetail: true }
+    },
     methods: []
   },
   'mz-alert': {
