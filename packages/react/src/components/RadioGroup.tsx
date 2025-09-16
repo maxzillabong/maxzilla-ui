@@ -4,8 +4,8 @@ import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react
 import 'maxzilla-ui-core'
 
 export interface RadioGroupProps {
-  value?: string
   name?: string
+  value?: string | null
   onChange?: (event: Event) => void
   className?: string
   style?: React.CSSProperties
@@ -57,9 +57,12 @@ export const RadioGroup = forwardRef<
   }, [onChange])
 
   // Handle controlled components
-  
-
-  
+  useEffect(() => {
+    const element = elementRef.current as any
+    if (element && props.value !== undefined) {
+      element.value = props.value
+    }
+  }, [props.value])
 
   return (
     <mz-radio-group

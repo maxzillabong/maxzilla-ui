@@ -118,13 +118,25 @@ const componentDefinitions = {
   'mz-card': {
     props: {
       elevation: "'none' | 'sm' | 'md' | 'lg' | 'xl'",
-      clickable: 'boolean',
-      href: 'string',
-      target: 'string',
-      rel: 'string'
+      variant: "'default' | 'outlined' | 'elevated' | 'interactive'",
+      interactive: 'boolean',
+      loading: 'boolean',
+      disabled: 'boolean',
+      compact: 'boolean',
+      fullHeight: 'boolean',
+      hasAvatar: 'boolean',
+      ariaLabel: 'string',
+      ariaDescribedBy: 'string',
+      ariaLabelledBy: 'string'
     },
     events: {
-      onClick: { webEvent: 'click', hasDetail: false }
+      onClick: { webEvent: 'mz-click', hasDetail: true },
+      onCardClick: { webEvent: 'mz-card-click', hasDetail: true },
+      onMouseEnter: { webEvent: 'mz-mouseenter', hasDetail: true },
+      onMouseLeave: { webEvent: 'mz-mouseleave', hasDetail: true },
+      onFocus: { webEvent: 'mz-focus', hasDetail: true },
+      onBlur: { webEvent: 'mz-blur', hasDetail: true },
+      onKeyDown: { webEvent: 'mz-keydown', hasDetail: true }
     },
     methods: []
   },

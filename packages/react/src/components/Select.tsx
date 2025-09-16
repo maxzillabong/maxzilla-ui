@@ -4,26 +4,20 @@ import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react
 import 'maxzilla-ui-core'
 
 export interface SelectProps {
-  value?: string
   label?: string
-  placeholder?: string
-  disabled?: boolean
-  required?: boolean
-  error?: boolean
-  helperText?: string
-  name?: string
-  size?: 'sm' | 'md' | 'lg'
+  multiple?: boolean
+  value?: string | null
+  ariaExpanded?: boolean
   onChange?: (event: Event) => void
+  onInput?: (event: Event) => void
+  onFocus?: (event: Event) => void
+  onBlur?: (event: Event) => void
   className?: string
   style?: React.CSSProperties
 
 }
 
-export interface SelectRef {
-    focus: () => void
-    blur: () => void
-    validate: () => void
-}
+
 
 declare global {
   namespace JSX {
@@ -37,11 +31,14 @@ declare global {
 }
 
 export const Select = forwardRef<
-  SelectRef,
+  HTMLElement,
   SelectProps
 >((props, ref) => {
   const {
     onChange,
+    onInput,
+    onFocus,
+    onBlur,
     className,
     style,
     
@@ -50,11 +47,7 @@ export const Select = forwardRef<
 
   const elementRef = useRef<HTMLElement>(null)
 
-  useImperativeHandle(ref, () => ({
-    focus: () => (elementRef.current as any)?.focus(),
-    blur: () => (elementRef.current as any)?.blur(),
-    validate: () => (elementRef.current as any)?.validate()
-  }), [])
+  useImperativeHandle(ref, () => elementRef.current as HTMLElement, [])
 
   useEffect(() => {
     const element = elementRef.current
@@ -63,24 +56,39 @@ export const Select = forwardRef<
       if (onChange) {
         element.addEventListener('change', onChange as EventListener)
       }
+      if (onInput) {
+        element.addEventListener('input', onInput as EventListener)
+      }
+      if (onFocus) {
+        element.addEventListener('focus', onFocus as EventListener)
+      }
+      if (onBlur) {
+        element.addEventListener('blur', onBlur as EventListener)
+      }
 
     return () => {
         if (onChange) {
           element.removeEventListener('change', onChange as EventListener)
         }
+        if (onInput) {
+          element.removeEventListener('input', onInput as EventListener)
+        }
+        if (onFocus) {
+          element.removeEventListener('focus', onFocus as EventListener)
+        }
+        if (onBlur) {
+          element.removeEventListener('blur', onBlur as EventListener)
+        }
     }
-  }, [onChange])
+  }, [onChange, onInput, onFocus, onBlur])
 
   // Handle controlled components
-  
   useEffect(() => {
     const element = elementRef.current as any
     if (element && props.value !== undefined) {
       element.value = props.value
     }
   }, [props.value])
-
-  
 
   return (
     <mz-select

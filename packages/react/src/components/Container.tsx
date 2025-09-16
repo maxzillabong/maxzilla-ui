@@ -4,8 +4,8 @@ import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react
 import 'maxzilla-ui-core'
 
 export interface ContainerProps {
-  maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
-
+  size?: 'sm' | 'md' | 'lg' | 'xl'
+  centered?: boolean
   className?: string
   style?: React.CSSProperties
   children?: React.ReactNode
@@ -43,9 +43,6 @@ export const Container = forwardRef<
   
 
   // Handle controlled components
-  
-
-  
 
   return (
     <mz-container

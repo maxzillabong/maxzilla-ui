@@ -5,15 +5,16 @@ import 'maxzilla-ui-core'
 
 export interface AccordionItemProps {
   header?: string
-  expanded?: boolean
-  disabled?: boolean
-
+  open?: boolean
+  onChange?: (event: Event) => void
   className?: string
   style?: React.CSSProperties
   children?: React.ReactNode
 }
 
-
+export interface AccordionItemRef {
+    focusHeader: () => void
+}
 
 declare global {
   namespace JSX {
@@ -27,11 +28,11 @@ declare global {
 }
 
 export const AccordionItem = forwardRef<
-  HTMLElement,
+  AccordionItemRef,
   AccordionItemProps
 >((props, ref) => {
   const {
-    
+    onChange,
     className,
     style,
     children,
@@ -40,14 +41,32 @@ export const AccordionItem = forwardRef<
 
   const elementRef = useRef<HTMLElement>(null)
 
-  useImperativeHandle(ref, () => elementRef.current as HTMLElement, [])
+  useImperativeHandle(ref, () => ({
+    focusHeader: () => (elementRef.current as any)?.focusHeader()
+  }), [])
 
-  
+  useEffect(() => {
+    const element = elementRef.current
+    if (!element) return
+
+      if (onChange) {
+        element.addEventListener('change', onChange as EventListener)
+      }
+
+    return () => {
+        if (onChange) {
+          element.removeEventListener('change', onChange as EventListener)
+        }
+    }
+  }, [onChange])
 
   // Handle controlled components
-  
-
-  
+  useEffect(() => {
+    const element = elementRef.current as any
+    if (element && props.open !== undefined) {
+      element.open = props.open
+    }
+  }, [props.open])
 
   return (
     <mz-accordion-item

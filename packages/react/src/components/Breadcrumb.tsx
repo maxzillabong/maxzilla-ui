@@ -5,7 +5,6 @@ import 'maxzilla-ui-core'
 
 export interface BreadcrumbProps {
 
-
   className?: string
   style?: React.CSSProperties
   children?: React.ReactNode
@@ -43,9 +42,6 @@ export const Breadcrumb = forwardRef<
   
 
   // Handle controlled components
-  
-
-  
 
   return (
     <mz-breadcrumb

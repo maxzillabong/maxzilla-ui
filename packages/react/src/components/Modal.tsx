@@ -11,9 +11,18 @@ export interface ModalProps {
   noCloseOnBackdrop?: boolean
   noCloseButton?: boolean
   scrollable?: boolean
-  onShow?: (event: Event) => void
+  ariaLabel?: string
+  ariaDescribedBy?: string
+  onMzShow?: (event: Event) => void
+  onMzModalShow?: (event: Event) => void
+  onMzAfterShow?: (event: Event) => void
+  onMzHide?: (event: Event) => void
+  onMzModalClose?: (event: Event) => void
+  onMzAfterHide?: (event: Event) => void
+  onMzModalClosed?: (event: Event) => void
   onClose?: (event: Event) => void
-  onClosed?: (event: Event) => void
+  onShow?: (event: Event) => void
+  onHide?: (event: Event) => void
   className?: string
   style?: React.CSSProperties
   children?: React.ReactNode
@@ -40,9 +49,16 @@ export const Modal = forwardRef<
   ModalProps
 >((props, ref) => {
   const {
-    onShow,
+    onMzShow,
+    onMzModalShow,
+    onMzAfterShow,
+    onMzHide,
+    onMzModalClose,
+    onMzAfterHide,
+    onMzModalClosed,
     onClose,
-    onClosed,
+    onShow,
+    onHide,
     className,
     style,
     children,
@@ -60,33 +76,78 @@ export const Modal = forwardRef<
     const element = elementRef.current
     if (!element) return
 
-      if (onShow) {
-        element.addEventListener('mz-modal-show', onShow as EventListener)
+      if (onMzShow) {
+        element.addEventListener('mz-show', onMzShow as EventListener)
+      }
+      if (onMzModalShow) {
+        element.addEventListener('mz-modal-show', onMzModalShow as EventListener)
+      }
+      if (onMzAfterShow) {
+        element.addEventListener('mz-after-show', onMzAfterShow as EventListener)
+      }
+      if (onMzHide) {
+        element.addEventListener('mz-hide', onMzHide as EventListener)
+      }
+      if (onMzModalClose) {
+        element.addEventListener('mz-modal-close', onMzModalClose as EventListener)
+      }
+      if (onMzAfterHide) {
+        element.addEventListener('mz-after-hide', onMzAfterHide as EventListener)
+      }
+      if (onMzModalClosed) {
+        element.addEventListener('mz-modal-closed', onMzModalClosed as EventListener)
       }
       if (onClose) {
         element.addEventListener('mz-modal-close', onClose as EventListener)
       }
-      if (onClosed) {
-        element.addEventListener('mz-modal-closed', onClosed as EventListener)
+      if (onShow) {
+        element.addEventListener('mz-show', onShow as EventListener)
+      }
+      if (onHide) {
+        element.addEventListener('mz-hide', onHide as EventListener)
       }
 
     return () => {
-        if (onShow) {
-          element.removeEventListener('mz-modal-show', onShow as EventListener)
+        if (onMzShow) {
+          element.removeEventListener('mz-show', onMzShow as EventListener)
+        }
+        if (onMzModalShow) {
+          element.removeEventListener('mz-modal-show', onMzModalShow as EventListener)
+        }
+        if (onMzAfterShow) {
+          element.removeEventListener('mz-after-show', onMzAfterShow as EventListener)
+        }
+        if (onMzHide) {
+          element.removeEventListener('mz-hide', onMzHide as EventListener)
+        }
+        if (onMzModalClose) {
+          element.removeEventListener('mz-modal-close', onMzModalClose as EventListener)
+        }
+        if (onMzAfterHide) {
+          element.removeEventListener('mz-after-hide', onMzAfterHide as EventListener)
+        }
+        if (onMzModalClosed) {
+          element.removeEventListener('mz-modal-closed', onMzModalClosed as EventListener)
         }
         if (onClose) {
           element.removeEventListener('mz-modal-close', onClose as EventListener)
         }
-        if (onClosed) {
-          element.removeEventListener('mz-modal-closed', onClosed as EventListener)
+        if (onShow) {
+          element.removeEventListener('mz-show', onShow as EventListener)
+        }
+        if (onHide) {
+          element.removeEventListener('mz-hide', onHide as EventListener)
         }
     }
-  }, [onShow, onClose, onClosed])
+  }, [onMzShow, onMzModalShow, onMzAfterShow, onMzHide, onMzModalClose, onMzAfterHide, onMzModalClosed, onClose, onShow, onHide])
 
   // Handle controlled components
-  
-
-  
+  useEffect(() => {
+    const element = elementRef.current as any
+    if (element && props.open !== undefined) {
+      element.open = props.open
+    }
+  }, [props.open])
 
   return (
     <mz-modal

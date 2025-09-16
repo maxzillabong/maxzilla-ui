@@ -5,14 +5,19 @@ import 'maxzilla-ui-core'
 
 export interface TreeNodeProps {
   label?: string
-  expanded?: boolean
-
+  expandable?: boolean
+  selected?: boolean
   className?: string
   style?: React.CSSProperties
   children?: React.ReactNode
 }
 
-
+export interface TreeNodeRef {
+    expand: () => void
+    collapse: () => void
+    toggle: () => void
+    select: () => void
+}
 
 declare global {
   namespace JSX {
@@ -26,7 +31,7 @@ declare global {
 }
 
 export const TreeNode = forwardRef<
-  HTMLElement,
+  TreeNodeRef,
   TreeNodeProps
 >((props, ref) => {
   const {
@@ -39,14 +44,16 @@ export const TreeNode = forwardRef<
 
   const elementRef = useRef<HTMLElement>(null)
 
-  useImperativeHandle(ref, () => elementRef.current as HTMLElement, [])
+  useImperativeHandle(ref, () => ({
+    expand: () => (elementRef.current as any)?.expand(),
+    collapse: () => (elementRef.current as any)?.collapse(),
+    toggle: () => (elementRef.current as any)?.toggle(),
+    select: () => (elementRef.current as any)?.select()
+  }), [])
 
   
 
   // Handle controlled components
-  
-
-  
 
   return (
     <mz-tree-node

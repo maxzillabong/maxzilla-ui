@@ -4,23 +4,16 @@ import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react
 import 'maxzilla-ui-core'
 
 export interface TextareaProps {
-  value?: string
-  placeholder?: string
-  disabled?: boolean
-  readonly?: boolean
-  required?: boolean
-  rows?: number
-  cols?: number
-  maxLength?: number
-  minLength?: number
-  name?: string
   label?: string
+  placeholder?: string
+  rows?: number
+  value?: string
+  disabled?: boolean
   helperText?: string
-  error?: boolean
-  success?: boolean
-  resize?: 'none' | 'both' | 'horizontal' | 'vertical'
+  ariaInvalid?: boolean
+  ariaRequired?: boolean
+  onInput?: (event: Event) => void
   onChange?: (event: Event) => void
-  onInput?: (event: CustomEvent<any>) => void
   onFocus?: (event: Event) => void
   onBlur?: (event: Event) => void
   className?: string
@@ -28,13 +21,7 @@ export interface TextareaProps {
 
 }
 
-export interface TextareaRef {
-    focus: () => void
-    blur: () => void
-    select: () => void
-    setSelectionRange: (start: number, end: number, direction?: 'forward' | 'backward' | 'none') => void
-    validate: () => void
-}
+
 
 declare global {
   namespace JSX {
@@ -48,12 +35,12 @@ declare global {
 }
 
 export const Textarea = forwardRef<
-  TextareaRef,
+  HTMLElement,
   TextareaProps
 >((props, ref) => {
   const {
-    onChange,
     onInput,
+    onChange,
     onFocus,
     onBlur,
     className,
@@ -64,59 +51,48 @@ export const Textarea = forwardRef<
 
   const elementRef = useRef<HTMLElement>(null)
 
-  useImperativeHandle(ref, () => ({
-    focus: () => (elementRef.current as any)?.focus(),
-    blur: () => (elementRef.current as any)?.blur(),
-    select: () => (elementRef.current as any)?.select(),
-    setSelectionRange: (start: number, end: number, direction?: 'forward' | 'backward' | 'none') => {
-      (elementRef.current as any)?.setSelectionRange(start, end, direction)
-    },
-    validate: () => (elementRef.current as any)?.validate()
-  }), [])
+  useImperativeHandle(ref, () => elementRef.current as HTMLElement, [])
 
   useEffect(() => {
     const element = elementRef.current
     if (!element) return
 
+      if (onInput) {
+        element.addEventListener('input', onInput as EventListener)
+      }
       if (onChange) {
         element.addEventListener('change', onChange as EventListener)
       }
-      if (onInput) {
-        element.addEventListener('mz-input', onInput as EventListener)
-      }
       if (onFocus) {
-        element.addEventListener('mz-focus', onFocus as EventListener)
+        element.addEventListener('focus', onFocus as EventListener)
       }
       if (onBlur) {
-        element.addEventListener('mz-blur', onBlur as EventListener)
+        element.addEventListener('blur', onBlur as EventListener)
       }
 
     return () => {
+        if (onInput) {
+          element.removeEventListener('input', onInput as EventListener)
+        }
         if (onChange) {
           element.removeEventListener('change', onChange as EventListener)
         }
-        if (onInput) {
-          element.removeEventListener('mz-input', onInput as EventListener)
-        }
         if (onFocus) {
-          element.removeEventListener('mz-focus', onFocus as EventListener)
+          element.removeEventListener('focus', onFocus as EventListener)
         }
         if (onBlur) {
-          element.removeEventListener('mz-blur', onBlur as EventListener)
+          element.removeEventListener('blur', onBlur as EventListener)
         }
     }
-  }, [onChange, onInput, onFocus, onBlur])
+  }, [onInput, onChange, onFocus, onBlur])
 
   // Handle controlled components
-  
   useEffect(() => {
     const element = elementRef.current as any
     if (element && props.value !== undefined) {
       element.value = props.value
     }
   }, [props.value])
-
-  
 
   return (
     <mz-textarea

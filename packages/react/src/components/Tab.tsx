@@ -5,8 +5,7 @@ import 'maxzilla-ui-core'
 
 export interface TabProps {
   label?: string
-  disabled?: boolean
-
+  active?: boolean
   className?: string
   style?: React.CSSProperties
   children?: React.ReactNode
@@ -44,9 +43,6 @@ export const Tab = forwardRef<
   
 
   // Handle controlled components
-  
-
-  
 
   return (
     <mz-tab

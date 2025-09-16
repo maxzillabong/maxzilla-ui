@@ -5,7 +5,6 @@ import 'maxzilla-ui-core'
 
 export interface DividerProps {
   orientation?: 'horizontal' | 'vertical'
-
   className?: string
   style?: React.CSSProperties
   children?: React.ReactNode
@@ -43,9 +42,6 @@ export const Divider = forwardRef<
   
 
   // Handle controlled components
-  
-
-  
 
   return (
     <mz-divider

@@ -4,14 +4,16 @@ import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react
 import 'maxzilla-ui-core'
 
 export interface ToastContainerProps {
-  position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
-
+  duration?: number
+  position?: 'top-left'|'top-right'|'bottom-left'|'bottom-right'
   className?: string
   style?: React.CSSProperties
   children?: React.ReactNode
 }
 
-
+export interface ToastContainerRef {
+    show: () => void
+}
 
 declare global {
   namespace JSX {
@@ -25,7 +27,7 @@ declare global {
 }
 
 export const ToastContainer = forwardRef<
-  HTMLElement,
+  ToastContainerRef,
   ToastContainerProps
 >((props, ref) => {
   const {
@@ -38,14 +40,13 @@ export const ToastContainer = forwardRef<
 
   const elementRef = useRef<HTMLElement>(null)
 
-  useImperativeHandle(ref, () => elementRef.current as HTMLElement, [])
+  useImperativeHandle(ref, () => ({
+    show: () => (elementRef.current as any)?.show()
+  }), [])
 
   
 
   // Handle controlled components
-  
-
-  
 
   return (
     <mz-toast-container

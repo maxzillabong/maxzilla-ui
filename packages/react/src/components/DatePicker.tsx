@@ -4,13 +4,11 @@ import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react
 import 'maxzilla-ui-core'
 
 export interface DatePickerProps {
+  label?: string
   value?: string
-  format?: string
-  placeholder?: string
-  onChange?: (event: Event) => void
   className?: string
   style?: React.CSSProperties
-  children?: React.ReactNode
+
 }
 
 
@@ -31,10 +29,10 @@ export const DatePicker = forwardRef<
   DatePickerProps
 >((props, ref) => {
   const {
-    onChange,
+    
     className,
     style,
-    children,
+    
     ...restProps
   } = props
 
@@ -42,25 +40,15 @@ export const DatePicker = forwardRef<
 
   useImperativeHandle(ref, () => elementRef.current as HTMLElement, [])
 
-  useEffect(() => {
-    const element = elementRef.current
-    if (!element) return
-
-      if (onChange) {
-        element.addEventListener('change', onChange as EventListener)
-      }
-
-    return () => {
-        if (onChange) {
-          element.removeEventListener('change', onChange as EventListener)
-        }
-    }
-  }, [onChange])
+  
 
   // Handle controlled components
-  
-
-  
+  useEffect(() => {
+    const element = elementRef.current as any
+    if (element && props.value !== undefined) {
+      element.value = props.value
+    }
+  }, [props.value])
 
   return (
     <mz-date-picker
@@ -69,7 +57,7 @@ export const DatePicker = forwardRef<
       style={style}
       {...restProps}
     >
-      {children}
+      
     </mz-date-picker>
   )
 })

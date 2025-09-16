@@ -4,8 +4,7 @@ import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react
 import 'maxzilla-ui-core'
 
 export interface AccordionProps {
-
-
+  multiple?: boolean
   className?: string
   style?: React.CSSProperties
   children?: React.ReactNode
@@ -43,9 +42,6 @@ export const Accordion = forwardRef<
   
 
   // Handle controlled components
-  
-
-  
 
   return (
     <mz-accordion

@@ -4,8 +4,12 @@ import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react
 import 'maxzilla-ui-core'
 
 export interface NavbarProps {
-
-
+  elevated?: boolean
+  transparent?: boolean
+  compact?: boolean
+  centered?: boolean
+  theme?: 'light' | 'dark'
+  mobileMenuOpen?: boolean
   className?: string
   style?: React.CSSProperties
   children?: React.ReactNode
@@ -43,9 +47,6 @@ export const Navbar = forwardRef<
   
 
   // Handle controlled components
-  
-
-  
 
   return (
     <mz-navbar

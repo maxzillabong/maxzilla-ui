@@ -6,11 +6,11 @@ import 'maxzilla-ui-core'
 export interface ProgressProps {
   value?: number
   max?: number
-  type?: 'line' | 'circle'
-
+  label?: string
+  showValue?: boolean
   className?: string
   style?: React.CSSProperties
-  children?: React.ReactNode
+
 }
 
 
@@ -34,7 +34,7 @@ export const Progress = forwardRef<
     
     className,
     style,
-    children,
+    
     ...restProps
   } = props
 
@@ -45,9 +45,12 @@ export const Progress = forwardRef<
   
 
   // Handle controlled components
-  
-
-  
+  useEffect(() => {
+    const element = elementRef.current as any
+    if (element && props.value !== undefined) {
+      element.value = props.value
+    }
+  }, [props.value])
 
   return (
     <mz-progress
@@ -56,7 +59,7 @@ export const Progress = forwardRef<
       style={style}
       {...restProps}
     >
-      {children}
+      
     </mz-progress>
   )
 })

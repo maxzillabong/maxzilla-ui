@@ -6,7 +6,7 @@ import 'maxzilla-ui-core'
 export interface TabsProps {
   initial?: number
   orientation?: 'horizontal' | 'vertical'
-  onChange?: (event: CustomEvent<any>) => void
+  onChange?: (event: Event) => void
   className?: string
   style?: React.CSSProperties
   children?: React.ReactNode
@@ -46,20 +46,17 @@ export const Tabs = forwardRef<
     if (!element) return
 
       if (onChange) {
-        element.addEventListener('mz-tab-change', onChange as EventListener)
+        element.addEventListener('change', onChange as EventListener)
       }
 
     return () => {
         if (onChange) {
-          element.removeEventListener('mz-tab-change', onChange as EventListener)
+          element.removeEventListener('change', onChange as EventListener)
         }
     }
   }, [onChange])
 
   // Handle controlled components
-  
-
-  
 
   return (
     <mz-tabs

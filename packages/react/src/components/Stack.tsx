@@ -4,11 +4,10 @@ import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react
 import 'maxzilla-ui-core'
 
 export interface StackProps {
-  direction?: 'row' | 'column'
-  spacing?: string | number
-  align?: string
-  justify?: string
-
+  direction?: 'horizontal' | 'vertical'
+  spacing?: 'sm' | 'md' | 'lg'
+  align?: 'start' | 'center' | 'end'
+  justify?: 'start' | 'center' | 'end' | 'between'
   className?: string
   style?: React.CSSProperties
   children?: React.ReactNode
@@ -46,9 +45,6 @@ export const Stack = forwardRef<
   
 
   // Handle controlled components
-  
-
-  
 
   return (
     <mz-stack

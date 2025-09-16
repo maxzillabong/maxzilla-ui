@@ -5,6 +5,72 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Maxzilla UI Design Tokens */
+:root {
+  /* Primary colors */
+  --mz-color-primary: hsl(180, 70%, 45%);
+  --mz-color-primary-50: hsl(180, 100%, 97%);
+  --mz-color-primary-100: hsl(180, 84%, 92%);
+  --mz-color-primary-200: hsl(180, 83%, 84%);
+  --mz-color-primary-300: hsl(180, 82%, 72%);
+  --mz-color-primary-400: hsl(180, 76%, 58%);
+  --mz-color-primary-500: hsl(180, 70%, 45%);
+  --mz-color-primary-600: hsl(180, 75%, 37%);
+  --mz-color-primary-700: hsl(180, 79%, 30%);
+  --mz-color-primary-800: hsl(180, 82%, 25%);
+  --mz-color-primary-900: hsl(180, 86%, 20%);
+
+  /* Neutral colors */
+  --mz-color-neutral-0: hsl(0, 0%, 100%);
+  --mz-color-neutral-50: hsl(210, 20%, 98%);
+  --mz-color-neutral-100: hsl(220, 14%, 96%);
+  --mz-color-neutral-200: hsl(220, 13%, 91%);
+  --mz-color-neutral-300: hsl(216, 12%, 84%);
+  --mz-color-neutral-400: hsl(218, 11%, 65%);
+  --mz-color-neutral-500: hsl(220, 9%, 46%);
+  --mz-color-neutral-600: hsl(215, 14%, 34%);
+  --mz-color-neutral-700: hsl(217, 19%, 27%);
+  --mz-color-neutral-800: hsl(215, 28%, 17%);
+  --mz-color-neutral-900: hsl(221, 39%, 11%);
+
+  /* Semantic colors */
+  --mz-color-surface: var(--mz-color-neutral-0);
+  --mz-color-border: var(--mz-color-neutral-200);
+  --mz-color-text: var(--mz-color-neutral-900);
+  --mz-color-text-secondary: var(--mz-color-neutral-600);
+  --mz-color-background: var(--mz-color-neutral-50);
+
+  /* Shadows */
+  --mz-shadow-small: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --mz-shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --mz-shadow-large: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+  /* Borders */
+  --mz-border-radius-small: 0.25rem;
+  --mz-border-radius-medium: 0.5rem;
+  --mz-border-radius-large: 0.75rem;
+
+  /* Typography */
+  --mz-font-weight-normal: 400;
+  --mz-font-weight-medium: 500;
+  --mz-font-weight-semibold: 600;
+  --mz-font-weight-bold: 700;
+
+  /* Sizes */
+  --mz-font-size-small: 0.875rem;
+  --mz-font-size-base: 1rem;
+  --mz-font-size-large: 1.125rem;
+
+  /* Spacing */
+  --mz-space-1: 0.25rem;
+  --mz-space-2: 0.5rem;
+  --mz-space-3: 0.75rem;
+  --mz-space-4: 1rem;
+
+  /* Alpha colors for overlays */
+  --mz-color-primary-alpha-20: hsla(180, 70%, 45%, 0.2);
+}
+
 /* Base styles */
 html {
   font-family: 'Inter', system-ui, sans-serif;

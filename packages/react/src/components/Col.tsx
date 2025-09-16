@@ -5,13 +5,6 @@ import 'maxzilla-ui-core'
 
 export interface ColProps {
   span?: number
-  offset?: number
-  xs?: number
-  sm?: number
-  md?: number
-  lg?: number
-  xl?: number
-
   className?: string
   style?: React.CSSProperties
   children?: React.ReactNode
@@ -49,9 +42,6 @@ export const Col = forwardRef<
   
 
   // Handle controlled components
-  
-
-  
 
   return (
     <mz-col

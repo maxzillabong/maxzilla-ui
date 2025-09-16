@@ -4,9 +4,6 @@ import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react
 import 'maxzilla-ui-core'
 
 export interface RowProps {
-  gutter?: number
-  align?: string
-  justify?: string
 
   className?: string
   style?: React.CSSProperties
@@ -45,9 +42,6 @@ export const Row = forwardRef<
   
 
   // Handle controlled components
-  
-
-  
 
   return (
     <mz-row

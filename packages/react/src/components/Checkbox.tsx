@@ -11,21 +11,18 @@ export interface CheckboxProps {
   name?: string
   value?: string
   required?: boolean
+  ariaLabel?: string
+  ariaDescribedBy?: string
   onChange?: (event: Event) => void
-  onMzChange?: (event: CustomEvent<any>) => void
+  onInput?: (event: Event) => void
+  onFocus?: (event: Event) => void
+  onBlur?: (event: Event) => void
   className?: string
   style?: React.CSSProperties
 
 }
 
-export interface CheckboxRef {
-    click: () => void
-    focus: () => void
-    blur: () => void
-    validate: () => void
-    checkValidity: () => void
-    reportValidity: () => void
-}
+
 
 declare global {
   namespace JSX {
@@ -39,12 +36,14 @@ declare global {
 }
 
 export const Checkbox = forwardRef<
-  CheckboxRef,
+  HTMLElement,
   CheckboxProps
 >((props, ref) => {
   const {
     onChange,
-    onMzChange,
+    onInput,
+    onFocus,
+    onBlur,
     className,
     style,
     
@@ -53,14 +52,7 @@ export const Checkbox = forwardRef<
 
   const elementRef = useRef<HTMLElement>(null)
 
-  useImperativeHandle(ref, () => ({
-    click: () => (elementRef.current as any)?.click(),
-    focus: () => (elementRef.current as any)?.focus(),
-    blur: () => (elementRef.current as any)?.blur(),
-    validate: () => (elementRef.current as any)?.validate(),
-    checkValidity: () => (elementRef.current as any)?.checkValidity(),
-    reportValidity: () => (elementRef.current as any)?.reportValidity()
-  }), [])
+  useImperativeHandle(ref, () => elementRef.current as HTMLElement, [])
 
   useEffect(() => {
     const element = elementRef.current
@@ -69,24 +61,39 @@ export const Checkbox = forwardRef<
       if (onChange) {
         element.addEventListener('change', onChange as EventListener)
       }
-      if (onMzChange) {
-        element.addEventListener('mz-change', onMzChange as EventListener)
+      if (onInput) {
+        element.addEventListener('input', onInput as EventListener)
+      }
+      if (onFocus) {
+        element.addEventListener('focus', onFocus as EventListener)
+      }
+      if (onBlur) {
+        element.addEventListener('blur', onBlur as EventListener)
       }
 
     return () => {
         if (onChange) {
           element.removeEventListener('change', onChange as EventListener)
         }
-        if (onMzChange) {
-          element.removeEventListener('mz-change', onMzChange as EventListener)
+        if (onInput) {
+          element.removeEventListener('input', onInput as EventListener)
+        }
+        if (onFocus) {
+          element.removeEventListener('focus', onFocus as EventListener)
+        }
+        if (onBlur) {
+          element.removeEventListener('blur', onBlur as EventListener)
         }
     }
-  }, [onChange, onMzChange])
+  }, [onChange, onInput, onFocus, onBlur])
 
   // Handle controlled components
-  
-
-  
+  useEffect(() => {
+    const element = elementRef.current as any
+    if (element && props.value !== undefined) {
+      element.value = props.value
+    }
+  }, [props.value])
   useEffect(() => {
     const element = elementRef.current as any
     if (element && props.checked !== undefined) {

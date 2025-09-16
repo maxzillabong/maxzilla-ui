@@ -5,10 +5,13 @@ import 'maxzilla-ui-core'
 
 export interface CardProps {
   elevation?: 'none' | 'sm' | 'md' | 'lg' | 'xl'
-  clickable?: boolean
-  href?: string
-  target?: string
-  rel?: string
+  variant?: 'default' | 'outlined' | 'elevated' | 'interactive'
+  interactive?: boolean
+  loading?: boolean
+  disabled?: boolean
+  compact?: boolean
+  fullHeight?: boolean
+  hasAvatar?: boolean
   onClick?: (event: Event) => void
   className?: string
   style?: React.CSSProperties
@@ -60,9 +63,6 @@ export const Card = forwardRef<
   }, [onClick])
 
   // Handle controlled components
-  
-
-  
 
   return (
     <mz-card

@@ -4,8 +4,8 @@ import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react
 import 'maxzilla-ui-core'
 
 export interface BreadcrumbItemProps {
-  href?: string
-
+  href?: string | null
+  current?: boolean
   className?: string
   style?: React.CSSProperties
   children?: React.ReactNode
@@ -43,9 +43,6 @@ export const BreadcrumbItem = forwardRef<
   
 
   // Handle controlled components
-  
-
-  
 
   return (
     <mz-breadcrumb-item

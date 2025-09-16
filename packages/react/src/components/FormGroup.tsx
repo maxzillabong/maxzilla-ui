@@ -4,7 +4,6 @@ import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react
 import 'maxzilla-ui-core'
 
 export interface FormGroupProps {
-  label?: string
 
   className?: string
   style?: React.CSSProperties
@@ -43,9 +42,6 @@ export const FormGroup = forwardRef<
   
 
   // Handle controlled components
-  
-
-  
 
   return (
     <mz-form-group

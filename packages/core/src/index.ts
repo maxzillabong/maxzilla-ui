@@ -32,6 +32,12 @@ export { MzLoading } from './components/loading/index.js';
 export { MzToastContainer } from './components/toast-container/index.js';
 export { MzTree, MzTreeNode } from './components/tree/index.js';
 export { MzDatePicker } from './components/datepicker/index.js';
+export { MzColorPicker } from './components/color-picker/index.js';
+export { MzRange } from './components/range/index.js';
+export { MzRating } from './components/rating/index.js';
+export { MzSpinner } from './components/spinner/index.js';
+export { MzTag } from './components/tag/index.js';
+export { MzSkeleton } from './components/skeleton/index.js';
 
 // Export styles
 export * from './styles/index.js';

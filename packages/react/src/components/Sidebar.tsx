@@ -4,8 +4,6 @@ import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react
 import 'maxzilla-ui-core'
 
 export interface SidebarProps {
-  open?: boolean
-  position?: 'left' | 'right'
 
   className?: string
   style?: React.CSSProperties
@@ -44,9 +42,6 @@ export const Sidebar = forwardRef<
   
 
   // Handle controlled components
-  
-
-  
 
   return (
     <mz-sidebar

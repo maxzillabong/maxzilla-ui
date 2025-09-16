@@ -34,6 +34,12 @@ import { tooltipEntry } from './entries/tooltip'
 import { sidebarEntry } from './entries/sidebar'
 import { toastEntry } from './entries/toast'
 import { gridEntry } from './entries/grid'
+import { colorPickerEntry } from './entries/color-picker'
+import { rangeEntry } from './entries/range'
+import { ratingEntry } from './entries/rating'
+import { spinnerEntry } from './entries/spinner'
+import { tagEntry } from './entries/tag'
+import { skeletonEntry } from './entries/skeleton'
 
 // Combine into registry
 export const registry: ComponentMeta[] = [
@@ -69,7 +75,13 @@ export const registry: ComponentMeta[] = [
   tooltipEntry,
   sidebarEntry,
   toastEntry,
-  gridEntry
+  gridEntry,
+  colorPickerEntry,
+  rangeEntry,
+  ratingEntry,
+  spinnerEntry,
+  tagEntry,
+  skeletonEntry
 ]
 
 export function byCategory(category: string) {

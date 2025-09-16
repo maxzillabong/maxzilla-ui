@@ -5,9 +5,13 @@ import 'maxzilla-ui-core'
 
 export interface ToastProps {
   message?: string
-  type?: 'info' | 'success' | 'warning' | 'error'
+  title?: string
+  variant?: 'info' | 'success' | 'warning' | 'error'
   duration?: number
-
+  avatar?: string
+  time?: string
+  closable?: boolean
+  theme?: 'light' | 'dark'
   className?: string
   style?: React.CSSProperties
   children?: React.ReactNode
@@ -15,7 +19,7 @@ export interface ToastProps {
 
 export interface ToastRef {
     show: () => void
-    hide: () => void
+    close: () => void
 }
 
 declare global {
@@ -45,15 +49,12 @@ export const Toast = forwardRef<
 
   useImperativeHandle(ref, () => ({
     show: () => (elementRef.current as any)?.show(),
-    hide: () => (elementRef.current as any)?.hide()
+    close: () => (elementRef.current as any)?.close()
   }), [])
 
   
 
   // Handle controlled components
-  
-
-  
 
   return (
     <mz-toast

@@ -7,20 +7,18 @@ export interface SwitchProps {
   checked?: boolean
   disabled?: boolean
   label?: string
-  name?: string
-  value?: string
-  required?: boolean
+  ariaLabel?: string
+  ariaDescribedBy?: string
   onChange?: (event: Event) => void
+  onInput?: (event: Event) => void
+  onFocus?: (event: Event) => void
+  onBlur?: (event: Event) => void
   className?: string
   style?: React.CSSProperties
 
 }
 
-export interface SwitchRef {
-    click: () => void
-    focus: () => void
-    blur: () => void
-}
+
 
 declare global {
   namespace JSX {
@@ -34,11 +32,14 @@ declare global {
 }
 
 export const Switch = forwardRef<
-  SwitchRef,
+  HTMLElement,
   SwitchProps
 >((props, ref) => {
   const {
     onChange,
+    onInput,
+    onFocus,
+    onBlur,
     className,
     style,
     
@@ -47,11 +48,7 @@ export const Switch = forwardRef<
 
   const elementRef = useRef<HTMLElement>(null)
 
-  useImperativeHandle(ref, () => ({
-    click: () => (elementRef.current as any)?.click(),
-    focus: () => (elementRef.current as any)?.focus(),
-    blur: () => (elementRef.current as any)?.blur()
-  }), [])
+  useImperativeHandle(ref, () => elementRef.current as HTMLElement, [])
 
   useEffect(() => {
     const element = elementRef.current
@@ -60,18 +57,33 @@ export const Switch = forwardRef<
       if (onChange) {
         element.addEventListener('change', onChange as EventListener)
       }
+      if (onInput) {
+        element.addEventListener('input', onInput as EventListener)
+      }
+      if (onFocus) {
+        element.addEventListener('focus', onFocus as EventListener)
+      }
+      if (onBlur) {
+        element.addEventListener('blur', onBlur as EventListener)
+      }
 
     return () => {
         if (onChange) {
           element.removeEventListener('change', onChange as EventListener)
         }
+        if (onInput) {
+          element.removeEventListener('input', onInput as EventListener)
+        }
+        if (onFocus) {
+          element.removeEventListener('focus', onFocus as EventListener)
+        }
+        if (onBlur) {
+          element.removeEventListener('blur', onBlur as EventListener)
+        }
     }
-  }, [onChange])
+  }, [onChange, onInput, onFocus, onBlur])
 
   // Handle controlled components
-  
-
-  
   useEffect(() => {
     const element = elementRef.current as any
     if (element && props.checked !== undefined) {

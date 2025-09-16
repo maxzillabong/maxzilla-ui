@@ -4,7 +4,6 @@ import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react
 import 'maxzilla-ui-core'
 
 export interface FormProps {
-
   onSubmit?: (event: Event) => void
   className?: string
   style?: React.CSSProperties
@@ -56,9 +55,6 @@ export const Form = forwardRef<
   }, [onSubmit])
 
   // Handle controlled components
-  
-
-  
 
   return (
     <mz-form

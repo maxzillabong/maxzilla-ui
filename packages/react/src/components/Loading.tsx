@@ -4,9 +4,9 @@ import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react
 import 'maxzilla-ui-core'
 
 export interface LoadingProps {
-  size?: 'sm' | 'md' | 'lg'
-  color?: string
-
+  overlay?: boolean
+  size?: 'sm'|'md'|'lg'
+  ariaLabel?: string
   className?: string
   style?: React.CSSProperties
   children?: React.ReactNode
@@ -44,9 +44,6 @@ export const Loading = forwardRef<
   
 
   // Handle controlled components
-  
-
-  
 
   return (
     <mz-loading

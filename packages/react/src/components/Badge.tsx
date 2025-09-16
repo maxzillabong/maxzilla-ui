@@ -4,10 +4,10 @@ import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react
 import 'maxzilla-ui-core'
 
 export interface BadgeProps {
-  variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error'
-  size?: 'sm' | 'md' | 'lg'
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive' | 'warning' | 'success'
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   dot?: boolean
-
+  live?: boolean
   className?: string
   style?: React.CSSProperties
   children?: React.ReactNode
@@ -45,9 +45,6 @@ export const Badge = forwardRef<
   
 
   // Handle controlled components
-  
-
-  
 
   return (
     <mz-badge

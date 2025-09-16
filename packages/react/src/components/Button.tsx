@@ -4,26 +4,20 @@ import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react
 import 'maxzilla-ui-core'
 
 export interface ButtonProps {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger'
-  size?: 'sm' | 'md' | 'lg'
-  loading?: boolean
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive' | 'warning' | 'success'
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  type?: 'button' | 'submit' | 'reset'
   disabled?: boolean
   fullWidth?: boolean
-  href?: string
-  target?: string
-  rel?: string
-  type?: 'button' | 'submit' | 'reset'
+  iconOnly?: boolean
+  loading?: boolean
   onClick?: (event: Event) => void
   className?: string
   style?: React.CSSProperties
   children?: React.ReactNode
 }
 
-export interface ButtonRef {
-    click: () => void
-    focus: () => void
-    blur: () => void
-}
+
 
 declare global {
   namespace JSX {
@@ -37,7 +31,7 @@ declare global {
 }
 
 export const Button = forwardRef<
-  ButtonRef,
+  HTMLElement,
   ButtonProps
 >((props, ref) => {
   const {
@@ -50,11 +44,7 @@ export const Button = forwardRef<
 
   const elementRef = useRef<HTMLElement>(null)
 
-  useImperativeHandle(ref, () => ({
-    click: () => (elementRef.current as any)?.click(),
-    focus: () => (elementRef.current as any)?.focus(),
-    blur: () => (elementRef.current as any)?.blur()
-  }), [])
+  useImperativeHandle(ref, () => elementRef.current as HTMLElement, [])
 
   useEffect(() => {
     const element = elementRef.current
@@ -72,9 +62,6 @@ export const Button = forwardRef<
   }, [onClick])
 
   // Handle controlled components
-  
-
-  
 
   return (
     <mz-button

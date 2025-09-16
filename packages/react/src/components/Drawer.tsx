@@ -9,9 +9,14 @@ export interface DrawerProps {
   closable?: boolean
   noCloseButton?: boolean
   size?: 'sm' | 'md' | 'lg' | 'full'
-  onOpen?: (event: Event) => void
+  ariaLabel?: string
+  ariaDescribedBy?: string
+  onMzDrawerOpen?: (event: Event) => void
+  onMzDrawerClose?: (event: Event) => void
+  onMzDrawerClosed?: (event: Event) => void
   onClose?: (event: Event) => void
-  onClosed?: (event: Event) => void
+  onShow?: (event: Event) => void
+  onHide?: (event: Event) => void
   className?: string
   style?: React.CSSProperties
   children?: React.ReactNode
@@ -38,9 +43,12 @@ export const Drawer = forwardRef<
   DrawerProps
 >((props, ref) => {
   const {
-    onOpen,
+    onMzDrawerOpen,
+    onMzDrawerClose,
+    onMzDrawerClosed,
     onClose,
-    onClosed,
+    onShow,
+    onHide,
     className,
     style,
     children,
@@ -58,33 +66,54 @@ export const Drawer = forwardRef<
     const element = elementRef.current
     if (!element) return
 
-      if (onOpen) {
-        element.addEventListener('mz-drawer-open', onOpen as EventListener)
+      if (onMzDrawerOpen) {
+        element.addEventListener('mz-drawer-open', onMzDrawerOpen as EventListener)
+      }
+      if (onMzDrawerClose) {
+        element.addEventListener('mz-drawer-close', onMzDrawerClose as EventListener)
+      }
+      if (onMzDrawerClosed) {
+        element.addEventListener('mz-drawer-closed', onMzDrawerClosed as EventListener)
       }
       if (onClose) {
         element.addEventListener('mz-drawer-close', onClose as EventListener)
       }
-      if (onClosed) {
-        element.addEventListener('mz-drawer-closed', onClosed as EventListener)
+      if (onShow) {
+        element.addEventListener('mz-show', onShow as EventListener)
+      }
+      if (onHide) {
+        element.addEventListener('mz-hide', onHide as EventListener)
       }
 
     return () => {
-        if (onOpen) {
-          element.removeEventListener('mz-drawer-open', onOpen as EventListener)
+        if (onMzDrawerOpen) {
+          element.removeEventListener('mz-drawer-open', onMzDrawerOpen as EventListener)
+        }
+        if (onMzDrawerClose) {
+          element.removeEventListener('mz-drawer-close', onMzDrawerClose as EventListener)
+        }
+        if (onMzDrawerClosed) {
+          element.removeEventListener('mz-drawer-closed', onMzDrawerClosed as EventListener)
         }
         if (onClose) {
           element.removeEventListener('mz-drawer-close', onClose as EventListener)
         }
-        if (onClosed) {
-          element.removeEventListener('mz-drawer-closed', onClosed as EventListener)
+        if (onShow) {
+          element.removeEventListener('mz-show', onShow as EventListener)
+        }
+        if (onHide) {
+          element.removeEventListener('mz-hide', onHide as EventListener)
         }
     }
-  }, [onOpen, onClose, onClosed])
+  }, [onMzDrawerOpen, onMzDrawerClose, onMzDrawerClosed, onClose, onShow, onHide])
 
   // Handle controlled components
-  
-
-  
+  useEffect(() => {
+    const element = elementRef.current as any
+    if (element && props.open !== undefined) {
+      element.open = props.open
+    }
+  }, [props.open])
 
   return (
     <mz-drawer
